@@ -2,7 +2,7 @@ defmodule Kobrakai.Blog do
   use NimblePublisher,
     build: Kobrakai.Blog.Post,
     parser: Kobrakai.Blog.Post,
-    from: "posts/**/*.md",
+    from: "static/posts/**/*.md",
     as: :posts,
     highlighters: [:makeup_elixir, :makeup_erlang]
 
@@ -13,7 +13,7 @@ defmodule Kobrakai.Blog do
   # The @posts variable is first defined by NimblePublisher.
   # Let's further modify it by sorting all posts by descending date.
   @posts @posts
-         |> Enum.sort_by(fn post -> post.date end, {:desc, Date})
+         |> Enum.sort_by(fn post -> post.date end, Date)
          |> Enum.filter(fn post -> !post.draft || @show_drafts end)
 
   # And finally export them

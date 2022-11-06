@@ -1,1 +1,67 @@
-HI
+<h1 class="visually-hidden">Benjamin Milde</h1>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div>
+    <h2 class="uppercase mb-6">Projekte</h2>
+    <ol class="staggered-intro">
+      <.limited_listing :let={limited} list={[]} max={9} reverse>
+        <.list_item :for={p <- limited} headline={p.title} date={p.date} tags={p.tags} url="" />
+        <:link :let={length}>
+          <li class="group">
+            <a href="/projekte">
+              Alle Projekte (<%= length %>) <.arrow />
+            </a>
+          </li>
+        </:link>
+      </.limited_listing>
+    </ol>
+  </div>
+  <div>
+    <div class="flex gap-4 mb-6">
+      <h2 class="uppercase mb-0">Kolumne</h2>
+      <a class="text-gray-500 dark:text-gray-400 group" href="/feed.xml" target="_blank">
+        RSS <.arrow direction="top-left" />
+      </a>
+    </div>
+    <ol class="staggered-intro">
+      <.limited_listing :let={limited} list={@posts} max={9} reverse>
+        <.list_item
+          :for={{p, index} <- Enum.with_index(limited)}
+          class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+          headline={p.title}
+          date={p.date}
+          tags={p.tags}
+          url={~p"/kolumne/#{p.id}"}
+        />
+        <:link :let={length}>
+          <li class="group opacity-0 animate-in animation-fill-mode-forwards animation-delay-495">
+            <.link navigate={~p"/kolumne"}>
+              Alle Posts (<%= length %>) <.arrow />
+            </.link>
+          </li>
+        </:link>
+      </.limited_listing>
+    </ol>
+  </div>
+  <div class="sm:col-span-2 lg:col-auto">
+    <h2 class="uppercase mb-6">
+      Benjamin Milde
+    </h2>
+    <div class="prose-custom staggered-intro">
+      {% markdown %}
+      {%- include index/bio -%}
+      {% endmarkdown %}
+    </div>
+  </div>
+  <div class="sm:col-span-2 lg:col-span-3">
+    <h2 class="uppercase mb-6 group">
+      <a href="https://foto.space.kobrakai.de/" target="_blank">
+        Fotografie <.arrow direction="top-left" />
+      </a>
+    </h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 baguette">
+      {% for image in images %}
+      {% include index/photo, img: image %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

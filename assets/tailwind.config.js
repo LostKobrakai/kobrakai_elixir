@@ -3,13 +3,21 @@
 
 const plugin = require("tailwindcss/plugin")
 
+const range = [...Array(10).keys()]
+const delays = range.reduce((acc, i) => {
+  return { ...acc, [`${i * 55}`]: `${i * 55}ms` };
+}, {})
+const delays_safe = range.map(i => `animation-delay-${i * 55}`)
+
 module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/*_web.ex",
     "../lib/*_web/**/*.*ex"
   ],
+  safelist: [...delays_safe],
   theme: {
+    animationDelay: delays,
     screens: {
       'sm': '640px',
       'md': '768px',
@@ -56,6 +64,15 @@ module.exports = {
           '800': '#424242',
           '900': '#212121',
         }
+      },
+      animation: {
+        'in': 'animateIn 250ms ease-out'
+      },
+      keyframes: {
+        animateIn: {
+          '0%': { opacity: 0, transform: 'translate3d(0,100%,0)' },
+          '100%': { opacity: 1 }
+        }
       }
     },
   },
@@ -67,6 +84,15 @@ module.exports = {
     plugin(({ addVariant }) => addVariant("phx-no-feedback", [".phx-no-feedback&", ".phx-no-feedback &"])),
     plugin(({ addVariant }) => addVariant("phx-click-loading", [".phx-click-loading&", ".phx-click-loading &"])),
     plugin(({ addVariant }) => addVariant("phx-submit-loading", [".phx-submit-loading&", ".phx-submit-loading &"])),
-    plugin(({ addVariant }) => addVariant("phx-change-loading", [".phx-change-loading&", ".phx-change-loading &"]))
+    plugin(({ addVariant }) => addVariant("phx-change-loading", [".phx-change-loading&", ".phx-change-loading &"])),
+    plugin(function ({ addUtilities, theme, e }) {
+      const values = theme('animationDelay')
+      var utilities = Object.entries(values).map(([key, value]) => {
+        return {
+          [`.${e(`animation-delay-${key}`)}`]: { animationDelay: `${value}` },
+        }
+      })
+      addUtilities(utilities)
+    })
   ]
 }

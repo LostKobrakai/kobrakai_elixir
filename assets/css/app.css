@@ -2,4 +2,25 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* This file is for your main application CSS */
+@font-face {
+  font-family: 'Noway';
+  src: url('/font/noway-regular-webfont.woff2') format('woff2'),
+       url('/font/noway-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer utilities {
+  .animation-fill-mode-forwards {
+   animation-fill-mode: forwards;
+  }
+}
+
+html, body{
+  font-family: "Noway", "Helvetiva Neue", Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+.comma-separated li + li::before{
+  content: ", ";
+}
