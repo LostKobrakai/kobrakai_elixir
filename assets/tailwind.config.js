@@ -66,11 +66,16 @@ module.exports = {
         }
       },
       animation: {
-        'in': 'animateIn 250ms ease-out'
+        'in': 'animateIn 250ms ease-out',
+        'in-small': 'animateInSmall 250ms ease-out'
       },
       keyframes: {
         animateIn: {
           '0%': { opacity: 0, transform: 'translate3d(0,100%,0)' },
+          '100%': { opacity: 1 }
+        },
+        animateInSmall: {
+          '0%': { opacity: 0, transform: 'translate3d(0,2rem,0)' },
           '100%': { opacity: 1 }
         }
       }
