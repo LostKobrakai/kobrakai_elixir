@@ -18,6 +18,7 @@ defmodule KobrakaiElixirWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/kolumne/:id", BlogController, :show
   end
 
   # Other scopes may use custom stacks.
