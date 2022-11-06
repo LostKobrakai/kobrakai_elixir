@@ -18,6 +18,7 @@ defmodule KobrakaiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/kolumne", BlogController, :index
     get "/kolumne/:id", BlogController, :show
   end
 

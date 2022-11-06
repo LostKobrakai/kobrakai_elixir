@@ -48,7 +48,7 @@ defmodule Kobrakai.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:nimble_publisher, github: "dashbitco/nimble_publisher", ref: "abee26e"},
+      {:nimble_publisher, "~> 0.1.3"},
       {:makeup_elixir, ">= 0.0.0"},
       {:makeup_erlang, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"}

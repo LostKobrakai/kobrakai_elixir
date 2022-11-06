@@ -8,9 +8,13 @@ defmodule Kobrakai.Blog do
 
   alias Kobrakai.Blog.NotFoundError
 
+  @show_drafts Application.compile_env!(:kobrakai, [__MODULE__, :show_drafts])
+
   # The @posts variable is first defined by NimblePublisher.
   # Let's further modify it by sorting all posts by descending date.
-  @posts Enum.sort_by(@posts, & &1.date, {:desc, Date})
+  @posts @posts
+         |> Enum.sort_by(fn post -> post.date end, {:desc, Date})
+         |> Enum.filter(fn post -> !post.draft || @show_drafts end)
 
   # And finally export them
   def all_posts, do: @posts

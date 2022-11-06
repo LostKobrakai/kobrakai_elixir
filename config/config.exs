@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :kobrakai, Kobrakai.Blog, show_drafts: false
+
 # Configures the endpoint
 config :kobrakai, KobrakaiWeb.Endpoint,
   url: [host: "localhost"],
