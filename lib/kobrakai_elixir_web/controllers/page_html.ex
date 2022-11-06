@@ -11,6 +11,11 @@ defmodule KobrakaiWeb.PageHTML do
   attr :rest, :global
 
   def list_item(assigns) do
+    assigns =
+      update(assigns, :tags, fn tags ->
+        Enum.reject(tags, &(&1 in ["blog", "project", "featured"]))
+      end)
+
     ~H"""
     <li class={["my-2 group", @class]} style="break-inside: avoid;" {@rest}>
       <.link navigate={@url}>

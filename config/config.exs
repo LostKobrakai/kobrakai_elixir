@@ -8,6 +8,7 @@
 import Config
 
 config :kobrakai, Kobrakai.Blog, show_drafts: false
+config :kobrakai, Kobrakai.Portfolio, show_drafts: false
 
 # Configures the endpoint
 config :kobrakai, KobrakaiWeb.Endpoint,

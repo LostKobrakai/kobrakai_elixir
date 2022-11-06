@@ -1,12 +1,19 @@
-<h1 class="visually-hidden">Benjamin Milde</h1>
+<h1 class="sr-only">Benjamin Milde</h1>
 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
   <div>
     <h2 class="uppercase mb-6">Projekte</h2>
     <ol class="staggered-intro">
-      <.limited_listing :let={limited} list={[]} max={9} reverse>
-        <.list_item :for={p <- limited} headline={p.title} date={p.date} tags={p.tags} url="" />
+      <.limited_listing :let={limited} list={@projects} max={-9} reverse>
+        <.list_item
+          :for={{p, index} <- Enum.with_index(limited)}
+          class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+          headline={p.title}
+          date={p.date}
+          tags={p.tags}
+          url=""
+        />
         <:link :let={length}>
-          <li class="group">
+          <li class="group opacity-0 animate-in animation-fill-mode-forwards animation-delay-495">
             <a href="/projekte">
               Alle Projekte (<%= length %>) <.arrow />
             </a>
@@ -46,10 +53,15 @@
     <h2 class="uppercase mb-6">
       Benjamin Milde
     </h2>
-    <div class="prose-custom staggered-intro">
-      {% markdown %}
-      {%- include index/bio -%}
-      {% endmarkdown %}
+    <div class="prose-custom">
+      <p class="opacity-0 animate-in animation-fill-mode-forwards animation-delay-0">
+        Designer mit Bachelor of Arts in Mediadesign.<br />
+        Programmierer in Front- und Backend.<br /> Hobbyfotograf mit Fokus Peoplefotografie.
+      </p>
+      <p class="opacity-0 animate-in animation-fill-mode-forwards animation-delay-55">
+        Gründer bei
+        <.link href="https://www.madeit.io/">made it</.link>.
+      </p>
     </div>
   </div>
   <div class="sm:col-span-2 lg:col-span-3">

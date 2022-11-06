@@ -24,3 +24,14 @@ html, body{
 .comma-separated li + li::before{
   content: ", ";
 }
+
+.prose-custom p{
+  @apply my-6;
+}
+.prose-custom a{
+  text-decoration: underline;
+}
+.prose-custom ul{
+  margin-left: 1rem;
+  list-style-type: disc;
+}

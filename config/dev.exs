@@ -1,6 +1,7 @@
 import Config
 
 config :kobrakai, Kobrakai.Blog, show_drafts: true
+config :kobrakai, Kobrakai.Portfolio, show_drafts: true
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
