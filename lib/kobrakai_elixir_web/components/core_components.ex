@@ -1,4 +1,4 @@
-defmodule KobrakaiElixirWeb.CoreComponents do
+defmodule KobrakaiWeb.CoreComponents do
   @moduledoc """
   Provides core UI components.
 
@@ -12,7 +12,7 @@ defmodule KobrakaiElixirWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import KobrakaiElixirWeb.Gettext
+  import KobrakaiWeb.Gettext
 
   @doc """
   Renders a modal.
@@ -604,9 +604,9 @@ defmodule KobrakaiElixirWeb.CoreComponents do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(KobrakaiElixirWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(KobrakaiWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(KobrakaiElixirWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(KobrakaiWeb.Gettext, "errors", msg, opts)
     end
   end
 

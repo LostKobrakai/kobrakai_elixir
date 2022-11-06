@@ -1,4 +1,4 @@
-defmodule KobrakaiElixir.Application do
+defmodule Kobrakai.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -9,20 +9,20 @@ defmodule KobrakaiElixir.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      KobrakaiElixirWeb.Telemetry,
+      KobrakaiWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: KobrakaiElixir.PubSub},
+      {Phoenix.PubSub, name: Kobrakai.PubSub},
       # Start Finch
-      {Finch, name: KobrakaiElixir.Finch},
+      {Finch, name: Kobrakai.Finch},
       # Start the Endpoint (http/https)
-      KobrakaiElixirWeb.Endpoint
-      # Start a worker by calling: KobrakaiElixir.Worker.start_link(arg)
-      # {KobrakaiElixir.Worker, arg}
+      KobrakaiWeb.Endpoint
+      # Start a worker by calling: Kobrakai.Worker.start_link(arg)
+      # {Kobrakai.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: KobrakaiElixir.Supervisor]
+    opts = [strategy: :one_for_one, name: Kobrakai.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -30,7 +30,7 @@ defmodule KobrakaiElixir.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    KobrakaiElixirWeb.Endpoint.config_change(changed, removed)
+    KobrakaiWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -8,13 +8,13 @@
 import Config
 
 # Configures the endpoint
-config :kobrakai_elixir, KobrakaiElixirWeb.Endpoint,
+config :kobrakai, KobrakaiWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: KobrakaiElixirWeb.ErrorHTML, json: KobrakaiElixirWeb.ErrorJSON],
+    formats: [html: KobrakaiWeb.ErrorHTML, json: KobrakaiWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: KobrakaiElixir.PubSub,
+  pubsub_server: Kobrakai.PubSub,
   live_view: [signing_salt: "Rtah5aPu"]
 
 # Configures the mailer
@@ -24,7 +24,7 @@ config :kobrakai_elixir, KobrakaiElixirWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :kobrakai_elixir, KobrakaiElixir.Mailer, adapter: Swoosh.Adapters.Local
+config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,

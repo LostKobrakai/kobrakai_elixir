@@ -1,3 +1,3 @@
-defmodule KobrakaiElixir.Mailer do
-  use Swoosh.Mailer, otp_app: :kobrakai_elixir
+defmodule Kobrakai.Mailer do
+  use Swoosh.Mailer, otp_app: :kobrakai
 end

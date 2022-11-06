@@ -1,4 +1,4 @@
-defmodule KobrakaiElixir.Blog.Post do
+defmodule Kobrakai.Blog.Post do
   @enforce_keys [:id, :title, :body, :date]
   defstruct [:id, :title, :body, :date]
 

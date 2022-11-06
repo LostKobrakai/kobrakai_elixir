@@ -1,3 +1,3 @@
-defmodule KobrakaiElixir.Blog.NotFoundError do
+defmodule Kobrakai.Blog.NotFoundError do
   defexception [:message]
 end

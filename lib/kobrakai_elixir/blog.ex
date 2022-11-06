@@ -1,12 +1,12 @@
-defmodule KobrakaiElixir.Blog do
+defmodule Kobrakai.Blog do
   use NimblePublisher,
-    build: KobrakaiElixir.Blog.Post,
-    parser: KobrakaiElixir.Blog.Post,
+    build: Kobrakai.Blog.Post,
+    parser: Kobrakai.Blog.Post,
     from: "posts/**/*.md",
     as: :posts,
     highlighters: [:makeup_elixir, :makeup_erlang]
 
-  alias KobrakaiElixir.Blog.NotFoundError
+  alias Kobrakai.Blog.NotFoundError
 
   # The @posts variable is first defined by NimblePublisher.
   # Let's further modify it by sorting all posts by descending date.

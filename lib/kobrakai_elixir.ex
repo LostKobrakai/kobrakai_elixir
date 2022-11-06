@@ -1,6 +1,6 @@
-defmodule KobrakaiElixir do
+defmodule Kobrakai do
   @moduledoc """
-  KobrakaiElixir keeps the contexts that define your domain
+  Kobrakai keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

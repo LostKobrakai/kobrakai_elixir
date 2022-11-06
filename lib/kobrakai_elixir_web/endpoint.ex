@@ -1,12 +1,12 @@
-defmodule KobrakaiElixirWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :kobrakai_elixir
+defmodule KobrakaiWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :kobrakai
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_kobrakai_elixir_key",
+    key: "_kobrakai_key",
     signing_salt: "qeXOcdUK",
     same_site: "Lax"
   ]
@@ -19,9 +19,9 @@ defmodule KobrakaiElixirWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :kobrakai_elixir,
+    from: :kobrakai,
     gzip: false,
-    only: KobrakaiElixirWeb.static_paths()
+    only: KobrakaiWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -46,5 +46,5 @@ defmodule KobrakaiElixirWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug KobrakaiElixirWeb.Router
+  plug KobrakaiWeb.Router
 end

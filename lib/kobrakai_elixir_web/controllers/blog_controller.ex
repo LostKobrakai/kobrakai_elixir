@@ -1,6 +1,6 @@
-defmodule KobrakaiElixirWeb.BlogController do
-  use KobrakaiElixirWeb, :controller
-  alias KobrakaiElixir.Blog
+defmodule KobrakaiWeb.BlogController do
+  use KobrakaiWeb, :controller
+  alias Kobrakai.Blog
 
   def show(conn, %{"id" => id}) do
     post = Blog.get_post_by_id!(id)

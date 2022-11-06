@@ -1,12 +1,12 @@
-defmodule KobrakaiElixirWeb.ErrorJSONTest do
-  use KobrakaiElixirWeb.ConnCase, async: true
+defmodule KobrakaiWeb.ErrorJSONTest do
+  use KobrakaiWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert KobrakaiElixirWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert KobrakaiWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
   end
 
   test "renders 500" do
-    assert KobrakaiElixirWeb.ErrorJSON.render("500.json", %{}) ==
+    assert KobrakaiWeb.ErrorJSON.render("500.json", %{}) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
 end

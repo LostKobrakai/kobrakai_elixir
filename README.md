@@ -1,4 +1,4 @@
-# KobrakaiElixir
+# Kobrakai
 
 To start your Phoenix server:
 

@@ -2,14 +2,13 @@ import Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :kobrakai_elixir, KobrakaiElixirWeb.Endpoint,
+config :kobrakai, KobrakaiWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "FXRFs7HK7qgTq2zD4SYYn7c0fc+xQTxYP517fy3j0ew4FTI+EALANSjq+4lXwMKl",
   server: false
 
 # In test we don't send emails.
-config :kobrakai_elixir, KobrakaiElixir.Mailer,
-  adapter: Swoosh.Adapters.Test
+config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

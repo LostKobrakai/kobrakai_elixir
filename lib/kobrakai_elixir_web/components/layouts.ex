@@ -1,5 +1,5 @@
-defmodule KobrakaiElixirWeb.Layouts do
-  use KobrakaiElixirWeb, :html
+defmodule KobrakaiWeb.Layouts do
+  use KobrakaiWeb, :html
 
   embed_templates "layouts/*"
 end

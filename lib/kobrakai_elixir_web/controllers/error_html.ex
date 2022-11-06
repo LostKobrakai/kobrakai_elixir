@@ -1,12 +1,12 @@
-defmodule KobrakaiElixirWeb.ErrorHTML do
-  use KobrakaiElixirWeb, :html
+defmodule KobrakaiWeb.ErrorHTML do
+  use KobrakaiWeb, :html
 
   # If you want to customize your error pages,
   # uncomment the embed_templates/1 call below
   # and add pages to the error directory:
   #
-  #   * lib/kobrakai_elixir_web/controllers/error/404.html.heex
-  #   * lib/kobrakai_elixir_web/controllers/error/500.html.heex
+  #   * lib/kobrakai_web/controllers/error/404.html.heex
+  #   * lib/kobrakai_web/controllers/error/500.html.heex
   #
   # embed_templates "error/*"
 

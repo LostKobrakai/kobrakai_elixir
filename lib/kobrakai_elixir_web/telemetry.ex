@@ -1,4 +1,4 @@
-defmodule KobrakaiElixirWeb.Telemetry do
+defmodule KobrakaiWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -63,7 +63,7 @@ defmodule KobrakaiElixirWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {KobrakaiElixirWeb, :count_users, []}
+      # {KobrakaiWeb, :count_users, []}
     ]
   end
 end

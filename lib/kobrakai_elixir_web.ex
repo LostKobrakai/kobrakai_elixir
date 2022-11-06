@@ -1,12 +1,12 @@
-defmodule KobrakaiElixirWeb do
+defmodule KobrakaiWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use KobrakaiElixirWeb, :controller
-      use KobrakaiElixirWeb, :html
+      use KobrakaiWeb, :controller
+      use KobrakaiWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -39,12 +39,12 @@ defmodule KobrakaiElixirWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        namespace: KobrakaiElixirWeb,
+        namespace: KobrakaiWeb,
         formats: [:html, :json],
-        layouts: [html: KobrakaiElixirWeb.Layouts]
+        layouts: [html: KobrakaiWeb.Layouts]
 
       import Plug.Conn
-      import KobrakaiElixirWeb.Gettext
+      import KobrakaiWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -53,7 +53,7 @@ defmodule KobrakaiElixirWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {KobrakaiElixirWeb.Layouts, :app}
+        layout: {KobrakaiWeb.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -85,8 +85,8 @@ defmodule KobrakaiElixirWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import KobrakaiElixirWeb.CoreComponents
-      import KobrakaiElixirWeb.Gettext
+      import KobrakaiWeb.CoreComponents
+      import KobrakaiWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -99,9 +99,9 @@ defmodule KobrakaiElixirWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: KobrakaiElixirWeb.Endpoint,
-        router: KobrakaiElixirWeb.Router,
-        statics: KobrakaiElixirWeb.static_paths()
+        endpoint: KobrakaiWeb.Endpoint,
+        router: KobrakaiWeb.Router,
+        statics: KobrakaiWeb.static_paths()
     end
   end
 

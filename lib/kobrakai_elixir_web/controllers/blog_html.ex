@@ -1,5 +1,5 @@
-defmodule KobrakaiElixirWeb.BlogHTML do
-  use KobrakaiElixirWeb, :html
+defmodule KobrakaiWeb.BlogHTML do
+  use KobrakaiWeb, :html
 
   def show(assigns) do
     ~H"""

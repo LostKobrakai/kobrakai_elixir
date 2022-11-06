@@ -1,5 +1,5 @@
-defmodule KobrakaiElixirWeb.PageController do
-  use KobrakaiElixirWeb, :controller
+defmodule KobrakaiWeb.PageController do
+  use KobrakaiWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

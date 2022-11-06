@@ -1,5 +1,5 @@
-defmodule KobrakaiElixirWeb.PageControllerTest do
-  use KobrakaiElixirWeb.ConnCase
+defmodule KobrakaiWeb.PageControllerTest do
+  use KobrakaiWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

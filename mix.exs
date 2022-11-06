@@ -1,9 +1,9 @@
-defmodule KobrakaiElixir.MixProject do
+defmodule Kobrakai.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kobrakai_elixir,
+      app: :kobrakai,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule KobrakaiElixir.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {KobrakaiElixir.Application, []},
+      mod: {Kobrakai.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
