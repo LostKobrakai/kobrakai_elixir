@@ -1,5 +1,6 @@
 defmodule KobrakaiWeb.Router do
   use KobrakaiWeb, :router
+  import Redirect
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -27,6 +28,16 @@ defmodule KobrakaiWeb.Router do
   # scope "/api", KobrakaiWeb do
   #   pipe_through :api
   # end
+
+  redirect "/digitaler-ikearahmen", "/projekte/digitaler-ikearahmen", :permanent
+  redirect "/wunderle-partner-architekten", "/projekte/wunderle-partner-architekten", :permanent
+  redirect "/sense", "/projekte/sense", :permanent
+  redirect "/decrescendo", "/projekte/decrescendo", :permanent
+  redirect "/korona-redesign", "/projekte/korona-redesign", :permanent
+  redirect "/zombie-ad-infinitum", "/projekte/zombie-ad-infinitum", :permanent
+  redirect "/maya", "/projekte/maya", :permanent
+  redirect "/bleisatz", "/projekte/bleisatz", :permanent
+  redirect "/schriftanalyse", "/projekte/schriftanalyse", :permanent
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:kobrakai, :dev_routes) do
