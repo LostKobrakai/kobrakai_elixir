@@ -51,6 +51,8 @@ COPY lib lib
 
 COPY assets assets
 
+COPY posts posts
+
 # compile assets
 RUN mix assets.deploy
 
