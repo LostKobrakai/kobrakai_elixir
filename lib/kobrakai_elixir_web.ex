@@ -17,7 +17,11 @@ defmodule KobrakaiWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def favicons do
+    ~w(android-chrome-192x192.png android-chrome-512x512.png apple-touch-icon.png favicon.ico icon.svg site.webmanifest)
+  end
+
+  def static_paths, do: ~w(assets fonts images robots.txt) ++ favicons()
 
   def router do
     quote do
@@ -85,6 +89,7 @@ defmodule KobrakaiWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
+      import KobrakaiWeb.Components
       import KobrakaiWeb.CoreComponents
       import KobrakaiWeb.Gettext
 
