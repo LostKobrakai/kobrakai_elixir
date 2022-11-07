@@ -1,6 +1,17 @@
 defmodule Kobrakai.Portfolio.Project do
-  @enforce_keys [:id, :title, :draft, :body, :date, :tags]
-  defstruct [:id, :title, :draft, :body, :date, :tags]
+  @enforce_keys [
+    :id,
+    :title,
+    :draft,
+    :body,
+    :date,
+    :tags,
+    :primary,
+    :secondary,
+    :headline,
+    :subtitle
+  ]
+  defstruct [:id, :title, :draft, :body, :date, :tags, :primary, :secondary, :headline, :subtitle]
 
   def parse(_path, contents) do
     ["---\n" <> yaml, body] = :binary.split(contents, ["\n---\n"])
@@ -19,7 +30,11 @@ defmodule Kobrakai.Portfolio.Project do
       date: date,
       body: body,
       draft: !!attrs[:draft],
-      tags: Map.get(attrs, :tags, [])
+      tags: Map.get(attrs, :tags, []),
+      primary: Map.fetch!(attrs, :primary),
+      secondary: Map.fetch!(attrs, :secondary),
+      headline: Map.get(attrs, :headline),
+      subtitle: Map.get(attrs, :subtitle)
     }
   end
 end

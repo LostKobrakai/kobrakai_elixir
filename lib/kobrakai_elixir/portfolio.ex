@@ -20,8 +20,8 @@ defmodule Kobrakai.Portfolio do
   def all_projects, do: @projects
   def featured_projects, do: Enum.filter(all_projects, fn p -> "featured" in p.tags end)
 
-  def get_post_by_id!(id) do
+  def get_project_by_id!(id) do
     Enum.find(all_projects(), &(&1.id == id)) ||
-      raise NotFoundError, "post with id=#{id} not found"
+      raise NotFoundError, "project with id=#{id} not found"
   end
 end

@@ -10,13 +10,13 @@
           headline={p.title}
           date={p.date}
           tags={p.tags}
-          url=""
+          url={~p"/projekte/#{p.id}"}
         />
         <:link :let={length}>
           <li class="group opacity-0 animate-in animation-fill-mode-forwards animation-delay-495">
-            <a href="/projekte">
+            <.link navigate={~p"/projekte"}>
               Alle Projekte (<%= length %>) <.arrow />
-            </a>
+            </.link>
           </li>
         </:link>
       </.limited_listing>

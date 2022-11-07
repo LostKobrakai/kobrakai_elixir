@@ -51,7 +51,7 @@ defmodule KobrakaiWeb.Components do
 
     ~H"""
     <%= render_slot(@inner_block, @rendered) %>
-    <%= if @length > @max && @link != [] do %>
+    <%= if @length > abs(@max) && @link != [] do %>
       <%= render_slot(@link, @length) %>
     <% end %>
     """
