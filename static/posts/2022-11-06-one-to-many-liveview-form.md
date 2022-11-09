@@ -18,7 +18,7 @@ rows added.
 
 There are however a few foot-guns when approaching forms like that. We'll b
 
-
+<!-- [KobrakaiWeb.CounterLive] -->
 
 The introduction of [HEEx and function components](https://hexdocs.pm/phoenix_live_view/0.17.9/Phoenix.Component.html) to Phoenix LiveView brought a lot of improvements for 
 building and maintaining UIs in html to the Phoenix community. A simple example 
@@ -39,7 +39,7 @@ defmodule Components do
 end
 ```
 
-```html
+```heex
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,7 +108,7 @@ defmodule Components do
 end
 ```
 
-```html
+```heex
 <!DOCTYPE html>
 <html lang="en">
 <head>

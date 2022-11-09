@@ -52,6 +52,7 @@ defmodule Kobrakai.MixProject do
       {:makeup_elixir, ">= 0.0.0"},
       {:makeup_erlang, ">= 0.0.0"},
       {:makeup_html, ">= 0.0.0"},
+      {:makeup_eex, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"}
     ]

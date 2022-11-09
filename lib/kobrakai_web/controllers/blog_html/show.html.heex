@@ -9,7 +9,7 @@
     <h1 class="uppercase text-3xl mb-2"><%= @post.headline || @post.title %></h1>
   </div>
   <div class="prose max-w-none dark:prose-invert">
-    <%= Phoenix.HTML.raw(@post.body) %>
+    <.body conn={@conn} content={@post.body} />
   </div>
   <aside class="mt-32 flex items-center gap-6">
     <div class="w-16 rounded-full overflow-hidden inline-flex">
