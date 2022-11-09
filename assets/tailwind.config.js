@@ -15,6 +15,7 @@ module.exports = {
     "../lib/*_web.ex",
     "../lib/*_web/**/*.*ex"
   ],
+  darkMode: 'class',
   safelist: [...delays_safe],
   theme: {
     animationDelay: delays,
@@ -43,12 +44,7 @@ module.exports = {
           css: {
             '--tw-prose-body': '#333',
             '--tw-prose-headings': theme('colors.black'),
-            'pre code::before': {
-              display: "none"
-            },
-            'pre code::after': {
-              display: "none"
-            },
+            '--tw-prose-pre-bg': theme('colors.gray[200]'),
           }
         }
       }),

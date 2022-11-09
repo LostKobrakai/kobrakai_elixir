@@ -4,7 +4,7 @@ defmodule Kobrakai.Portfolio do
     parser: Kobrakai.Portfolio.Project,
     from: "static/projects/**/*.md",
     as: :projects,
-    highlighters: [:makeup_elixir, :makeup_erlang]
+    highlighters: [:makeup_html, :makeup_elixir, :makeup_erlang]
 
   alias Kobrakai.Blog.NotFoundError
 
@@ -18,7 +18,7 @@ defmodule Kobrakai.Portfolio do
 
   # And finally export them
   def all_projects, do: @projects
-  def featured_projects, do: Enum.filter(all_projects, fn p -> "featured" in p.tags end)
+  def featured_projects, do: Enum.filter(all_projects(), fn p -> "featured" in p.tags end)
 
   def get_project_by_id!(id) do
     Enum.find(all_projects(), &(&1.id == id)) ||

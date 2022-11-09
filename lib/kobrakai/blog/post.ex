@@ -1,6 +1,6 @@
 defmodule Kobrakai.Blog.Post do
-  @enforce_keys [:id, :title, :draft, :body, :date, :tags]
-  defstruct [:id, :title, :draft, :body, :date, :tags]
+  @enforce_keys [:id, :title, :headline, :draft, :body, :date, :tags]
+  defstruct [:id, :title, :headline, :draft, :body, :date, :tags]
 
   def parse(_path, contents) do
     ["---\n" <> yaml, body] = :binary.split(contents, ["\n---\n"])
@@ -15,6 +15,7 @@ defmodule Kobrakai.Blog.Post do
 
     %__MODULE__{
       id: id,
+      headline: Map.get(attrs, :headline),
       title: attrs.title,
       date: date,
       body: body,
