@@ -1,5 +1,4 @@
 defmodule KobrakaiWeb.Router do
-  alias KobrakaiWeb.StaticController
   use KobrakaiWeb, :router
   import Redirect
 
@@ -17,6 +16,12 @@ defmodule KobrakaiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :rss do
+    plug :accepts, ["html", "rss", "atom", "xml"]
+    plug :put_root_layout, false
+    plug :put_layout, false
+  end
+
   scope "/", KobrakaiWeb do
     pipe_through :browser
 
@@ -29,6 +34,12 @@ defmodule KobrakaiWeb.Router do
     get "/werdegang", CustomController, :cv
     get "/kontakt", CustomController, :contact
     get "/impressum", CustomController, :legal
+  end
+
+  scope "/", KobrakaiWeb do
+    pipe_through :rss
+
+    get "/feed.xml", RssController, :rss
   end
 
   # Other scopes may use custom stacks.

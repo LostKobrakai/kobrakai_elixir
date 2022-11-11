@@ -55,7 +55,8 @@ defmodule Kobrakai.MixProject do
       {:makeup_eex, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"},
-      {:image, "~> 0.14.0", runtime: false}
+      {:image, "~> 0.14.0", runtime: false},
+      {:atomex, "0.3.0"}
     ]
   end
 

@@ -18,6 +18,14 @@
     </script>
 
     <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content={assigns[:page_title]} />
+    <meta :if={assigns[:excerpt]} name="description" content={assigns[:excerpt]} />
+    <meta :if={assigns[:excerpt]} property="og:description" content={assigns[:excerpt]} />
+    <meta property="og:url" content={Phoenix.Controller.current_path(@conn)} />
+    <meta property="og:image" content={~p"/images/signee.png"} />
+    <meta property="og:type" content={assigns[:og_type] || "website"} />
+    <link rel="canonical" href={Phoenix.Controller.current_path(@conn)} />
   </head>
   <body class="container mx-auto p-4 max-w-screen-xl dark:bg-[#111] dark:text-gray-100">
     <%= @inner_content %>
