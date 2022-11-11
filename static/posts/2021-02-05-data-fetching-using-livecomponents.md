@@ -103,7 +103,7 @@ ratings = Comparator.list_ratings(companies)
 
 This seems simple, but is a bit convoluted on the template level:
 
-```elixir
+```html_eex
 <%= for company <- @companies do %>
   <% rating = Map.get(@ratings, company.id) %>
   …
@@ -122,7 +122,7 @@ ratings in one place, just to bring together individual companies with their
 individual rating in a completely other place – live components allow for all
 that to happen in one place.
 
-```elixir
+```html_eex
 <%= for company <- @companies do %>
   <% live_component @socket, Row, id: company.id, company: company %>
 <% end %>

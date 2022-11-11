@@ -4,7 +4,7 @@ defmodule Kobrakai.Blog do
     parser: Kobrakai.Blog.Post,
     from: "static/posts/**/*.md",
     as: :posts,
-    highlighters: [:makeup_html, :makeup_elixir, :makeup_erlang, :kobrakai]
+    highlighters: [:makeup_eex, :makeup_html, :makeup_elixir, :makeup_erlang, :kobrakai]
 
   alias Kobrakai.Blog.NotFoundError
 

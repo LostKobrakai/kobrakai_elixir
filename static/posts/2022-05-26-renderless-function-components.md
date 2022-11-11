@@ -28,7 +28,7 @@ defmodule Components do
 end
 ```
 
-```html
+```heex
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +97,7 @@ defmodule Components do
 end
 ```
 
-```html
+```heex
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,7 +150,7 @@ state on toggleable content.
 I quickly toyed with something like this today and it's for sure an interesting idea
 for making it easy to do the correct thing:
 
-```html
+```heex
 <.form for={@changeset} let={f}>
   <.field_context form={f} field={:name} let={field}>
     <label for={field.id}><%= field.label %></label>

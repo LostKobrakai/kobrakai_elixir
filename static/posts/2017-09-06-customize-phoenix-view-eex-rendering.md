@@ -46,7 +46,7 @@ end
 
 Another example is the need for composed “layout” template in phoenix. In an imaginary application there’s the admin layout and the customer facing one. Without any customization one would have a `app.html.eex` and a `admin.html.eex`, which is totally fine. But in a case where both layouts share the whole `<head>` setup as well as the linked javascript files changes would need to be duplicated in both files. Ideally there would a `wrapper.html.eex` for the outer html and `app.html.eex` / `admin.html.eex` would only hold the actually different markup for headers or footers.
 
-```html
+```html_eex
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -67,7 +67,7 @@ Another example is the need for composed “layout” template in phoenix. In an
 </html>
 ```
 
-```html
+```html_eex
 <header>App View</header>
 <main role="main">
   <%= render @view_module, @view_template, assigns %>

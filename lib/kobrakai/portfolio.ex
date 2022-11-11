@@ -4,7 +4,7 @@ defmodule Kobrakai.Portfolio do
     parser: Kobrakai.Portfolio.Project,
     from: "static/projects/**/*.md",
     as: :projects,
-    highlighters: [:makeup_html, :makeup_elixir, :makeup_erlang, :kobrakai]
+    highlighters: []
 
   alias Kobrakai.Blog.NotFoundError
 
