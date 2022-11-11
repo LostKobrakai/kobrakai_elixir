@@ -54,7 +54,8 @@ defmodule Kobrakai.MixProject do
       {:makeup_html, ">= 0.0.0"},
       {:makeup_eex, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"},
-      {:redirect, "~> 0.4.0"}
+      {:redirect, "~> 0.4.0"},
+      {:image, "~> 0.14.0", runtime: false}
     ]
   end
 
@@ -67,7 +68,12 @@ defmodule Kobrakai.MixProject do
   defp aliases do
     [
       setup: ["deps.get"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.deploy": [
+        "images.compile",
+        "tailwind default --minify",
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end

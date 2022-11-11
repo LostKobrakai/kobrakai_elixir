@@ -3,7 +3,7 @@ defmodule KobrakaiWeb.BlogController do
   alias Kobrakai.Blog
 
   def index(conn, _) do
-    render(conn, :index, posts: Blog.all_posts())
+    render(conn, :index, posts: Blog.all_posts(), page_title: "Kolumne")
   end
 
   def show(conn, %{"id" => id}) do

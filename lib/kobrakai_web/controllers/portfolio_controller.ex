@@ -3,7 +3,7 @@ defmodule KobrakaiWeb.PortfolioController do
   alias Kobrakai.Portfolio
 
   def index(conn, _) do
-    render(conn, :index, projects: Portfolio.all_projects())
+    render(conn, :index, projects: Portfolio.all_projects(), page_title: "Projekte")
   end
 
   def show(conn, %{"id" => id}) do

@@ -11,7 +11,7 @@ primary:
   vimeo: "79765437"
 secondary:
   - type: pdf
-    file: forschertagebuch.pdf
+    file: /files/forschertagebuch.pdf
   - type: image
     source: /images/decrescendo/pendel.jpg
     alt: ""

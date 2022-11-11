@@ -14,7 +14,7 @@ by using the phoenix generators to build up the first bunch of boilerplate for
 those companies:
 
 ```bash
-mix phx.gen.live JobBoard Company companies name:string website:string
+$ mix phx.gen.live JobBoard Company companies name:string website:string
 ```
 
 This does generate a liveview module `MyAppWeb.CompanyLive.Index`, which for the

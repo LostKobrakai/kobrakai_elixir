@@ -5,11 +5,21 @@ defmodule KobrakaiWeb.BlogHTML do
 
   def index(assigns) do
     ~H"""
-    <ol>
-      <li :for={post <- @posts}>
-        <.link class="text-blue-600" navigate={~p"/kolumne/#{post.id}"}><%= post.title %></.link>
-      </li>
-    </ol>
+    <div>
+      <h2 class="uppercase mb-6"><%= @page_title %></h2>
+      <div class="sm:columns-2 lg:columns-3">
+        <ol class="-my-4">
+          <KobrakaiWeb.PageHTML.list_item
+            :for={{p, index} <- @posts |> Enum.reverse() |> Enum.with_index()}
+            class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+            headline={p.title}
+            date={p.date}
+            tags={p.tags}
+            url={~p"/kolumne/#{p.id}"}
+          />
+        </ol>
+      </div>
+    </div>
     """
   end
 

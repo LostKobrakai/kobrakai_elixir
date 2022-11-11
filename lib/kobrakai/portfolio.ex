@@ -4,7 +4,7 @@ defmodule Kobrakai.Portfolio do
     parser: Kobrakai.Portfolio.Project,
     from: "static/projects/**/*.md",
     as: :projects,
-    highlighters: [:makeup_html, :makeup_elixir, :makeup_erlang]
+    highlighters: [:makeup_html, :makeup_elixir, :makeup_erlang, :kobrakai]
 
   alias Kobrakai.Blog.NotFoundError
 
@@ -23,5 +23,19 @@ defmodule Kobrakai.Portfolio do
   def get_project_by_id!(id) do
     Enum.find(all_projects(), &(&1.id == id)) ||
       raise NotFoundError, "project with id=#{id} not found"
+  end
+
+  def primary_image_sizes, do: [600, 1250, 2500]
+  def secondary_image_sizes, do: [600, 1250]
+  def file_types, do: [:jpeg]
+
+  def static_path(path, size, ext) do
+    path
+    |> Path.split()
+    |> List.update_at(-1, fn filename ->
+      base = Path.basename(filename, Path.extname(filename))
+      "#{base}@#{size}.#{ext}"
+    end)
+    |> Path.join()
   end
 end
