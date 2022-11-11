@@ -1,4 +1,5 @@
 defmodule KobrakaiWeb.Router do
+  alias KobrakaiWeb.StaticController
   use KobrakaiWeb, :router
   import Redirect
 
@@ -24,6 +25,10 @@ defmodule KobrakaiWeb.Router do
     get "/projekte/:id", PortfolioController, :show
     get "/kolumne", BlogController, :index
     get "/kolumne/:id", BlogController, :show
+
+    get "/werdegang", CustomController, :cv
+    get "/kontakt", CustomController, :contact
+    get "/impressum", CustomController, :legal
   end
 
   # Other scopes may use custom stacks.
