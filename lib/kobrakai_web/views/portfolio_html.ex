@@ -50,7 +50,7 @@ defmodule KobrakaiWeb.PortfolioHTML do
         frameborder="0"
         height="1080"
         mozallowfullscreen
-        src={"//player.vimeo.com/video/#{@data["vimeo"]}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff"}
+        src={"//player.vimeo.com/video/#{@data["vimeo"]}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&dnt=true"}
         webkitallowfullscreen
         width="1920"
       >
