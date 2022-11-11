@@ -3,7 +3,7 @@
 
 const plugin = require("tailwindcss/plugin")
 
-const range = [...Array(10).keys()]
+const range = [...Array(100).keys()]
 const delays = range.reduce((acc, i) => {
   return { ...acc, [`${i * 55}`]: `${i * 55}ms` };
 }, {})
