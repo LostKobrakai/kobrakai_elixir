@@ -9,6 +9,7 @@ tags:
 primary:
   type: video
   vimeo: "79765437"
+  bunny: "440bc5e7-d7c4-4ad0-95b5-9113237c1bad"
 secondary:
   - type: pdf
     file: /files/forschertagebuch.pdf

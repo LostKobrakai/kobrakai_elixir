@@ -45,14 +45,10 @@ defmodule KobrakaiWeb.PortfolioHTML do
     ~H"""
     <div class="w-full aspect-w-16 aspect-h-9 bg-[#ddd]">
       <iframe
-        allowfullscreen
-        class="w-full"
-        frameborder="0"
-        height="1080"
-        mozallowfullscreen
-        src={"//player.vimeo.com/video/#{@data["vimeo"]}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&dnt=true"}
-        webkitallowfullscreen
-        width="1920"
+        class="w-full h-full border-0 absolute inset-0"
+        src={"https://iframe.mediadelivery.net/embed/73895/#{@data["bunny"]}?autoplay=false&preload=false"}
+        loading="lazy"
+        allowfullscreen="true"
       >
       </iframe>
     </div>

@@ -8,6 +8,7 @@ tags:
 primary:
   type: video
   vimeo: "64229600"
+  bunny: "3ec96886-c9e7-4eed-bb19-dfd5d14ce313"
 secondary:
   - type: image
     source: /images/zombie/ad_marcel.jpg
