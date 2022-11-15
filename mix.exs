@@ -9,7 +9,8 @@ defmodule Kobrakai.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -74,6 +75,14 @@ defmodule Kobrakai.MixProject do
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
+      ]
+    ]
+  end
+
+  defp releases do
+    [
+      kobrakai: [
+        steps: [:assemble, :tar]
       ]
     ]
   end

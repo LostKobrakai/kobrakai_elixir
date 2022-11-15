@@ -1,0 +1,86 @@
+# Find eligible builder and runner images on Docker Hub. We use Ubuntu/Debian
+# instead of Alpine to avoid DNS resolution issues in production.
+#
+# https://hub.docker.com/r/hexpm/elixir/tags?page=1&name=ubuntu
+# https://hub.docker.com/_/ubuntu?tab=tags
+#
+# This file is based on these images:
+#
+#   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
+#   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20210902-slim - for the release image
+#   - https://pkgs.org/ - resource for finding needed packages
+#   - Ex: hexpm/elixir:1.14.0-erlang-25.0-debian-bullseye-20210902-slim
+#
+FROM "centos:centos7"
+
+RUN yum update -y && yum clean all
+RUN yum reinstall -y glibc-common
+
+# Install Erlang Solutions repository
+RUN yum install -y gcc gcc-c++ make openssl-devel ncurses-devel && yum clean all
+RUN yum install -y epel-release.noarch && yum clean all
+RUN yum install -y https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_25.0-1~centos~7_amd64.rpm && yum clean all
+    
+RUN set -xe \
+    && curl -fSL -o elixir-precompiled.zip https://github.com/elixir-lang/elixir/releases/download/v1.14.2/elixir-otp-25.zip \
+    && echo "2ab159e875a8d407dde10ee279446d469022acf8128e4f390556ab44e8918a06  elixir-precompiled.zip" | sha256sum -c - \
+    && yum install -y unzip git \
+    && unzip -d /usr/local elixir-precompiled.zip \
+    && rm elixir-precompiled.zip \
+    && yum remove -y unzip \
+    && yum clean all \
+    && mix local.hex --force
+
+RUN set -xe \
+    && yum install -y yum-utils \
+    && yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
+    && yum-config-manager --enable remi \
+    && yum install -y vips-devel \
+    && yum clean all
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
+
+# prepare build dir
+WORKDIR /app
+
+# install hex + rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# set build ENV
+ENV MIX_ENV="prod"
+
+# install mix dependencies
+COPY mix.exs mix.lock ./
+RUN mix deps.get --only $MIX_ENV
+RUN mkdir config
+
+# copy compile-time config files before we compile dependencies
+# to ensure any relevant config change will trigger the dependencies
+# to be re-compiled.
+COPY config/config.exs config/${MIX_ENV}.exs config/
+RUN mix deps.compile
+
+COPY priv priv
+
+COPY lib lib
+
+COPY assets assets
+
+COPY static static
+
+# compile assets
+RUN mix assets.deploy
+
+# Compile the release
+RUN mix compile
+
+# Changes to config/runtime.exs don't require recompiling the code
+COPY config/runtime.exs config/
+
+COPY rel rel
+RUN mix release
