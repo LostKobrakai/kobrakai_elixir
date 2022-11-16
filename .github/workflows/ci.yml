@@ -23,6 +23,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
       - run: mix local.hex --force
 
       - run: mix local.rebar --force
@@ -31,4 +41,11 @@ jobs:
         run: mix deps.get --only $MIX_ENV
 
       - name: Build release
-        run: mix release
+        run: mix release --path release.tar.gz
+
+      - name: Archive release
+        uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: |
+            release.tar.gz
