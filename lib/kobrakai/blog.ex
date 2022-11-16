@@ -1,5 +1,4 @@
 defmodule Kobrakai.Blog do
-  Application.ensure_all_started(:makeup)
   Kobrakai.Makeup.ShellLexer.register()
 
   use NimblePublisher,

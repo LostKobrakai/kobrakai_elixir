@@ -26,6 +26,8 @@ defmodule Kobrakai.Makeup.ShellLexer do
   @behaviour Makeup.Lexer
 
   def register() do
+    Application.ensure_all_started(:makeup)
+
     Makeup.Registry.register_lexer(__MODULE__,
       options: [],
       names: ["shell", "console", "sh", "bash", "zsh"],
