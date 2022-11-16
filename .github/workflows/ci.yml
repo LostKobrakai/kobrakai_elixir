@@ -10,6 +10,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     container:
       image: ghcr.io/lostkobrakai/uberspace:centos-7
       credentials:
