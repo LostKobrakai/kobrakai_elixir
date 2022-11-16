@@ -1,10 +1,13 @@
 defmodule Kobrakai.Blog do
+  Application.ensure_all_started(:makeup)
+  Kobrakai.Makeup.ShellLexer.register()
+
   use NimblePublisher,
     build: Kobrakai.Blog.Post,
     parser: Kobrakai.Blog.Post,
     from: "static/posts/**/*.md",
     as: :posts,
-    highlighters: [:makeup_eex, :makeup_html, :makeup_elixir, :makeup_erlang, :kobrakai]
+    highlighters: [:makeup_eex, :makeup_html, :makeup_elixir, :makeup_erlang]
 
   alias Kobrakai.Blog.NotFoundError
 

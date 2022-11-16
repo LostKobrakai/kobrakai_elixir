@@ -15,16 +15,15 @@
   .animation-fill-mode-forwards {
    animation-fill-mode: forwards;
   }
-  @responsive {
-    .columns-1 {
-      columns: 1;
-    }
-    .columns-2 {
-      columns: 2;
-    }
-    .columns-3 {
-      columns: 3;
-    }
+
+  .columns-1 {
+    columns: 1;
+  }
+  .columns-2 {
+    columns: 2;
+  }
+  .columns-3 {
+    columns: 3;
   }
 }
 

@@ -8,7 +8,6 @@ defmodule Kobrakai.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      Kobrakai.Makeup.ShellLexer,
       # Start the Telemetry supervisor
       KobrakaiWeb.Telemetry,
       # Start the PubSub system

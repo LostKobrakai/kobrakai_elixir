@@ -25,20 +25,12 @@ defmodule Kobrakai.Makeup.ShellLexer do
 
   @behaviour Makeup.Lexer
 
-  def child_spec(init_arg) do
-    %{id: __MODULE__, start: {__MODULE__, :register, [init_arg]}}
-  end
-
-  def register(init_arg) do
-    names = Keyword.get(init_arg, :names, ["shell", "console", "sh", "bash", "zsh"])
-
+  def register() do
     Makeup.Registry.register_lexer(__MODULE__,
       options: [],
-      names: names,
+      names: ["shell", "console", "sh", "bash", "zsh"],
       extensions: []
     )
-
-    :ignore
   end
 
   @impl true
