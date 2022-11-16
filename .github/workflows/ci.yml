@@ -2,16 +2,50 @@ name: CI
 on:
   push:
     branches: [ main ]
+  pull_request:
+
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     container:
       image: ghcr.io/lostkobrakai/uberspace:centos-7
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.github_token }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       env:
         MIX_ENV: prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - run: mix local.hex --force
+
+      - run: mix local.rebar --force
+
+      - name: Fetch dependencies
+        run: mix deps.get --only $MIX_ENV
+
+      - name: Build release
+        run: mix release --path release.tar.gz
+
+      - name: Archive release
+        uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: |
+            release.tar.gz
