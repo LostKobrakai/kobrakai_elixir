@@ -40,6 +40,9 @@ jobs:
       - name: Fetch dependencies
         run: mix deps.get --only $MIX_ENV
 
+      - name: Build assets
+        run: mix assets.deploy
+
       - name: Build release
         run: mix release --path release
 
