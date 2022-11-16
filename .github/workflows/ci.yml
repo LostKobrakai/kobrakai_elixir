@@ -41,11 +41,11 @@ jobs:
         run: mix deps.get --only $MIX_ENV
 
       - name: Build release
-        run: mix release --path release.tar.gz
+        run: mix release --path release
 
       - name: Archive release
         uses: actions/upload-artifact@v3
         with:
           name: release
           path: |
-            release.tar.gz
+            release/*.tar.gz

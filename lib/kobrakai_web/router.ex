@@ -1,6 +1,7 @@
 defmodule KobrakaiWeb.Router do
   use KobrakaiWeb, :router
   import Redirect
+  import KobrakaiWeb.Plugs
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,7 +10,8 @@ defmodule KobrakaiWeb.Router do
     plug :put_root_layout, {KobrakaiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug KobrakaiWeb.Paths
+    plug :assign_current_path
+    plug :assign_host
   end
 
   pipeline :api do
