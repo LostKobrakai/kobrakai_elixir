@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/lostkobrakai/uberspace:centos-7
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+      env:
+        MIX_ENV: prod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
