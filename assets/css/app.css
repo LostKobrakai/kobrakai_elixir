@@ -46,3 +46,11 @@ html, body{
   margin-left: 1rem;
   list-style-type: disc;
 }
+
+.footnotes p {
+  margin: 0
+}
+
+.footnotes hr {
+  margin-bottom: 1em
+}
