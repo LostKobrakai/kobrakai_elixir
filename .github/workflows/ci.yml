@@ -52,3 +52,38 @@ jobs:
           name: release
           path: |
             release/*.tar.gz
+
+  deployment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    environment: production
+    concurrency: production
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/prod.key
+          chmod 600 ~/.ssh/prod.key
+          cat >>~/.ssh/config <<END
+          Host prod
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/prod.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_HOST: ${{ secrets.HOST }}
+
+      - name: Fetch release
+        uses: actions/download-artifact@v3
+        with:
+          name: release
+            
+      - name: Push release to server
+        run: rsync -avz -e ssh . prod:/home/${{ secrets.USER }}/kobrakai
+
+      - name: Restart service with new release
+        run: ssh prod 'bash /home/${{ secrets.USER }}/kobrakai/restart.sh'
