@@ -24,6 +24,10 @@ defmodule KobrakaiWeb.Router do
     plug :put_layout, false
   end
 
+  pipeline :webfinger do
+    plug :accepts, ["jrd", "json"]
+  end
+
   scope "/", KobrakaiWeb do
     pipe_through :browser
 
@@ -42,6 +46,12 @@ defmodule KobrakaiWeb.Router do
     pipe_through :rss
 
     get "/feed.xml", RssController, :rss
+  end
+
+  scope "/", KobrakaiWeb do
+    pipe_through :webfinger
+
+    get "/.well-known/webfinger", WebfingerController, :finger
   end
 
   # Other scopes may use custom stacks.

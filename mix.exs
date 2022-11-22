@@ -57,7 +57,8 @@ defmodule Kobrakai.MixProject do
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"},
       {:image, "~> 0.14.0", runtime: false},
-      {:atomex, "0.3.0"}
+      {:atomex, "0.3.0"},
+      {:etag_plug, "~> 1.0"}
     ]
   end
 
