@@ -1,5 +1,6 @@
 defmodule KobrakaiWeb.Router do
   use KobrakaiWeb, :router
+  import Phoenix.LiveDashboard.Router
   import Redirect
   import KobrakaiWeb.Plugs
 
@@ -28,6 +29,10 @@ defmodule KobrakaiWeb.Router do
     plug :accepts, ["jrd", "json"]
   end
 
+  pipeline :admin do
+    plug :auth
+  end
+
   scope "/", KobrakaiWeb do
     pipe_through :browser
 
@@ -54,6 +59,12 @@ defmodule KobrakaiWeb.Router do
     get "/.well-known/webfinger", WebfingerController, :finger
   end
 
+  scope "/", KobrakaiWeb do
+    pipe_through [:browser, :admin]
+
+    live_dashboard "/dashboard", metrics: KobrakaiWeb.Telemetry
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", KobrakaiWeb do
   #   pipe_through :api
@@ -71,18 +82,17 @@ defmodule KobrakaiWeb.Router do
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:kobrakai, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
-    import Phoenix.LiveDashboard.Router
-
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: KobrakaiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
+  defp auth(conn, _opts) do
+    case Application.fetch_env!(:kobrakai, :admin) do
+      false -> conn
+      config -> Plug.BasicAuth.basic_auth(conn, config)
     end
   end
 end
