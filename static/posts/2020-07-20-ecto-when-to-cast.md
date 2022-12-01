@@ -41,7 +41,7 @@ runtime_date = Ecto.Type.load(:date, database_date)
 database_date = Ecto.Type.dump(:date, runtime_date)
 ```
 
-There's no way to specific way of going from the runtime value to a possible input value, but that's not needed, at least
+There's no way of going from the runtime value to a possible input value, but that's not needed, at least
 in the context of ecto.
 
 ## Applying that to `Ecto.Changeset`
