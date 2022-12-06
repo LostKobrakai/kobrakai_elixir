@@ -36,7 +36,8 @@ defmodule Kobrakai.MixProject do
       {:phoenix, github: "phoenixframework/phoenix", override: true},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.18.3"},
+      {:phoenix_live_view, "~> 0.18.3",
+       github: "phoenixframework/phoenix_live_view", ref: "15ec572", override: true},
       {:heroicons, "~> 0.5"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.7.2"},
@@ -48,7 +49,6 @@ defmodule Kobrakai.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
       {:nimble_publisher, "~> 0.1.3"},
       {:makeup_elixir, ">= 0.0.0"},
       {:makeup_erlang, ">= 0.0.0"},
@@ -57,8 +57,11 @@ defmodule Kobrakai.MixProject do
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"},
       {:image, "~> 0.14.0", runtime: false},
-      {:atomex, "0.3.0"},
-      {:etag_plug, "~> 1.0"}
+      {:atomex, "~> 0.5.0"},
+      {:etag_plug, "~> 1.0"},
+      {:ecto, "~> 3.9"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:bandit, ">= 0.6.2"}
     ]
   end
 
