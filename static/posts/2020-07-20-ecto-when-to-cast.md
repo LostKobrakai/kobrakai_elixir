@@ -9,9 +9,15 @@ People starting out with ecto are often confused by all the methods of getting c
 
 ## Looking at `Ecto.Type`
 
-There are three conceptional types of data ecto deals with. There's user input, which is often provided in a subset of data types of what a schema is meant to carry. E.g. in a web context forms often submit data with text values only. JSON serialize data might know a few more data types, but is still quite limited. Then there's the actual values one want's to have have at runtime in schemas – your `field :some_name, :date` being a `%Date{}`. The third type is the data type the runtime data is serialized into for database storage. 
+There are three conceptional types of data ecto deals with. 
 
-The following shows a concrete example of those three types of representations for the underlying value.
+- There's user input, which is often provided in a subset of data types of what a schema is meant to carry. E.g. in a web context forms often submit data with text values only. JSON serialize data might know a few more data types, but is still quite limited. 
+- Then there's the actual values one want's to have have at runtime in schemas – your `field :some_name, :date` being a `%Date{}`. 
+- The third type is the data type the runtime data is serialized into for database storage. 
+
+Turning user input into the runtime data type is using `Ecto.Type.cast/2` and is therefore referred to as "casting". 
+
+The following shows a concrete example of those three types of representations for one underlying value.
 
 ```elixir
 # Plain string, describing a date in iso8601, 
@@ -41,14 +47,13 @@ runtime_date = Ecto.Type.load(:date, database_date)
 database_date = Ecto.Type.dump(:date, runtime_date)
 ```
 
-There's no way of going from the runtime value to a possible input value, but that's not needed, at least
-in the context of ecto.
+There's no way of going from the runtime value to a possible input value, but that's not needed, at least in the context of ecto.
 
 ## Applying that to `Ecto.Changeset`
 
-As shown before turning user input into the runtime data type is using `Ecto.Type.cast/2` and is therefore called "casting". `Ecto.Changeset` exposes 3 functions for doing to a whole set of values being the user input: `cast/4`, `cast_assoc/3` and `cast_embed/3`.
+`Ecto.Changeset` exposes multiple functions for casting to a whole set of values of user input: `cast/4`, `cast_assoc/3` and `cast_embed/3`.
 
-However changes applied on a changeset are not always "user input" and therefore don't always need to involve "casting" the changes. E.g. in an event sourcing system one might handle events, whose data has been validated before and is no longer expressed by constrainted data types. Those can be applied by another set of functions on `Ecto.Changeset`: `change/2`, `put_change/3`, `put_assoc/4` and `put_embed/4`. For those functions values for fields are expected to already be "runtime format" values,
+However changes applied on a changeset are not always "user input" and therefore don't always need to involve casting the changes. E.g. in an event sourcing system one might handle events, whose data has been validated before and is no longer expressed by constrainted data types. Those can be applied by another set of functions on `Ecto.Changeset`: `change/2`, `put_change/3`, `put_assoc/4` and `put_embed/4`. For those functions values for fields are expected to already be "runtime format" values,
 which don't need to be casted.
 
 | |Needs Casting|No Casting|
