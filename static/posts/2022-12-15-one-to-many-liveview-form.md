@@ -1,6 +1,5 @@
 ---
 title: One-to-Many LiveView Form
-draft: true
 tags: 
   - blog
   - programmierung
