@@ -17,7 +17,7 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
 
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={assigns[:robots] || "index, follow"} />
 
     <meta property="og:title" content={assigns[:page_title]} />
     <meta :if={assigns[:excerpt]} name="description" content={assigns[:excerpt]} />

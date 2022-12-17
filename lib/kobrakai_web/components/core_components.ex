@@ -281,6 +281,57 @@ defmodule KobrakaiWeb.CoreComponents do
     |> input()
   end
 
+  def input(%{type: "checkbox", multiple: true} = assigns) do
+    assigns =
+      update(assigns, :options, fn options ->
+        options
+        |> Enum.map(fn
+          {option_key, option_value} ->
+            %{key: option_key, value: option_value, rest: %{}}
+
+          option when is_list(option) ->
+            {option_key, options} = Keyword.pop(options, :key)
+
+            option_key ||
+              raise ArgumentError,
+                    "expected :key key when building <option> from keyword list: #{inspect(options)}"
+
+            {option_value, options} = Keyword.pop(options, :value)
+
+            option_value ||
+              raise ArgumentError,
+                    "expected :value key when building <option> from keyword list: #{inspect(options)}"
+
+            %{key: option_key, value: option_value, rest: options}
+
+          option ->
+            %{key: option, value: option, rest: %{}}
+        end)
+        |> Enum.map(fn option ->
+          Map.put(option, :selected, Enum.any?(assigns.value, &input_equals?(&1, option.value)))
+        end)
+      end)
+
+    ~H"""
+    <div phx-feedback-for={@name}>
+      <.label for={@id}><%= @label %></.label>
+      <div :for={option <- @options}>
+        <input
+          type="checkbox"
+          id={"#{@id}_#{option.value}"}
+          name={@name}
+          value={option.value}
+          checked={option.selected}
+          class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
+          {@rest}
+        />
+        <%= option.key %>
+      </div>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
   def input(%{type: "checkbox"} = assigns) do
     assigns = assign_new(assigns, :checked, fn -> input_equals?(assigns.value, "true") end)
 
@@ -293,7 +344,7 @@ defmodule KobrakaiWeb.CoreComponents do
         name={@name}
         value="true"
         checked={@checked}
-        class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+        class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
         {@rest}
       />
       <%= @label %>

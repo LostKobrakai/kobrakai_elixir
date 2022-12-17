@@ -80,4 +80,22 @@ defmodule KobrakaiWeb.Components do
     </div>
     """
   end
+
+  attr :base, :any, required: true
+  attr :inspect, :boolean, default: false
+
+  def base(assigns) do
+    code =
+      if assigns.inspect do
+        inspect(assigns.base, pretty: true)
+      else
+        assigns.base
+      end
+
+    assigns = assign(assigns, :formatted, Makeup.highlight_inner_html(code))
+
+    ~H"""
+    <pre class="makeup elixir"><%= Phoenix.HTML.raw(@formatted) %></pre>
+    """
+  end
 end

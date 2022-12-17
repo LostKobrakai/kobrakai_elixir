@@ -45,6 +45,10 @@ defmodule KobrakaiWeb.Router do
     get "/werdegang", CustomController, :cv
     get "/kontakt", CustomController, :contact
     get "/impressum", CustomController, :legal
+
+    scope "/scratchpad", Scratchpad do
+      live "/checkboxes", Checkboxes
+    end
   end
 
   scope "/", KobrakaiWeb do

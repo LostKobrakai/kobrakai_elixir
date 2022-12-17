@@ -29,7 +29,7 @@ defmodule KobrakaiWeb.OneToManyForm do
 
     <details id="static" class="mt-4">
       <summary>Open to see saved value</summary>
-      <.base base={@base} />
+      <.base base={@base} inspect />
     </details>
     """
   end
@@ -65,19 +65,6 @@ defmodule KobrakaiWeb.OneToManyForm do
         </.button>
       </div>
     </div>
-    """
-  end
-
-  defp base(assigns) do
-    assigns =
-      assign(
-        assigns,
-        :formatted,
-        Makeup.highlight_inner_html(inspect(assigns.base, pretty: true))
-      )
-
-    ~H"""
-    <pre class="makeup elixir"><%= raw(@formatted) %></pre>
     """
   end
 
