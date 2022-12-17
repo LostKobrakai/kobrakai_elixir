@@ -36,8 +36,8 @@ defmodule KobrakaiWeb.Scratchpad.Checkboxes do
   end
 
   @impl true
-  def handle_event("validate", %{"form" => params}, socket) do
-    params = Map.put_new(params, "items", [])
+  def handle_event("validate", params, socket) do
+    params = deal_with_html_form_encoding_shortcomings(params)
 
     changeset =
       socket.assigns.changeset.data
@@ -47,8 +47,8 @@ defmodule KobrakaiWeb.Scratchpad.Checkboxes do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("submit", %{"form" => params}, socket) do
-    params = Map.put_new(params, "items", [])
+  def handle_event("submit", params, socket) do
+    params = deal_with_html_form_encoding_shortcomings(params)
     changeset = changeset(socket.assigns.changeset.data, params)
 
     case Ecto.Changeset.apply_action(changeset, :insert) do
@@ -66,11 +66,20 @@ defmodule KobrakaiWeb.Scratchpad.Checkboxes do
     |> Ecto.Changeset.cast(params, [:items])
   end
 
+  defp deal_with_html_form_encoding_shortcomings(params) do
+    # Work around the fact that no selection submits no data
+    params |> Map.get("form", %{}) |> Map.put_new("items", [])
+  end
+
+  # To be put besides phoenix 1.7 core_components before the checkbox function
+  # head.
+  #
   # def input(%{type: "checkbox", multiple: true} = assigns) do
   #   assigns =
   #     update(assigns, :options, fn options ->
   #       options
   #       |> Enum.map(fn
+  #         # Mostly copied from Phoenix.HTML.Form.options_for_select/2
   #         {option_key, option_value} ->
   #           %{key: option_key, value: option_value, rest: %{}}
 
