@@ -36,7 +36,7 @@ list.
 To start from the beginning – we'll need a schema to power our form. There
 are schemaless changesets, but the `Phoenix.HTML.Form` implementation for
 changesets doesn't support nested forms using schemaless changesets. Given 
-the example shown here is in memory only I'll be using an embedded schema,
+the example shown here is in memory only we'll be using an embedded schema,
 but a database backed schema works just as well.
 
 ```elixir
@@ -54,13 +54,13 @@ defmodule GroceriesList do
 end
 ```
 
-Using embeds also allows me to inline the `Line` embed, which is described
+Using embeds also allows us to inline the `Line` embed, which is described
 in more detail in the [documentation](https://hexdocs.pm/ecto/3.9.2/Ecto.Schema.html#embeds_many/3-inline-embedded-schema).
 
 To apply changes to the defined schema and validate the input there's also the
 need for `changeset/2` type functions. These should be mostly straight forward to
-anyone having worked with `ecto` before, so I won't go into detail what these 
-functions specifically do.
+anyone having worked with `ecto` before, so this blog post won't go into detail 
+what these functions specifically do. There's again more to read in the [documentation](https://hexdocs.pm/ecto/3.9.2/Ecto.Changeset.html).
 
 ```elixir
 defmodule GroceriesList do
@@ -83,10 +83,10 @@ defmodule GroceriesList do
 end
 ```
 
-## The LiveView
+## Setting up the LiveView
 
-Getting to the meat the next will be implementing the form – starting with a bare
-bones LiveView.
+Getting to the meat of the topic – the LiveView itself. Starting from a mostly bare
+bones implementation.
 
 ```elixir
 defmodule GroceriesWeb.ListLive do
@@ -120,13 +120,13 @@ defmodule GroceriesWeb.ListLive do
 end
 ```
 
-In most applications `base` would likely be fetched from the database. This example
-runs completely with data in memory, so there's just some hardcoded initial data.
+Usually `base` would be fetched from the database. This example again runs 
+completely with data in memory, so there's just some hardcoded initial data.
 
 `init/2` is a small helper, which generates the initial changeset for the form,
-but also does handle a few things – again – needed just for this being in-memory 
-instead of being backed by a database. Changing the id also means LV will reset
-its client side state around the form properly on successful saves.
+but also does handle a few things needed just for this being in-memory. 
+Changing the id also means LV will reset its client side state around 
+the form properly on successful saves.
 
 ```elixir
 defp init(socket, base) do
@@ -143,7 +143,9 @@ end
 
 ### The Form
 
-Let's fill `render/1` with some actual markup. First the outer form with the `:email` input, event handlers and submit button, but also a `<fieldset>` to wrap all the nested inputs.
+Let's fill `render/1` with some actual markup. First the outer form with the 
+`:email` input, event handler configuration and submit button, but also a 
+`<fieldset>` to wrap all the nested inputs.
 
 ```heex
 <.simple_form 
@@ -168,7 +170,9 @@ Let's fill `render/1` with some actual markup. First the outer form with the `:e
 </.simple_form>
 ```
 
-The nested inputs themselves are extracted into a function component, which makes things a little easier to follow.
+The nested inputs themselves are extracted into a function component, which makes 
+things a little easier to follow compared to one huge blob of html. It will also
+allow us computing assigns per row later.
 
 ```heex
 <div>
@@ -184,13 +188,24 @@ The nested inputs themselves are extracted into a function component, which make
 </div>
 ```
 
+The `Phoenix.HTML.Form.hidden_inputs_for/1` call here is quite important. Previous
+versions of `Phoenix.HTML.Form.inputs_for/4` using an anonymous function did add
+hidden inputs for records' primary key automatically. The arity-2 version used
+with `for` however needs this to be added by the user. 
+
+Without those hidden inputs submitted assoc data won't include primary keys, so ecto
+will consider each record to be a new record replacing existing ones instead of
+updating the ones already present.
+
 ### Getting things working
+
+With the markup and the data backing the form out of the way we can get started 
+making adding and removing lines work. 
 
 #### Adding a line
 
-With the markup and the data backing the form out of the way we can get started 
-making this actually work. Lets start with adding new lines to the list. For that
-we'll add a button within the `<fieldset>` wrapping the groceries list.
+Lets start with adding new lines to the list. For that we'll add a button within 
+the `<fieldset>` wrapping the groceries list.
 
 ```heex
 <fieldset class="flex flex-col gap-2">
@@ -200,47 +215,61 @@ we'll add a button within the `<fieldset>` wrapping the groceries list.
 ```
 
 The `phx-click` handler will send an event to the server to add a new line. How
-to do that however is already a tricky topic, given how changesets work. 
+to do that however is already a tricky topic, given how changesets work. Explaining
+those requires a quick tangent:
 
 <hr />
 
 #### `Ecto.Changeset` in LiveView
 
-There are two things to understand about `Ecto.Changeset`s, which feel a bit
-strange in the context of LiveView. 
+There are two things to understand about `Ecto.Changeset`s, which make working
+with it a bit feel rather bend over backwards.
 
 - Changesets are not stateful as in they're not mean to be continuously edited
 
-The changeset API is a very functional one. Given a starting value and input,
-which maps to an "envisioned" endresult the data should be morphed to it figures
-out the changes, validates that changes don't conflict with constraints and 
-eventually applies changes. 
+The changeset API is a very functional one. Given a base and an input of of how
+things are meant to look like at the end ecto figures out all the necessary changes
+to get to that endresult. One can then validate all the changes to prevent disallowed
+invariant and eventually can check if the changes are good to go or not.
 
-It doesn't do any stateful stuff though. It doesn't track validations applied
-to a changeset – it keeps only metadata – so validations cannot be reapplied. 
-It does never remove errors for a given field, even if it is changed again.
+The API however is not stateful in the sense that after such a round of validation
+one could go back and add more changes and have the changeset know which errors
+won't apply anymore. A changeset doesn't keep track of which validations were applied
+end how, it only keeps their results – errors and metadata – around.
 
-For forms this means you don't want to store data in a changeset, which won't
-be reflected back to a new changeset by how the form on the client is updated. 
-Creating a new changeset from just the form `params` should always work.
+So whenever there is new input with changes to be validated the expectation is
+that a new changeset is created, which again is run through the same validation
+paths as the previous.
 
-- Associations and embeds are dealt with in sets
+For forms in LiveView this means you don't want to store data in a changeset, 
+which won't be reflected back to a new changeset by how the form on the client is 
+updated. Creating a new changeset from just the form `params` should always work.
 
-Changesets modify associations or embeds not through actions like
-`add` or `remove`, but through a set based approach. Instead of e.g. deleting 
-the last item it'll figure out to delete it when the supplied list doesn't contain
-that item anymore. By comparing the existing list with the supplied one ecto can
-figure out which items need to be added, edited, kept as is or deleted.
+- There is no imperative API for modifying list of associations or embeds
+
+Changesets modify associations or embeds through a set based approach. The input
+to a changeset can just include how the list of associations or embeds is meant
+to look like after changes are applied and ecto figures out which items need to
+be added, which need to be update, which had no changes or which need to be deleted.
+
+This is great for non-interactive clients, which have no means of modifying that
+list over time by e.g. by applying "delete item a" and later applying "delete item b".
+This also overlaps with the previous point of being meant to create a new 
+changeset each time the set of updates to be applied changes.
+
+Any interactivity we add to a form with LiveView will be imperative however. We
+also won't have access to the forms `params` in the related event handlers. That
+requires updating the existing changeset on the LiveView, but also constrains how
+that can happen.
 
 Both of those facts about changeset – which to be fair were never build to 
-power dynamic frontend forms – don't match to well with LiveView forms 
-becoming more event driven and less driven by a single set of submitted input
-values.
+power interactive frontend forms – don't map too well to what LiveView allows
+people to build forms.
 
 <hr />
 
-The mentioned properties of changesets means we'll need to adjust what we do
-for handling the events of our LiveView.
+The mentioned properties of changesets means we'll need to be thoughful in what 
+we do for handling the additional events related to our LiveView form.
 
 ```elixir
 def handle_event("add-line", _, socket) do
@@ -254,45 +283,56 @@ def handle_event("add-line", _, socket) do
 end
 ```
 
-In the event handler we want to add a line to our form. We use `put_embed` to
-change the list of `:lines`. To do that we pass a list with all existing lines
-and include an additional line, which is supposed to be without any changes yet, 
-therefore the empty list. 
+In the event handler we want to add a line to our form, but also don't want to
+loose any existing changes present in the form, but not yet applied to our
+`base` data. We use `get_field` to get whatever the changeset considers the 
+current list of lines, including all known changes and then append a new item. 
+That new item doesn't have changes, so it's an empty map. The modified list is 
+then passed to `put_embed` to be set on the changeset.
 
-Updating the changeset makes the form render one more entry for `inputs_for/2`,
-so and subsequent parameters from the form sent to the server will also include
-this new line.
+This feels like imperative editing the changeset in place and it is. But the goal
+really is that the re-rendered form on the client includes new inputs for this 
+new item. So that they're visible to the user and subsequent `phx-validate` events 
+include those `params` to be able to build a changeset. No other code of ours 
+should need to look at that added item in the changeset again.
 
 #### Remove a line
 
-The other step to deal with is the opposite of adding lines: removing lines. 
-This one has a few complexities:
+The second step is the inverse to the previous: removing lines. This one also 
+has a few complexities:
 
 ##### Identifying the line to delete
 
-The usual answer to identifying especially database records would be using their
-primary key, most often the `id`. The form we're looking at however allows adding
-new lines, which might only get a fixed id assigned when persisted, so there
-might be many lines without an `id`. 
+The usual answer to identifying data especially database records would be using 
+primary keys, most often the `id` of a record. The form we're looking at however 
+allows adding new lines, which might only get a fixed id assigned when persisted. 
+So there might be many lines without an `id` yet. Also not every database record
+has a primary key.
 
 A more flexible approach is using `@f_line.index`, which `inputs_for` supplies.
-That value doesn't need to know anything about the schema used with `inputs_for`,
-which is really useful.
+That value is available and works with any schema without our code needing to
+depends on any of their details, which is great.
 
 ##### Deleting existing records
 
 HTML forms cannot send a value of "empty list". The encodings for form data
 only allow for sending data on a form, but not the lack of data.
 
-If we would just update our changeset to no longer include any removed lines
-that would update the form on the client to include no inputs, so submitted
-`params` would look like `%{email: "…"}` instead of `%{email: "…", lines: []}`.
+If there are two existing lines for our form, we delete the inputs for the first 
+line and submit the form everything will work just fine.
 
-To ecto `%{email: "…"}` means "no changes to lines" rather than "delete existing lines".
+If we however remove all the line inputs and submit the form the `params` would look 
+like `%{email: "…"}` instead of `%{email: "…", lines: []}`. To ecto `%{email: "…"}` 
+means "no changes to lines" rather than "delete existing lines". That's obviously
+not what we want. 
 
-This can be avoided by being more explicit. Instead of removing lines, which are
-persisted, we update them with a flag, which makes them be deleted when the form
-is saved. For that we need to update the schema and its `changeset/2` function.
+There are few ways to work around that issue, but the cleanest is to be more more 
+explicit about deletions. Instead of removing inputs for existing lines from the
+form immediatelly, we instead update a flag on to be deleted lines, which makes 
+them be deleted when the form is saved. 
+
+For that to happen we need to go back and update the schema and its `changeset/2` 
+function slightly to make the delete on save part work.
 
 ```elixir
 embeds_many :lines, Line, on_replace: :delete do
@@ -316,22 +356,26 @@ def line_changeset(city, params) do
 end
 ```
 
-With that information we can add the button to remove a line as well as the 
-accompanying event handler.
-
-Adding this in the `line/1` function component:
+With that out of the way we can add the button to remove a line as well as the 
+accompanying event handler. We'll also add a new computed assign to the `line/1` 
+function component, so the few places needing the be adjusted for lines marked
+to be deleted have a single assign to use.
 
 ```
 assigns = assign(assigns, :deleted, Phoenix.HTML.Form.input_value(assigns.f_line, :delete) == true)
 ```
 
-And updating its template. For educational purposes I dropped the opacity on
-persisted rows flagged for deletion, instead of hiding them completely.
+For educational purposes I only dropped the opacity on existing rows flagged for 
+deletion, instead of hiding them completely. Feel free to adjust as needed.
 
 ```heex
 <div class={if(@deleted, do: "opacity-50")}>
   […]
-  <.input field={{@f_line, :delete}} type="hidden" />
+  <input
+    type="hidden"
+    name={Phoenix.HTML.Form.input_name(@f, :delete)}
+    value={to_string(Phoenix.HTML.Form.input_value(@f, :delete))}
+  />
   <div class="flex gap-4 items-end">
     […]
     <.button
@@ -347,8 +391,16 @@ persisted rows flagged for deletion, instead of hiding them completely.
 </div>
 ```
 
-The event handler flags existing lines as `:deleted`, while not yet persisted
-lines are fine to just be removed from the changeset. 
+The event handler for deleting a line is conceptionally similar to the one for
+adding one. We again use `get_field` to fetch all current lines, split out the
+one to delete and check if it's one already existing in `base` or not.
+
+Here we check for the presense of an `id`, which is unfortunate, but for embeds
+there's no good way to check if a line was part of `base` or was added to the form
+later. For database backed schemas you can consider using `Ecto.get_meta(schema, :state)`.
+
+For existing lines the event handler then marks the line as `:deleted`, while any 
+other lines are fine to just be removed from the changeset immediatelly. 
 
 ```elixir
 def handle_event("delete-line", %{"index" => index}, socket) do
@@ -375,9 +427,9 @@ end
 
 ### Validating and saving the form
 
-For adding and removing lines we went to great length to consider how forms and 
-changesets work before implementing anything. For validating and saving this 
-pays off, as the event handlers for `phx-change` and `phx-submit` of our form
+We went to great length to consider how forms and changesets work before 
+implementing adding and removing lines. For validating and saving the whole form 
+this pays off, as the event handlers for `phx-change` and `phx-submit` of our form
 won't look any different as they would for most other LV forms:
 
 ```elixir
@@ -406,11 +458,11 @@ end
 
 The `params` supplied by our form will include all the details we need to 
 validate the top level inputs, but also any lines. We won't loose any not 
-yet persisted lines on validation and also will have any deleted lines be 
-properly deleted, even if this means there are no more lines on the data.
+yet saved lines on validation and also will have any deleted lines be 
+properly deleted, even if there are no more lines left on the form.
 
 From here there could be additional features added like for example ignoring
-newly added lines, which have non of their inputs filled.
+newly added lines, which have none of their inputs filled.
 
 If you want to play with this you can look at this example repo, which actually
 stores data in the database: https://github.com/LostKobrakai/one-to-many-form

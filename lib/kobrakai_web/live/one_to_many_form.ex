@@ -42,7 +42,11 @@ defmodule KobrakaiWeb.OneToManyForm do
     ~H"""
     <div class={if(@deleted, do: "opacity-50")}>
       <%= Phoenix.HTML.Form.hidden_inputs_for(@f) %>
-      <.input field={{@f, :delete}} type="hidden" />
+      <input
+        type="hidden"
+        name={Phoenix.HTML.Form.input_name(@f, :delete)}
+        value={to_string(Phoenix.HTML.Form.input_value(@f, :delete))}
+      />
       <div class="flex gap-4 items-end">
         <div class="grow">
           <.input class="mt-0" field={{@f, :item}} readonly={@deleted} label="Item" />
