@@ -275,11 +275,17 @@ we do for handling the additional events related to our LiveView form.
 def handle_event("add-line", _, socket) do
   socket =
     update(socket, :changeset, fn changeset ->
-      existing = Ecto.Changeset.get_field(changeset, :lines, [])
+      existing = get_change_or_field(changeset, :lines)
       Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
     end)
 
   {:noreply, socket}
+end
+
+defp get_change_or_field(changeset, field) do
+  with nil <- Ecto.Changeset.get_change(changeset, field) do
+    Ecto.Changeset.get_field(changeset, field, [])
+  end
 end
 ```
 
@@ -295,6 +301,11 @@ really is that the re-rendered form on the client includes new inputs for this
 new item. So that they're visible to the user and subsequent `phx-validate` events 
 include those `params` to be able to build a changeset. No other code of ours 
 should need to look at that added item in the changeset again.
+
+There's also a little helper function to fetch current lines. This one is needed
+because `Ecto.Changeset.get_field/3` applies changes for relations (embeds and assocs)
+instead of returning the list of changesets we need. `Ecto.Changeset.get_change/3`
+doesn't do so, but we can't be sure that there are changes, so we combine both.
 
 #### Remove a line
 
@@ -408,17 +419,17 @@ def handle_event("delete-line", %{"index" => index}, socket) do
 
   socket =
     update(socket, :changeset, fn changeset ->
-      existing = Ecto.Changeset.get_field(changeset, :lines, [])
+      existing = get_change_or_field(changeset, :lines, [])
       {to_delete, rest} = List.pop_at(existing, index)
 
-      if Ecto.Changeset.change(to_delete).data.id do
-        updated =
+      lines = 
+        if Ecto.Changeset.change(to_delete).data.id do
           List.replace_at(existing, index, Ecto.Changeset.change(to_delete, delete: true))
+        else
+          rest
+        end
 
-        Ecto.Changeset.put_embed(changeset, :lines, updated)
-      else
-        Ecto.Changeset.put_embed(changeset, :lines, rest)
-      end
+      Ecto.Changeset.put_embed(changeset, :lines, lines)
     end)
 
   {:noreply, socket}
@@ -466,3 +477,10 @@ newly added lines, which have none of their inputs filled.
 
 If you want to play with this you can look at this example repo, which actually
 stores data in the database: https://github.com/LostKobrakai/one-to-many-form
+
+--- 
+
+**2023-01-17**: Replaced usage of `Ecto.Changeset.get_field/3` in `"add-line"` and 
+`"delete-line"` event handlers with custom function using `Ecto.Changeset.get_change/3` 
+with a fallback of `Ecto.Changeset.get_field/3`. This fixes a bug, where adding 
+or removing a line would make changes in other lines be "forgotten".
