@@ -2,6 +2,7 @@ defmodule KobrakaiWeb.Scratchpad.Checkboxes do
   use KobrakaiWeb, :live_view
   use Kobrakai.Blog.ModuleCode
 
+  on_mount {KobrakaiWeb.Hooks, :scratchpad}
   on_mount {KobrakaiWeb.Hooks, :current_path}
   on_mount {KobrakaiWeb.Hooks, :noindex}
 
