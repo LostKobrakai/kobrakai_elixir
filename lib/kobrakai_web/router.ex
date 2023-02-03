@@ -49,6 +49,7 @@ defmodule KobrakaiWeb.Router do
     scope "/scratchpad" do
       get "/", ScratchpadController, :index
       live "/checkboxes", Scratchpad.Checkboxes
+      live "/table", Scratchpad.Table
     end
   end
 
