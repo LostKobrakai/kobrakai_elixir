@@ -51,8 +51,7 @@ config :kobrakai, KobrakaiWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/kobrakai_web/(live|views)/.*(ex)$",
-      ~r"lib/kobrakai_web/templates/.*(eex)$",
+      ~r"lib/kobrakai_web/(controllers|live|components|views)/.*(ex|heex)$",
       ~r"posts/*/.*(md)$"
     ]
   ]

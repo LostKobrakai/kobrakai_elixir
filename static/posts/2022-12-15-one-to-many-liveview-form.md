@@ -39,6 +39,10 @@ changesets doesn't support nested forms using schemaless changesets. Given
 the example shown here is in memory only we'll be using an embedded schema,
 but a database backed schema works just as well.
 
+Phoenix 1.7 added support for plain maps powering forms, which seems like a 
+viable alternative as well. That option won't be discussed here as part 
+of updating this blog post though.
+
 ```elixir
 defmodule GroceriesList do
   use Ecto.Schema
@@ -123,8 +127,8 @@ end
 Usually `base` would be fetched from the database. This example again runs 
 completely with data in memory, so there's just some hardcoded initial data.
 
-`init/2` is a small helper, which generates the initial changeset for the form,
-but also does handle a few things needed just for this being in-memory. 
+`init/2` is a small helper, which generates the initial changeset behind the form,
+but does also handle a few things needed just for this being in-memory. 
 Changing the id also means LV will reset its client side state around 
 the form properly on successful saves.
 
@@ -135,7 +139,7 @@ defp init(socket, base) do
 
   assign(socket,
     base: base,
-    changeset: changeset,
+    form: to_form(changeset),
     id: "form-#{System.unique_integer()}" # Reset form for LV
   )
 end
@@ -149,19 +153,19 @@ Let's fill `render/1` with some actual markup. First the outer form with the
 
 ```heex
 <.simple_form 
-  :let={f} 
+  :let={f}
   id={@id} 
-  for={@changeset} 
+  for={@form} 
   phx-change="validate" 
   phx-submit="submit"
   as="form">
-  <.input field={{f, :email}} label="Email" />
+  <.input field={f[:email]} label="Email" />
 
   <fieldset class="flex flex-col gap-2">
     <legend>Groceries</legend>
-    <%= for f_line <- Phoenix.HTML.Form.inputs_for(f, :lines) do %>
+    <.inputs_for :let={f_line} field={f[:lines]}>
       <.line f_line={f_line} />
-    <% end %>
+    </.inputs_for>
   </fieldset>
 
   <:actions>
@@ -170,32 +174,31 @@ Let's fill `render/1` with some actual markup. First the outer form with the
 </.simple_form>
 ```
 
+This uses `:let={f}` on the form, so the `as="form"` option is applied to inputs.
+Otherwise `@form[field]` would work as well to provide the field data of the form.
+
 The nested inputs themselves are extracted into a function component, which makes 
 things a little easier to follow compared to one huge blob of html. It will also
 allow us computing assigns per row later.
 
 ```heex
 <div>
-  <%= Phoenix.HTML.Form.hidden_inputs_for(@f_line) %>
   <div class="flex gap-4 items-end">
     <div class="grow">
-      <.input class="mt-0" field={{@f_line, :item}} label="Item" />
+      <.input class="mt-0" field={@f_line[:item]} label="Item" />
     </div>
     <div class="grow">
-      <.input class="mt-0" field={{@f_line, :amount}} type="number" label="Amount" />
+      <.input class="mt-0" field={@f_line[:amount]} type="number" label="Amount" />
     </div>
   </div>
 </div>
 ```
 
-The `Phoenix.HTML.Form.hidden_inputs_for/1` call here is quite important. Previous
-versions of `Phoenix.HTML.Form.inputs_for/4` using an anonymous function did add
-hidden inputs for records' primary key automatically. The arity-2 version used
-with `for` however needs this to be added by the user. 
-
-Without those hidden inputs submitted assoc data won't include primary keys, so ecto
-will consider each record to be a new record replacing existing ones instead of
-updating the ones already present.
+There used to be the need to call `Phoenix.HTML.Form.hidden_inputs_for/1` here 
+when using a manual `for` comprehention with `Phoenix.HTML.Form.inputs_for/2`, 
+but the newer function component `Phoenix.Component.inputs_for/1` automatically 
+adds those. Those hidden inputs submit metadata like primary keys, so ecto can 
+map any changes back to existing data if available.
 
 ### Getting things working
 
@@ -223,7 +226,7 @@ those requires a quick tangent:
 #### `Ecto.Changeset` in LiveView
 
 There are two things to understand about `Ecto.Changeset`s, which make working
-with it a bit feel rather bend over backwards.
+with it feela bit bend over backwards.
 
 - Changesets are not stateful as in they're not mean to be continuously edited
 
@@ -274,9 +277,10 @@ we do for handling the additional events related to our LiveView form.
 ```elixir
 def handle_event("add-line", _, socket) do
   socket =
-    update(socket, :changeset, fn changeset ->
+    update(socket, :form, fn %{source: changeset} ->
       existing = get_change_or_field(changeset, :lines)
-      Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
+      changeset = Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
+      to_form(changeset)
     end)
 
   {:noreply, socket}
@@ -307,6 +311,8 @@ because `Ecto.Changeset.get_field/3` applies changes for relations (embeds and a
 instead of returning the list of changesets we need. `Ecto.Changeset.get_change/3`
 doesn't do so, but we can't be sure that there are changes, so we combine both.
 
+Coming in ecto 3.10 there will be `Ecto.Changeset.get_assoc/3` to clean this up.
+
 #### Remove a line
 
 The second step is the inverse to the previous: removing lines. This one also 
@@ -320,7 +326,7 @@ allows adding new lines, which might only get a fixed id assigned when persisted
 So there might be many lines without an `id` yet. Also not every database record
 has a primary key.
 
-A more flexible approach is using `@f_line.index`, which `inputs_for` supplies.
+A more flexible approach is using `@f_line.index`, which `inputs_for` sets.
 That value is available and works with any schema without our code needing to
 depends on any of their details, which is great.
 
@@ -403,8 +409,9 @@ deletion, instead of hiding them completely. Feel free to adjust as needed.
 ```
 
 The event handler for deleting a line is conceptionally similar to the one for
-adding one. We again use `get_field` to fetch all current lines, split out the
-one to delete and check if it's one already existing in `base` or not.
+adding one. We again use the `get_change_or_field` helper to fetch all current 
+lines, split out the one to delete and check if it's one already existing in 
+`base` or not.
 
 Here we check for the presense of an `id`, which is unfortunate, but for embeds
 there's no good way to check if a line was part of `base` or was added to the form
@@ -418,7 +425,7 @@ def handle_event("delete-line", %{"index" => index}, socket) do
   index = String.to_integer(index)
 
   socket =
-    update(socket, :changeset, fn changeset ->
+    update(socket, :form, fn %{source: changeset} ->
       existing = get_change_or_field(changeset, :lines, [])
       {to_delete, rest} = List.pop_at(existing, index)
 
@@ -429,7 +436,9 @@ def handle_event("delete-line", %{"index" => index}, socket) do
           rest
         end
 
-      Ecto.Changeset.put_embed(changeset, :lines, lines)
+      changeset
+      |> Ecto.Changeset.put_embed(:lines, lines)
+      |> to_form()
     end)
 
   {:noreply, socket}
@@ -450,7 +459,7 @@ def handle_event("validate", %{"form" => params}, socket) do
     |> GroceriesList.changeset(params)
     |> struct!(action: :validate)
 
-  {:noreply, assign(socket, changeset: changeset)}
+  {:noreply, assign(socket, form: to_form(changeset))}
 end
 
 def handle_event("submit", %{"form" => params}, socket) do
@@ -462,7 +471,7 @@ def handle_event("submit", %{"form" => params}, socket) do
       {:noreply, init(socket, data)}
 
     {:error, changeset} ->
-      {:noreply, assign(socket, changeset: changeset)}
+      {:noreply, assign(socket, form: to_form(changeset))}
   end
 end
 ```
@@ -479,6 +488,8 @@ If you want to play with this you can look at this example repo, which actually
 stores data in the database: https://github.com/LostKobrakai/one-to-many-form
 
 --- 
+
+**2023-02-27**: Updated to work with phoenix 1.7.0 form changes.
 
 **2023-01-17**: Replaced usage of `Ecto.Changeset.get_field/3` in `"add-line"` and 
 `"delete-line"` event handlers with custom function using `Ecto.Changeset.get_change/3` 

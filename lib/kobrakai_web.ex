@@ -43,7 +43,6 @@ defmodule KobrakaiWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        namespace: KobrakaiWeb,
         formats: [:html, :json],
         layouts: [html: KobrakaiWeb.Layouts]
 

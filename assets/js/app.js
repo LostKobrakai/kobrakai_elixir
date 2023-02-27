@@ -36,8 +36,8 @@ let liveSocket = new LiveSocket("/live", Socket, {
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
-window.addEventListener("phx:page-loading-start", info => topbar.delayedShow(200))
-window.addEventListener("phx:page-loading-stop", info => topbar.hide())
+window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
+window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
@@ -64,7 +64,7 @@ function initDarkMode() {
 initDarkMode()
 
 window.addEventListener("toogle-darkmode", e => {
-  if (localStorage.theme === 'dark' || isDarkPrefered()) {
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && isDarkPrefered())) {
     localStorage.theme = 'light'
   } else {
     localStorage.theme = 'dark'

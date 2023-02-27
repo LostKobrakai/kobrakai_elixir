@@ -10,8 +10,9 @@ defmodule KobrakaiWeb.Scratchpad.Table do
   def render(assigns) do
     ~H"""
     <div class="max-w-xl mx-auto prose dark:prose-invert">
+      <h2>Adjusted tables</h2>
       <div class="p-8">
-        <.adjusted_table id="users" rows={@rows}>
+        <.adjusted_table id="users-1" rows={@rows}>
           <:col :let={user} label="id"><%= user.id %></:col>
           <:col :let={user} label="username"><%= user.username %><br />Multiline</:col>
           <:action>Action 1</:action>
@@ -19,9 +20,24 @@ defmodule KobrakaiWeb.Scratchpad.Table do
         </.adjusted_table>
       </div>
       <div class="p-8">
-        <.adjusted_table id="users" rows={@rows}>
+        <.adjusted_table id="users-2" rows={@rows}>
           <:col :let={user} label="id"><%= user.id %></:col>
         </.adjusted_table>
+      </div>
+      <hr />
+      <h2>Phoenix tables</h2>
+      <div class="p-8">
+        <.table id="users-1" rows={@rows}>
+          <:col :let={user} label="id"><%= user.id %></:col>
+          <:col :let={user} label="username"><%= user.username %><br />Multiline</:col>
+          <:action>Action 1</:action>
+          <:action>Action 2</:action>
+        </.table>
+      </div>
+      <div class="p-8">
+        <.table id="users-2" rows={@rows}>
+          <:col :let={user} label="id"><%= user.id %></:col>
+        </.table>
       </div>
       <hr />
       <.base base={@code} />
@@ -65,10 +81,10 @@ defmodule KobrakaiWeb.Scratchpad.Table do
       <table class="mt-11 w-[40rem] sm:w-full">
         <thead class="text-left text-[0.8125rem] leading-6 text-zinc-500">
           <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">
+            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal" scope="col">
               <%= col[:label] %>
             </th>
-            <th :if={@action != []} class="relative p-0 pb-4">
+            <th :if={@action != []} class="relative p-0 pb-4" scope="col">
               <span class="sr-only"><%= gettext("Actions") %></span>
             </th>
           </tr>
@@ -79,8 +95,9 @@ defmodule KobrakaiWeb.Scratchpad.Table do
             id={"#{@id}-#{index}"}
             class="group hover:bg-zinc-50"
           >
-            <td
+            <.dynamic_tag
               :for={{col, i} <- Enum.with_index(@col)}
+              name={if(i == 0, do: "th", else: "td")}
               phx-click={@row_click && @row_click.(row)}
               class={[
                 "p-0 relative",
@@ -88,19 +105,17 @@ defmodule KobrakaiWeb.Scratchpad.Table do
                 @action == [] && rounded_end(),
                 @row_click && "hover:cursor-pointer"
               ]}
+              {[scope: i == 0 && "row"]}
             >
               <div class="block py-4 pr-6">
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
                   <%= render_slot(col, row) %>
                 </span>
               </div>
-            </td>
+            </.dynamic_tag>
             <td :if={@action != []} class={["p-0 w-14 relative", rounded_end()]}>
-              <div class="whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span
-                  :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-                >
+              <div class="whitespace-nowrap py-4 text-right text-sm font-semibold leading-6 text-zinc-900 flex gap-4">
+                <span :for={action <- @action} class="relative hover:text-zinc-700">
                   <%= render_slot(action, row) %>
                 </span>
               </div>

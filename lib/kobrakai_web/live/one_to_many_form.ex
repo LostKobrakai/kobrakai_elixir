@@ -5,20 +5,13 @@ defmodule KobrakaiWeb.OneToManyForm do
   @impl true
   def render(assigns) do
     ~H"""
-    <.simple_form
-      :let={f}
-      id={@id}
-      for={@changeset}
-      phx-change="validate"
-      phx-submit="submit"
-      as="form"
-    >
-      <.input field={{f, :email}} label="Email" />
+    <.simple_form :let={form} id={@id} for={@form} phx-change="validate" phx-submit="submit" as="form">
+      <.input field={form[:email]} label="Email" />
       <fieldset class="flex flex-col gap-2">
         <legend>Groceries</legend>
-        <%= for f_line <- Phoenix.HTML.Form.inputs_for(f, :lines) do %>
+        <.inputs_for :let={f_line} field={form[:lines]}>
           <.line f={f_line} />
-        <% end %>
+        </.inputs_for>
         <.button class="mt-2" type="button" phx-click="add-line">Add</.button>
       </fieldset>
 
@@ -41,7 +34,6 @@ defmodule KobrakaiWeb.OneToManyForm do
 
     ~H"""
     <div class={if(@deleted, do: "opacity-50")}>
-      <%= Phoenix.HTML.Form.hidden_inputs_for(@f) %>
       <input
         type="hidden"
         name={Phoenix.HTML.Form.input_name(@f, :delete)}
@@ -49,10 +41,10 @@ defmodule KobrakaiWeb.OneToManyForm do
       />
       <div class="flex gap-4 items-end">
         <div class="grow">
-          <.input class="mt-0" field={{@f, :item}} readonly={@deleted} label="Item" />
+          <.input class="mt-0" field={@f[:item]} readonly={@deleted} label="Item" />
         </div>
         <div class="grow">
-          <.input class="mt-0" field={{@f, :amount}} type="number" readonly={@deleted} label="Amount" />
+          <.input class="mt-0" field={@f[:amount]} type="number" readonly={@deleted} label="Amount" />
         </div>
         <.button
           class="grow-0"
@@ -94,9 +86,10 @@ defmodule KobrakaiWeb.OneToManyForm do
 
   def handle_event("add-line", _, socket) do
     socket =
-      update(socket, :changeset, fn changeset ->
+      update(socket, :form, fn %{source: changeset} ->
         existing = Ecto.Changeset.get_field(changeset, :lines, [])
-        Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
+        changeset = Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
+        to_form(changeset)
       end)
 
     {:noreply, socket}
@@ -106,18 +99,20 @@ defmodule KobrakaiWeb.OneToManyForm do
     index = String.to_integer(index)
 
     socket =
-      update(socket, :changeset, fn changeset ->
+      update(socket, :form, fn %{source: changeset} ->
         existing = Ecto.Changeset.get_field(changeset, :lines, [])
         {to_delete, rest} = List.pop_at(existing, index)
 
-        if Ecto.Changeset.change(to_delete).data.id do
-          updated =
+        lines =
+          if Ecto.Changeset.change(to_delete).data.id do
             List.replace_at(existing, index, Ecto.Changeset.change(to_delete, delete: true))
+          else
+            rest
+          end
 
-          Ecto.Changeset.put_embed(changeset, :lines, updated)
-        else
-          Ecto.Changeset.put_embed(changeset, :lines, rest)
-        end
+        changeset
+        |> Ecto.Changeset.put_embed(:lines, lines)
+        |> to_form()
       end)
 
     {:noreply, socket}
@@ -129,7 +124,7 @@ defmodule KobrakaiWeb.OneToManyForm do
       |> GroceriesList.changeset(params)
       |> struct!(action: :validate)
 
-    {:noreply, assign(socket, changeset: changeset)}
+    {:noreply, assign(socket, form: to_form(changeset))}
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
@@ -141,7 +136,7 @@ defmodule KobrakaiWeb.OneToManyForm do
         {:noreply, init(socket, data)}
 
       {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, assign(socket, form: to_form(changeset))}
     end
   end
 
@@ -151,7 +146,7 @@ defmodule KobrakaiWeb.OneToManyForm do
 
     assign(socket,
       base: base,
-      changeset: changeset,
+      form: to_form(changeset),
       id: "form-#{System.unique_integer()}"
     )
   end
