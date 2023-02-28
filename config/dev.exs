@@ -19,7 +19,8 @@ config :kobrakai, KobrakaiWeb.Endpoint,
   secret_key_base: "5x0q0Y1j1FKgBNGfJmjjOY6qj/GEX7U8EsZWtonVrXIfVaFhcNk4Fg54oXHdX9R2",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},
+    storybook_tailwind: {Tailwind, :install_and_run, [:storybook, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -52,7 +53,8 @@ config :kobrakai, KobrakaiWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/kobrakai_web/(controllers|live|components|views)/.*(ex|heex)$",
-      ~r"posts/*/.*(md)$"
+      ~r"posts/*/.*(md)$",
+      ~r"storybook/.*(exs)$"
     ]
   ]
 

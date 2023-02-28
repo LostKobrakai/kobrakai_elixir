@@ -1,6 +1,7 @@
 defmodule KobrakaiWeb.Router do
   use KobrakaiWeb, :router
   import Phoenix.LiveDashboard.Router
+  import PhoenixStorybook.Router
   import Redirect
   import KobrakaiWeb.Plugs
 
@@ -69,6 +70,15 @@ defmodule KobrakaiWeb.Router do
     pipe_through [:browser, :admin]
 
     live_dashboard "/dashboard", metrics: KobrakaiWeb.Telemetry
+  end
+
+  scope "/" do
+    storybook_assets()
+  end
+
+  scope "/", KobrakaiWeb do
+    pipe_through [:browser, :admin]
+    live_storybook("/storybook", backend_module: KobrakaiWeb.Storybook)
   end
 
   # Other scopes may use custom stacks.

@@ -60,7 +60,8 @@ defmodule Kobrakai.MixProject do
       {:etag_plug, "~> 1.0"},
       {:ecto, "~> 3.9"},
       {:phoenix_ecto, "~> 4.4"},
-      {:bandit, ">= 0.6.2"}
+      {:bandit, ">= 0.6.2"},
+      {:phoenix_storybook, "~> 0.5.0"}
     ]
   end
 
