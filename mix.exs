@@ -75,10 +75,11 @@ defmodule Kobrakai.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "esbuild default"],
+      "assets.build": ["tailwind default", "tailwind storybook", "esbuild default"],
       "assets.deploy": [
         "images.compile",
         "tailwind default --minify",
+        "tailwind storybook --minify",
         "esbuild default --minify",
         "phx.digest"
       ]
