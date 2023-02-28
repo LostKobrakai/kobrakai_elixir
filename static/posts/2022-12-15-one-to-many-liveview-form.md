@@ -390,8 +390,8 @@ deletion, instead of hiding them completely. Feel free to adjust as needed.
   […]
   <input
     type="hidden"
-    name={Phoenix.HTML.Form.input_name(@f, :delete)}
-    value={to_string(Phoenix.HTML.Form.input_value(@f, :delete))}
+    name={Phoenix.HTML.Form.input_name(@f_line, :delete)}
+    value={to_string(Phoenix.HTML.Form.input_value(@f_line, :delete))}
   />
   <div class="flex gap-4 items-end">
     […]
