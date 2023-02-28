@@ -1,4 +1,4 @@
-defmodule Storybook.Kobrakai.BrandHeader do
+defmodule Storybook.Kobrakai.LimitedListing do
   use PhoenixStorybook.Story, :component
 
   def function, do: &KobrakaiWeb.Components.limited_listing/1
