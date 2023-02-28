@@ -1,6 +1,6 @@
 defmodule Storybook.CoreComponents.Flash do
   use PhoenixStorybook.Story, :component
-  alias Elixir.KobrakaiWeb.CoreComponents
+  alias KobrakaiWeb.CoreComponents
 
   def function, do: &CoreComponents.flash/1
   def imports, do: [{CoreComponents, [button: 1, show: 1]}]

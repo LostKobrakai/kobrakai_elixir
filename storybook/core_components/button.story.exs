@@ -1,8 +1,7 @@
 defmodule Storybook.CoreComponents.Button do
   use PhoenixStorybook.Story, :component
 
-  def function, do: &Elixir.KobrakaiWeb.CoreComponents.button/1
-  def container, do: :iframe
+  def function, do: &KobrakaiWeb.CoreComponents.button/1
 
   def variations do
     [

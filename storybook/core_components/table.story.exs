@@ -1,6 +1,6 @@
 defmodule Storybook.CoreComponents.Table do
   use PhoenixStorybook.Story, :component
-  alias Elixir.KobrakaiWeb.CoreComponents
+  alias KobrakaiWeb.CoreComponents
 
   def function, do: &CoreComponents.table/1
   def aliases, do: [Storybook.CoreComponents.Table.User]

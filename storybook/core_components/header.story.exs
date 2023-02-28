@@ -1,6 +1,6 @@
 defmodule Storybook.CoreComponents.Header do
   use PhoenixStorybook.Story, :component
-  alias Elixir.KobrakaiWeb.CoreComponents
+  alias KobrakaiWeb.CoreComponents
 
   def function, do: &CoreComponents.header/1
   def imports, do: [{CoreComponents, button: 1}]

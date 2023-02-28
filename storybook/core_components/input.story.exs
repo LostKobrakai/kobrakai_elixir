@@ -1,6 +1,6 @@
 defmodule Storybook.CoreComponents.Input do
   use PhoenixStorybook.Story, :component
-  alias Elixir.KobrakaiWeb.CoreComponents
+  alias KobrakaiWeb.CoreComponents
 
   def function, do: &CoreComponents.input/1
   def imports, do: [{CoreComponents, [simple_form: 1]}]

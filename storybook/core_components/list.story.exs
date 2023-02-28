@@ -1,7 +1,7 @@
 defmodule Storybook.CoreComponents.List do
   use PhoenixStorybook.Story, :component
 
-  def function, do: &Elixir.KobrakaiWeb.CoreComponents.list/1
+  def function, do: &KobrakaiWeb.CoreComponents.list/1
 
   def variations do
     [

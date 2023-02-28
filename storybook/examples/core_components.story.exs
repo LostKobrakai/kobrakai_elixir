@@ -1,6 +1,6 @@
 defmodule Storybook.Examples.CoreComponents do
   use PhoenixStorybook.Story, :example
-  import Elixir.KobrakaiWeb.CoreComponents
+  import KobrakaiWeb.CoreComponents
 
   alias Phoenix.LiveView.JS
 
