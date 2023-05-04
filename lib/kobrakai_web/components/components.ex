@@ -61,7 +61,7 @@ defmodule KobrakaiWeb.Components do
 
   def arrow(assigns) do
     ~H"""
-    <div
+    <span
       class={[
         "inline-block transition duration-100 group-hover:translate-x-1",
         if(@direction == "left", do: "group-hover:translate-x-1"),
@@ -77,7 +77,7 @@ defmodule KobrakaiWeb.Components do
         <% "top-left" -> %>
           &uarr;
       <% end %>
-    </div>
+    </span>
     """
   end
 

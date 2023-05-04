@@ -1,15 +1,104 @@
+<h1 class="text-xl uppercase mb-6">
+  Werdegang <span class="text-gray-700 dark:text-gray-500">/ Resume</span>
+</h1>
 <div class="grid sm:grid-cols-2 gap-8 mb-64">
-  <div class="sm:col-start-2">
-    <h1 class="text-xl uppercase mb-6">
-      Werdegang <span class="text-gray-700 dark:text-gray-500">/ CV</span>
-    </h1>
+  <div>
     <h2 class="uppercase mb-4">
-      Berufserfahrung <span class="text-gray-700 dark:text-gray-500">/ Experience</span>
+      Wissen <span class="text-gray-700 dark:text-gray-500">/ Knowledge</span>
+    </h2>
+    <p class="my-2">
+      I like to get deeply involved with the communities surrounding the programming languages I work with, getting to know the problems encountered. I really enjoy learning as well as teaching all there is to know about an ecosystem.
+    </p>
+    <p class="my-2">
+      All that gained context puts me in the rare position of having very broad knowledge around problems people run into and more importantly many of their solutions. Ask your developers – I might have helped them with problems in your system already.
+    </p>
+    <p class="my-2">
+      If you want to talk or have questions. Get in touch at
+      <a class="group" href="mailto:benjamin.milde@madeit.io">
+        benjamin.milde@madeit.io <.arrow direction="top-left" />
+      </a>
+    </p>
+    <div class="my-8 grid grid-cols-2 xl:grid-cols-3 gap-4 tabular-nums items-top">
+      <img
+        class="w-24 h-24 rounded-full block"
+        src={~p"/images/avatar.jpg"}
+        alt="Grayscale image of my face"
+      />
+      <div class="xl:col-span-2 self-center">
+        <em class="font-bold not-italic">@lostkobrakai</em> <br />
+        <a class="text-sm group" rel="me" href="https://github.com/LostKobrakai" target="_blank">
+          GitHub <.arrow direction="top-left" />
+        </a>
+        <br />
+        <a class="text-sm group" rel="me" href="https://twitter.com/lostkobrakai" target="_blank">
+          Twitter <.arrow direction="top-left" />
+        </a>
+        <br />
+        <a
+          :if={false}
+          class="text-sm group"
+          rel="me"
+          href="https://hachyderm.io/@lostkobrakai"
+          target="_blank"
+        >
+          Mastodon <.arrow direction="top-left" />
+        </a>
+      </div>
+      <div>
+        <a class="group" href="https://elixirforum.com/u/lostkobrakai/summary" target="_blank">
+          Elixir Forum <.arrow direction="top-left" />
+        </a>
+        <p class="text-sm">
+          4.5k Posts created<br /> 7.2k Likes received<br /> 0.5k Marked solutions
+        </p>
+      </div>
+      <div>
+        <a class="group" href="https://elixir-lang.slack.com/" target="_blank">
+          Elixir Slack <.arrow direction="top-left" />
+        </a>
+        <p class="text-sm">
+          Lots of conversations<br /> Likely more than on the forum
+        </p>
+      </div>
+      <div class="text-gray-700 dark:text-gray-500">
+        <a
+          class="group"
+          href="https://processwire.com/talk/profile/874-lostkobrakai/reputation/"
+          target="_blank"
+        >
+          ProcessWire Forum <.arrow direction="top-left" />
+        </a>
+        <p class="text-sm">
+          4.9k Posts created<br /> 5.2k Likes received<br /> 100 Days of most likes
+        </p>
+      </div>
+    </div>
+
+    <h2 class="uppercase mb-4">
+      Kompetenzen <span class="text-gray-700 dark:text-gray-500">/ Skills</span>
+    </h2>
+    <ol class="list-inside list-disc">
+      <li phx-no-format>Elixir Development
+        <ul class="pl-4 list-inside list-disc">
+          <li>Phoenix</li>
+          <li>Live View</li>
+          <li>Nerves (<a class="group" href="https://elixir-lang.org/blog/2023/03/09/embedded-and-cloud-elixir-at-sparkmeter/" target="_blank">Case Study <.arrow direction="top-left" />
+    </a>)</li>
+          <li>OTP</li>
+        </ul>
+      </li>
+      <li>PHP/ProcessWire Development</li>
+      <li>Frontend Development (HTML/Svelte/Vue)</li>
+    </ol>
+  </div>
+  <div>
+    <h2 class="uppercase mb-4">
+      Berufserfahrung <span class="text-gray-700 dark:text-gray-500">/ Work History</span>
     </h2>
     <ol class="space-y-2 mb-8">
       <li>
         <h3>
-          Leitender Entwickler, Geschäftsführer
+          Entwickler, Consultant, Geschäftsführer
           <span class="text-gray-700 dark:text-gray-500">/ CTO</span>
         </h3>
         <p class="text-gray-500 dark:text-gray-400 text-sm">
