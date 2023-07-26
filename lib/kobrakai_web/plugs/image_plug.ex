@@ -2,7 +2,13 @@ defmodule KobrakaiWeb.ImagePlug do
   use Plug.Builder
   import Plug.Conn
 
-  plug PlugCacheControl, directives: [:public, max_age: {1, :hour}]
+  plug PlugCacheControl,
+    directives: [
+      :public,
+      max_age: {1, :hour},
+      stale_while_revalidate: {20, :minutes}
+    ]
+
   plug :check_hmac
   plug :build_image
 
