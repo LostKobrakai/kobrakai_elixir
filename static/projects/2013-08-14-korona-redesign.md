@@ -13,10 +13,10 @@ primary:
   alt: ""
 secondary:
   - type: image
-    source: /images/korona/startseite-1.png
+    source: /images/korona/startseite-1.jpg
     alt: ""
   - type: image
-    source: /images/korona/produkte.png
+    source: /images/korona/produkte.jpg
     alt: ""
 ---
 Das Redesign der Webseite der Korona Leuchten GmbH entstand als Abschlussprojekt zusammen mit Anna-Sophie Meyer. Korona ist eine kleine Augsburger Firma, die sich im Leuchtenbau spezialisiert hat. Ihr Kerngeschäft betreiben sie mit einem sehr modularem LED-System, das sich den Bedingungen der einzelnen Anwendungszwecke genau anpassen lässt. Dabei übernimmt die Firma nicht nur die Produktion und den Vertrieb, sondern ist Ansprechpartner bei der Konfiguration, betreut das Projekt und ist oft auch an der finalen Montage beteiligt.

@@ -15,7 +15,7 @@ secondary:
     source: /images/wunderle/projekte.jpg
     alt: ""
   - type: image
-    source: /images/wunderle/wunderle-alt.png
+    source: /images/wunderle/wunderle-alt.jpg
     alt: ""
 ---
 Im Zuge der neuen Partnerschaften von Wunderle Architekten und einer doch schon betagten Webseite wurde das Design, in Zusammenarbeit mit Anna-Sophie Meyer, komplett erneuert. Das Redesign sollte die Agentur wieder moderner und mehr am Zeitgeist ausrichten. Mit zwei neuen und jüngeren Partnern and der Seite wird dieser Schritt auch in das Design übertragen. Die Gestaltung ist sehr klar und einfach gehalten. Der Fokus ist klar auf die Architektur gerichtet und Zusatzinformationen halten sich bedeckt. 
