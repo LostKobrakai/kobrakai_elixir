@@ -412,7 +412,7 @@ def handle_event("delete-line", %{"index" => index}, socket) do
 
   socket =
     update(socket, :form, fn %{source: changeset} ->
-      existing = Ecto.Changeset.get_embed(changeset, :lines, [])
+      existing = Ecto.Changeset.get_embed(changeset, :lines)
       {to_delete, rest} = List.pop_at(existing, index)
 
       lines = 
