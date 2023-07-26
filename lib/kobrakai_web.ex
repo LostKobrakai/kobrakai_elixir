@@ -25,7 +25,7 @@ defmodule KobrakaiWeb do
   def cdn do
     case Application.fetch_env!(:kobrakai, __MODULE__) |> Keyword.get(:cdn) do
       nil -> "/image/"
-      uri -> URI.new!(uri)
+      uri -> uri
     end
   end
 
