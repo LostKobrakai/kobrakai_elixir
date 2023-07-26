@@ -98,4 +98,34 @@ defmodule KobrakaiWeb.Components do
     <pre class="makeup elixir"><%= Phoenix.HTML.raw(@formatted) %></pre>
     """
   end
+
+  attr :src, :string, required: true
+  attr :size, :any, default: {100, 100}
+  attr :srcset, :list, default: [1, 2]
+  attr :alt, :string, default: ""
+  attr :rest, :global
+
+  def image(assigns) do
+    {size_w, size_h} = assigns.size
+
+    sources =
+      Enum.map(assigns.srcset, fn factor ->
+        path =
+          %ThumborPath{source: assigns.src, size: {size_w * factor, size_h * factor}}
+          |> ThumborPath.build(KobrakaiWeb.fetch_secret())
+
+        {Path.join(~p"/image/", path), factor}
+      end)
+
+    srcset = Enum.map_join(sources, ", ", fn {uri, factor} -> "#{uri} #{factor}x" end)
+
+    assigns =
+      assigns
+      |> assign(:src, sources |> List.first() |> elem(0))
+      |> assign(:srcset, srcset)
+
+    ~H"""
+    <img src={@src} alt={@alt} srcset={@srcset} {@rest} />
+    """
+  end
 end

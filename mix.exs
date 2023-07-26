@@ -55,13 +55,15 @@ defmodule Kobrakai.MixProject do
       {:makeup_eex, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"},
-      {:image, "~> 0.14.0", runtime: false},
+      {:image, "~> 0.36.0"},
       {:atomex, "~> 0.5.0"},
       {:etag_plug, "~> 1.0"},
       {:ecto, "~> 3.9"},
       {:phoenix_ecto, "~> 4.4"},
       {:bandit, ">= 0.6.2"},
-      {:phoenix_storybook, "~> 0.5.0"}
+      {:phoenix_storybook, "~> 0.5.0"},
+      {:plug_cache_control, "~> 1.1.0"},
+      {:thumbor_path, github: "LostKobrakai/thumbor_path"}
     ]
   end
 

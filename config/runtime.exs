@@ -52,6 +52,9 @@ if config_env() == :prod do
     username: System.fetch_env!("AUTH_USERNAME"),
     password: System.fetch_env!("AUTH_PASSWORD")
 
+  # Configure image plug
+  config :kobrakai, KobrakaiWeb, secret_key: System.fetch_env!("SECURITY_KEY")
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key

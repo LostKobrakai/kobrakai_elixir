@@ -66,6 +66,12 @@ defmodule KobrakaiWeb.Router do
     get "/.well-known/webfinger", WebfingerController, :finger
   end
 
+  scope "/image" do
+    forward "/", KobrakaiWeb.ImagePlug,
+      secret: &KobrakaiWeb.fetch_secret/0,
+      finch: Kobrakai.Finch
+  end
+
   scope "/", KobrakaiWeb do
     pipe_through [:browser, :admin]
 

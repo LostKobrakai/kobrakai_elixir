@@ -76,3 +76,6 @@ config :swoosh, :api_client, false
 
 # Disable admin access control
 config :kobrakai, :admin, false
+
+# Configure image plug
+config :kobrakai, KobrakaiWeb, secret_key: "abc"

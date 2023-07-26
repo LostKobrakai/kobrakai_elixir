@@ -17,6 +17,11 @@ defmodule KobrakaiWeb do
   those modules here.
   """
 
+  def fetch_secret do
+    Application.fetch_env!(:kobrakai, __MODULE__)
+    |> Keyword.fetch!(:secret_key)
+  end
+
   def favicons do
     ~w(android-chrome-192x192.png android-chrome-512x512.png apple-touch-icon.png favicon.ico icon.svg site.webmanifest)
   end

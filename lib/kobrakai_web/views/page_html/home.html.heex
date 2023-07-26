@@ -76,7 +76,10 @@
         class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
         href={"https://foto.space.kobrakai.de/site/assets/files/#{path}.jpg"}
       >
-        <img alt="" src={"https://foto.space.kobrakai.de/site/assets/files/#{path}.320x0.jpg"} />
+        <.image
+          src={"https://foto.space.kobrakai.de/site/assets/files/#{path}.jpg"}
+          size={{320, 0}}
+        />
       </.link>
     </div>
   </div>
