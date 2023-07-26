@@ -22,6 +22,13 @@ defmodule KobrakaiWeb do
     |> Keyword.fetch!(:secret_key)
   end
 
+  def cdn do
+    case Application.fetch_env!(:kobrakai, __MODULE__) |> Keyword.get(:cdn) do
+      nil -> "/image/"
+      uri -> URI.new!(uri)
+    end
+  end
+
   def favicons do
     ~w(android-chrome-192x192.png android-chrome-512x512.png apple-touch-icon.png favicon.ico icon.svg site.webmanifest)
   end

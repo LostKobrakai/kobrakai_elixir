@@ -114,7 +114,7 @@ defmodule KobrakaiWeb.Components do
           %ThumborPath{source: assigns.src, size: {size_w * factor, size_h * factor}}
           |> ThumborPath.build(KobrakaiWeb.fetch_secret())
 
-        {Path.join(~p"/image/", path), factor}
+        {Path.join(KobrakaiWeb.cdn(), path), factor}
       end)
 
     srcset = Enum.map_join(sources, ", ", fn {uri, factor} -> "#{uri} #{factor}x" end)
