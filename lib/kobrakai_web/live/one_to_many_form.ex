@@ -87,7 +87,7 @@ defmodule KobrakaiWeb.OneToManyForm do
   def handle_event("add-line", _, socket) do
     socket =
       update(socket, :form, fn %{source: changeset} ->
-        existing = Ecto.Changeset.get_field(changeset, :lines, [])
+        existing = Ecto.Changeset.get_embed(changeset, :lines)
         changeset = Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
         to_form(changeset)
       end)
@@ -100,7 +100,7 @@ defmodule KobrakaiWeb.OneToManyForm do
 
     socket =
       update(socket, :form, fn %{source: changeset} ->
-        existing = Ecto.Changeset.get_field(changeset, :lines, [])
+        existing = Ecto.Changeset.get_embed(changeset, :lines)
         {to_delete, rest} = List.pop_at(existing, index)
 
         lines =

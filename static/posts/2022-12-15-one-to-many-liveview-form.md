@@ -278,26 +278,20 @@ we do for handling the additional events related to our LiveView form.
 def handle_event("add-line", _, socket) do
   socket =
     update(socket, :form, fn %{source: changeset} ->
-      existing = get_change_or_field(changeset, :lines)
+      existing = Ecto.Changeset.get_embed(changeset, :lines)
       changeset = Ecto.Changeset.put_embed(changeset, :lines, existing ++ [%{}])
       to_form(changeset)
     end)
 
   {:noreply, socket}
 end
-
-defp get_change_or_field(changeset, field) do
-  with nil <- Ecto.Changeset.get_change(changeset, field) do
-    Ecto.Changeset.get_field(changeset, field, [])
-  end
-end
 ```
 
 In the event handler we want to add a line to our form, but also don't want to
 loose any existing changes present in the form, but not yet applied to our
-`base` data. We use `get_field` to get whatever the changeset considers the 
-current list of lines, including all known changes and then append a new item. 
-That new item doesn't have changes, so it's an empty map. The modified list is 
+`base` data. We use `get_embed` to get whatever the changeset considers the
+current list of lines, including all known changes and then append a new item.
+That new item doesn't have changes, so it's an empty map. The modified list is
 then passed to `put_embed` to be set on the changeset.
 
 This feels like imperative editing the changeset in place and it is. But the goal
@@ -305,13 +299,6 @@ really is that the re-rendered form on the client includes new inputs for this
 new item. So that they're visible to the user and subsequent `phx-validate` events 
 include those `params` to be able to build a changeset. No other code of ours 
 should need to look at that added item in the changeset again.
-
-There's also a little helper function to fetch current lines. This one is needed
-because `Ecto.Changeset.get_field/3` applies changes for relations (embeds and assocs)
-instead of returning the list of changesets we need. `Ecto.Changeset.get_change/3`
-doesn't do so, but we can't be sure that there are changes, so we combine both.
-
-Coming in ecto 3.10 there will be `Ecto.Changeset.get_assoc/3` to clean this up.
 
 #### Remove a line
 
@@ -409,9 +396,8 @@ deletion, instead of hiding them completely. Feel free to adjust as needed.
 ```
 
 The event handler for deleting a line is conceptionally similar to the one for
-adding one. We again use the `get_change_or_field` helper to fetch all current 
-lines, split out the one to delete and check if it's one already existing in 
-`base` or not.
+adding one. We again use the `get_embed` to fetch all current lines, split out
+the one to delete and check if it's one already existing in `base` or not.
 
 Here we check for the presense of an `id`, which is unfortunate, but for embeds
 there's no good way to check if a line was part of `base` or was added to the form
@@ -426,7 +412,7 @@ def handle_event("delete-line", %{"index" => index}, socket) do
 
   socket =
     update(socket, :form, fn %{source: changeset} ->
-      existing = get_change_or_field(changeset, :lines, [])
+      existing = Ecto.Changeset.get_embed(changeset, :lines, [])
       {to_delete, rest} = List.pop_at(existing, index)
 
       lines = 
@@ -495,3 +481,7 @@ stores data in the database: https://github.com/LostKobrakai/one-to-many-form
 `"delete-line"` event handlers with custom function using `Ecto.Changeset.get_change/3` 
 with a fallback of `Ecto.Changeset.get_field/3`. This fixes a bug, where adding 
 or removing a line would make changes in other lines be "forgotten".
+
+**2023-07-26**: Replaced usage of the `Ecto.Changeset.get_change/3` and fallback
+to `Ecto.Changeset.get_field/3` helper with `Ecto.Changeset.get_embed/3` as
+released with ecto 3.10.
