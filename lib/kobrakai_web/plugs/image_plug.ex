@@ -67,13 +67,19 @@ defmodule KobrakaiWeb.ImagePlug do
         end
       end
 
+    opts =
+      case thumbor_path.fit do
+        :default -> [crop: crop]
+        {:fit, _} -> [crop: :none, resize: :both]
+      end
+
     image =
       Enum.reduce(thumbor_path |> Map.from_struct(), image, fn
         {:size, {a, b}}, image ->
           Image.thumbnail!(
             image,
             size_and_dimensions_to_thumbnail({a, b}, {width, height}),
-            crop: crop
+            opts
           )
 
         _, image ->
