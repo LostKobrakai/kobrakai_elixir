@@ -54,3 +54,10 @@ html, body{
 .footnotes hr {
   margin-bottom: 1em
 }
+
+@media print {
+  a::after{
+    content: " (" attr(href) ") ";
+  }
+}
+

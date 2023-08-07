@@ -1,10 +1,15 @@
 <h1 class="text-xl uppercase mb-6">
-  Werdegang <span class="text-gray-700 dark:text-gray-500">/ Resume</span>
+  <span class="print:hidden">
+    Werdegang <span class="text-gray-700 dark:text-gray-500">/ Resume</span>
+  </span>
+  <span class="hidden print:inline">Benjamin Milde</span>
 </h1>
-<div class="grid sm:grid-cols-2 gap-8 mb-64">
-  <div>
+<div class="grid sm:grid-cols-2 gap-8 mb-64 print:!block print:!mb-0">
+  <div class="print:mb-8">
     <h2 class="uppercase mb-4">
-      Wissen <span class="text-gray-700 dark:text-gray-500">/ Knowledge</span>
+      <span class="print:hidden">
+        Wissen <span class="text-gray-700 dark:text-gray-500">/ Knowledge</span>
+      </span>
     </h2>
     <p class="my-2">
       I like to get deeply involved with the communities surrounding the programming languages I work with, getting to know the problems encountered. I really enjoy learning as well as teaching all there is to know about an ecosystem.
@@ -12,20 +17,27 @@
     <p class="my-2">
       All that gained context puts me in the rare position of having very broad knowledge around problems people run into and more importantly many of their solutions. Ask your developers – I might have helped them with problems in your system already.
     </p>
-    <p class="my-2">
+    <p class="my-2 print:hidden">
       If you want to talk or have questions. Get in touch at
       <a class="group" href="mailto:benjamin.milde@madeit.io">
         benjamin.milde@madeit.io <.arrow direction="top-left" />
       </a>
     </p>
-    <div class="my-8 grid grid-cols-2 xl:grid-cols-3 gap-4 tabular-nums items-top">
-      <img
-        class="w-24 h-24 rounded-full block"
-        src={~p"/images/avatar.jpg"}
-        alt="Grayscale image of my face"
-      />
-      <div class="xl:col-span-2 self-center">
-        <em class="font-bold not-italic">@lostkobrakai</em> <br />
+    <div class="my-8 grid grid-cols-2 xl:grid-cols-3 print:!grid-cols-1 gap-4 tabular-nums items-top">
+      <div class="print:flex gap-4 items-center">
+        <img
+          class="w-24 h-24 rounded-full block print:w-20 print:h-20"
+          src={~p"/images/avatar.jpg"}
+          alt="Grayscale image of my face"
+        />
+        <span class="hidden print:inline">
+          <em class="font-bold not-italic">www.madeit.io</em>
+          <br /> benjamin.milde@madeit.io
+        </span>
+      </div>
+      <div class="xl:col-span-2 self-center print:!col-span-1">
+        <em class="font-bold not-italic">@lostkobrakai</em>
+        <br />
         <a class="text-sm group" rel="me" href="https://github.com/LostKobrakai" target="_blank">
           GitHub <.arrow direction="top-left" />
         </a>
@@ -49,7 +61,7 @@
           Elixir Forum <.arrow direction="top-left" />
         </a>
         <p class="text-sm">
-          4.5k Posts created<br /> 7.2k Likes received<br /> 0.5k Marked solutions
+          4.5k Posts created<br /> 7.2k Likes received<br /> 500 Marked solutions
         </p>
       </div>
       <div>
@@ -92,6 +104,44 @@
     </ol>
   </div>
   <div>
+    <h2 class="uppercase mb-4">
+      Projekte <span class="text-gray-700 dark:text-gray-500">/ Projects</span>
+    </h2>
+    <ol class="space-y-2 mb-8">
+      <li>
+        <h3>Senior Elixir Consultant</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm print:max-w-none">
+          Supported Sparkmeter in building out their Nerves embedded base station
+          and its communication to upstream cloud services and futher data consumers.
+        </p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm">
+          Sparkmeter<br />
+          <time>März 2021</time> &ndash; <time>August 2023</time>
+        </p>
+      </li>
+      <li>
+        <h3>Elixir Developer</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm print:max-w-none">
+          Built out a custom business solution including job advertisement,
+          scheduling, feedback and invoice handling.
+        </p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          madeprojects GmbH<br />
+          <time>Aug. 2017</time> &ndash; <time>Feb. 2021</time>
+        </p>
+      </li>
+      <li>
+        <h3>Web Developer</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm print:max-w-none">
+          Built out a handful of custom corporate websites, started gettting into
+          app development using ProcessWire.
+        </p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          Verschiedene Kunden<br />
+          <time>2014</time> &ndash; <time>Aug. 2017</time>
+        </p>
+      </li>
+    </ol>
     <h2 class="uppercase mb-4">
       Berufserfahrung <span class="text-gray-700 dark:text-gray-500">/ Work History</span>
     </h2>

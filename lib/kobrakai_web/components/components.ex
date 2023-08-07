@@ -6,7 +6,7 @@ defmodule KobrakaiWeb.Components do
 
   def brand_header(assigns) do
     ~H"""
-    <header class="flex h-64 my-4 justify-center items-center 2xl:absolute 2xl:w-64 2xl:-translate-x-full transition duration-150">
+    <header class="flex h-64 my-4 justify-center items-center 2xl:absolute 2xl:w-64 2xl:-translate-x-full transition duration-150 print:hidden">
       <div class="w-20 h-20">
         <%= if @back do %>
           <.link class="group" navigate={~p"/"}>
@@ -63,7 +63,7 @@ defmodule KobrakaiWeb.Components do
     ~H"""
     <span
       class={[
-        "inline-block transition duration-100 group-hover:translate-x-1",
+        "inline-block transition duration-100 group-hover:translate-x-1 print:hidden",
         if(@direction == "left", do: "group-hover:translate-x-1"),
         if(@direction == "top-left",
           do: "rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1"

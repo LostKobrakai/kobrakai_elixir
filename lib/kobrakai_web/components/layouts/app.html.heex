@@ -5,7 +5,7 @@
   <main>
     <%= @inner_content %>
   </main>
-  <footer class="text-center mt-24 pb-16">
+  <footer class="text-center mt-24 pb-16 print:hidden">
     <.link
       :if={false && assigns[:show_back]}
       class="inline-block w-20 h-20 mb-16"

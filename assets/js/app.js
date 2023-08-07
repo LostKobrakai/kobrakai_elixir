@@ -49,8 +49,9 @@ liveSocket.connect()
 window.liveSocket = liveSocket
 
 function darkExpected() {
-  return localStorage.theme === 'dark' || (!('theme' in localStorage) &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches);
+  return !window.matchMedia('print').matches &&
+    localStorage.theme === 'dark' || (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
 }
 
 function initDarkMode() {
