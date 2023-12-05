@@ -153,17 +153,15 @@ Let's fill `render/1` with some actual markup. First the outer form with the
 
 ```heex
 <.simple_form 
-  :let={f}
   id={@id} 
   for={@form} 
   phx-change="validate" 
-  phx-submit="submit"
-  as="form">
-  <.input field={f[:email]} label="Email" />
+  phx-submit="submit">
+  <.input field={@form[:email]} label="Email" />
 
   <fieldset class="flex flex-col gap-2">
     <legend>Groceries</legend>
-    <.inputs_for :let={f_line} field={f[:lines]}>
+    <.inputs_for :let={f_line} field={@form[:lines]}>
       <.line f_line={f_line} />
     </.inputs_for>
   </fieldset>
@@ -173,9 +171,6 @@ Let's fill `render/1` with some actual markup. First the outer form with the
   </:actions>
 </.simple_form>
 ```
-
-This uses `:let={f}` on the form, so the `as="form"` option is applied to inputs.
-Otherwise `@form[field]` would work as well to provide the field data of the form.
 
 The nested inputs themselves are extracted into a function component, which makes 
 things a little easier to follow compared to one huge blob of html. It will also
@@ -439,7 +434,7 @@ this pays off, as the event handlers for `phx-change` and `phx-submit` of our fo
 won't look any different as they would for most other LV forms:
 
 ```elixir
-def handle_event("validate", %{"form" => params}, socket) do
+def handle_event("validate", %{"groceries_list" => params}, socket) do
   changeset =
     socket.assigns.base
     |> GroceriesList.changeset(params)
@@ -448,7 +443,7 @@ def handle_event("validate", %{"form" => params}, socket) do
   {:noreply, assign(socket, form: to_form(changeset))}
 end
 
-def handle_event("submit", %{"form" => params}, socket) do
+def handle_event("submit", %{"groceries_list" => params}, socket) do
   changeset = GroceriesList.changeset(socket.assigns.base, params)
 
   case Ecto.Changeset.apply_action(changeset, :insert) do

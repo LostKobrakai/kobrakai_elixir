@@ -60,9 +60,9 @@ defmodule Kobrakai.MixProject do
       {:etag_plug, "~> 1.0"},
       {:ecto, "~> 3.9"},
       {:phoenix_ecto, "~> 4.4"},
-      {:bandit, ">= 0.6.2"},
+      {:bandit, "~> 1.0"},
       {:phoenix_storybook, "~> 0.5.0"},
-      {:plug_cache_control, "~> 1.1.0"},
+      {:plug_cache_control, "~> 1.1.0", github: "tanguilp/plug_cache_control"},
       {:thumbor_path, github: "LostKobrakai/thumbor_path"}
     ]
   end

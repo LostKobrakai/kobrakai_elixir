@@ -5,11 +5,11 @@ defmodule KobrakaiWeb.OneToManyForm do
   @impl true
   def render(assigns) do
     ~H"""
-    <.simple_form :let={form} id={@id} for={@form} phx-change="validate" phx-submit="submit" as="form">
-      <.input field={form[:email]} label="Email" />
+    <.simple_form id={@id} for={@form} phx-change="validate" phx-submit="submit">
+      <.input field={@form[:email]} label="Email" />
       <fieldset class="flex flex-col gap-2">
         <legend>Groceries</legend>
-        <.inputs_for :let={f_line} field={form[:lines]}>
+        <.inputs_for :let={f_line} field={@form[:lines]}>
           <.line f={f_line} />
         </.inputs_for>
         <.button class="mt-2" type="button" phx-click="add-line">Add</.button>
@@ -118,7 +118,7 @@ defmodule KobrakaiWeb.OneToManyForm do
     {:noreply, socket}
   end
 
-  def handle_event("validate", %{"form" => params}, socket) do
+  def handle_event("validate", %{"groceries_list" => params}, socket) do
     changeset =
       socket.assigns.base
       |> GroceriesList.changeset(params)
@@ -127,7 +127,7 @@ defmodule KobrakaiWeb.OneToManyForm do
     {:noreply, assign(socket, form: to_form(changeset))}
   end
 
-  def handle_event("submit", %{"form" => params}, socket) do
+  def handle_event("submit", %{"groceries_list" => params}, socket) do
     changeset = GroceriesList.changeset(socket.assigns.base, params)
 
     case Ecto.Changeset.apply_action(changeset, :insert) do
