@@ -63,7 +63,8 @@ defmodule Kobrakai.MixProject do
       {:bandit, "~> 1.0"},
       {:phoenix_storybook, "~> 0.5.0"},
       {:plug_cache_control, "~> 1.1.0", github: "tanguilp/plug_cache_control"},
-      {:thumbor_path, github: "LostKobrakai/thumbor_path"}
+      {:thumbor_path, github: "LostKobrakai/thumbor_path"},
+      {:reverse_proxy_plug, "~> 2.1"}
     ]
   end
 
