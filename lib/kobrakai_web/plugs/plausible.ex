@@ -3,7 +3,7 @@ defmodule KobrakaiWeb.Plausible do
 
   def call(conn, _) do
     case conn.path_info do
-      path when path in [["js", "script.js"], ["api", "events"]] ->
+      path when path in [["js", "script.js"], ["api", "event"]] ->
         conn
         |> Plug.run([
           {

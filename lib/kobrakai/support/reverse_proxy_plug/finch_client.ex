@@ -6,8 +6,6 @@ defmodule Kobrakai.ReverseProxyPlug.FinchClient do
 
   @impl true
   def request(%HTTPClient.Request{} = request) do
-    IO.inspect(request)
-
     case request.options[:stream_to] do
       nil -> sync_request(request)
       pid when is_pid(pid) -> async_request(request, pid)
