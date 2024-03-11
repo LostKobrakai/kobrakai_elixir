@@ -128,4 +128,26 @@ defmodule KobrakaiWeb.Components do
     <img src={@src} alt={@alt} srcset={@srcset} {@rest} />
     """
   end
+
+  attr :stat, :integer, required: true
+
+  def stat(%{stat: num} = assigns) do
+    formatted =
+      cond do
+        num > 10000 ->
+          k = Float.round(num / 1000, 0)
+          "#{k}k"
+
+        num > 1000 ->
+          k = Float.round(num / 1000, 1)
+          "#{k}k"
+
+        true ->
+          "#{trunc(Float.round(num / 100, 0) * 100)}"
+      end
+
+    assigns = assign(assigns, formatted: formatted)
+
+    ~H"<data value={@stat}><%= @formatted %></data>"
+  end
 end

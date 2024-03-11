@@ -2,7 +2,10 @@ defmodule KobrakaiWeb.CustomController do
   use KobrakaiWeb, :controller
 
   def cv(conn, _) do
-    render(conn, :cv, page_title: "Werdegang")
+    render(conn, :cv,
+      page_title: "Werdegang",
+      elixir_forum_stats: Kobrakai.CV.elixir_forum_stats()
+    )
   end
 
   def contact(conn, _) do

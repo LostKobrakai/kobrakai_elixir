@@ -61,7 +61,9 @@
           Elixir Forum <.arrow direction="top-left" />
         </a>
         <p class="text-sm">
-          4.5k Posts created<br /> 7.2k Likes received<br /> 500 Marked solutions
+          <.stat stat={@elixir_forum_stats.num_posts} /> Posts created<br />
+          <.stat stat={@elixir_forum_stats.num_likes} /> Likes received<br />
+          <.stat stat={@elixir_forum_stats.num_solutions} /> Marked solutions
         </p>
       </div>
       <div>

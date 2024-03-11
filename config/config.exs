@@ -73,6 +73,13 @@ config :mime, :types, %{
   "application/jrd+json" => ["jrd"]
 }
 
+# Schedule quantum
+config :kobrakai, Kobrakai.Quantum.Scheduler,
+  jobs: [
+    {"@reboot", {Kobrakai.CV, :refresh_elixir_forum_stats, []}},
+    {"@daily", {Kobrakai.CV, :refresh_elixir_forum_stats, []}}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
