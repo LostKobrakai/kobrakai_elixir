@@ -10,12 +10,12 @@ defmodule Kobrakai.Application do
     children = [
       # Start the Telemetry supervisor
       KobrakaiWeb.Telemetry,
-      # Start the manager for scheduled jobs
-      Kobrakai.Quantum.Scheduler,
       # Start the PubSub system
       {Phoenix.PubSub, name: Kobrakai.PubSub},
       # Start Finch
       {Finch, name: Kobrakai.Finch},
+      # Start the manager for scheduled jobs
+      Kobrakai.Quantum.Scheduler,
       # Start the Endpoint (http/https)
       KobrakaiWeb.Endpoint
       # Start a worker by calling: Kobrakai.Worker.start_link(arg)
