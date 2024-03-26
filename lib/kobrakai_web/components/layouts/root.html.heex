@@ -19,7 +19,7 @@
 
     <meta name="robots" content={assigns[:robots] || "index, follow"} />
 
-    <meta property="og:title" content={assigns[:page_title]} />
+    <meta property="og:title" content={assigns[:page_title] || "Home"} />
     <meta :if={assigns[:excerpt]} name="description" content={assigns[:excerpt]} />
     <meta :if={assigns[:excerpt]} property="og:description" content={assigns[:excerpt]} />
     <meta property="og:url" content={Phoenix.Controller.current_path(@conn)} />
