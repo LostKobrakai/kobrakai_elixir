@@ -71,7 +71,8 @@ defmodule Kobrakai.MixProject do
       {:plug_cache_control, "~> 1.1.0", github: "tanguilp/plug_cache_control"},
       {:thumbor_path, github: "LostKobrakai/thumbor_path"},
       {:reverse_proxy_plug, "~> 2.1"},
-      {:quantum, "~> 3.0"}
+      {:quantum, "~> 3.0"},
+      {:vix, "~> 0.24.0"}
     ]
   end
 
