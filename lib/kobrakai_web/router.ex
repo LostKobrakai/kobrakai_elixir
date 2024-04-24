@@ -72,6 +72,10 @@ defmodule KobrakaiWeb.Router do
       finch: Kobrakai.Finch
   end
 
+  scope "/ws", KobrakaiWeb do
+    get "/connection_timer/:name", WebsocketUpgrade, KobrakaiWeb.ConnectionTimer
+  end
+
   scope "/", KobrakaiWeb do
     pipe_through [:browser, :admin]
 
