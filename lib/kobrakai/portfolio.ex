@@ -8,13 +8,13 @@ defmodule Kobrakai.Portfolio do
 
   alias Kobrakai.Blog.NotFoundError
 
-  @show_drafts Application.compile_env!(:kobrakai, [__MODULE__, :show_drafts])
+  show_drafts = Application.compile_env!(:kobrakai, [__MODULE__, :show_drafts])
 
   # The @projects variable is first defined by NimblePublisher.
   # Let's further modify it by sorting all projects by descending date.
   @projects @projects
             |> Enum.sort_by(fn project -> project.date end, Date)
-            |> Enum.filter(fn project -> !project.draft || @show_drafts end)
+            |> Enum.filter(fn project -> !project.draft || show_drafts end)
 
   # And finally export them
   def all_projects, do: @projects

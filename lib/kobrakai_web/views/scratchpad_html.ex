@@ -12,7 +12,7 @@ defmodule KobrakaiWeb.ScratchpadHTML do
             class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
             headline={pad.name}
             date={pad.date}
-            url={~p"/scratchpad/#{pad.id}"}
+            url={"/scratchpad/#{pad.id}"}
           />
         </ol>
       </div>
