@@ -85,6 +85,15 @@ module.exports = {
     }),
     require("@tailwindcss/forms"),
     require('@tailwindcss/aspect-ratio'),
+    plugin(function ({ addUtilities, theme, e }) {
+      const values = theme('animationDelay')
+      var utilities = Object.entries(values).map(([key, value]) => {
+        return {
+          [`.${e(`animation-delay-${key}`)}`]: { animationDelay: `${value}` },
+        }
+      })
+      addUtilities(utilities)
+    }),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //
