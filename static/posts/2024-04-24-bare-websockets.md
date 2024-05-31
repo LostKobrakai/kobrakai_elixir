@@ -191,3 +191,7 @@ So to me there are two reasons for using bare websockets on a phoenix project:
 
 Additionally this allows for websockets on plain plug applications as well, where
 channels aren't available in the first place.
+
+## Bonus: Elixir based websocket client
+
+Are you also interested in how to connect to a websockets server from elixir? [@chgeuer](https://github.com/chgeuer) did provide a gist on how to connect to the websocket endpoint of this blogpost with an elixir based client. Feel free to check his [gist](https://gist.github.com/LostKobrakai/364b93e346a224218145121857f268c5).
