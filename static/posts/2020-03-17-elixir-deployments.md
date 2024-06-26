@@ -1,13 +1,14 @@
 ---
 title: Are elixir deployments really that hard?
-tags: 
+tags:
   - blog
   - programmierung
 language: EN
 ---
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I&#39;ve thought that <a href="https://twitter.com/rails?ref_src=twsrc%5Etfw">@rails</a> deployment on a non-Docker or non-Heroku production server was tricky. But that is nothing compared to <a href="https://twitter.com/elixirphoenix?ref_src=twsrc%5Etfw">@elixirphoenix</a>.<br><br>A million buggy how-tos and deployment tools. Not a single one works. Not a single README works. Always something &quot;small&quot; is missing.</p>&mdash; Stefan Wintermeyer (@wintermeyer) <a href="https://twitter.com/wintermeyer/status/1239938792536117248?ref_src=twsrc%5Etfw">March 17, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">At the end of a two day hunt for a <a href="https://t.co/nY1mnbHhzA">https://t.co/nY1mnbHhzA</a> like tool I ended up with the advise of pros in an Elixir Slack channel to &quot;just write a Bash script which glues everything together&quot;.</p>&mdash; Stefan Wintermeyer (@wintermeyer) <a href="https://twitter.com/wintermeyer/status/1239938793681096704?ref_src=twsrc%5Etfw">March 17, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I&#39;ve thought that <a href="https://twitter.com/rails?ref_src=twsrc%5Etfw">@rails</a> deployment on a non-Docker or non-Heroku production server was tricky. But that is nothing compared to <a href="https://twitter.com/elixirphoenix?ref_src=twsrc%5Etfw">@elixirphoenix</a>.<br><br>A million buggy how-tos and deployment tools. Not a single one works. Not a single README works. Always something &quot;small&quot; is missing.</p>&mdash; Stefan Wintermeyer (@wintermeyer) <a href="https://twitter.com/wintermeyer/status/1239938792536117248?ref_src=twsrc%5Etfw">March 17, 2020</a></blockquote>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">At the end of a two day hunt for a <a href="https://t.co/nY1mnbHhzA">https://t.co/nY1mnbHhzA</a> like tool I ended up with the advise of pros in an Elixir Slack channel to &quot;just write a Bash script which glues everything together&quot;.</p>&mdash; Stefan Wintermeyer (@wintermeyer) <a href="https://twitter.com/wintermeyer/status/1239938793681096704?ref_src=twsrc%5Etfw">March 17, 2020</a></blockquote>
 
 Thoughts like this are not really rare for people new to elixir. And they're not totally wrong in their assessment either. Doing such a comparison however expects that a similar level of "just handle this for me" is actually possible for elixir tools to provide and if so that it's a good idea to do so. This is an attempt in clearing up a bit of the missing pieces in comparing elixir deployment to deployment tools of other languages.
 
@@ -17,12 +18,12 @@ Deployment in the context of elixir usually refers to the need of talking elixir
 
 In interpreted languages – like ruby – this is usually done by having the server use the language's runtime and shipping source code directly to the server. The source code is then executed using the installed runtime.
 
-The same can be done in elixir as well. With erlang, elixir and mix on the server one *can* run a mix project with `MIX_ENV=prod mix …`. This is usually not how deployment is handled in the community though. People tend to use releases, which I'll discuss in more detail later.
+The same can be done in elixir as well. With erlang, elixir and mix on the server one _can_ run a mix project with `MIX_ENV=prod mix …`. This is usually not how deployment is handled in the community though. People tend to use releases, which I'll discuss in more detail later.
 
 First I'd like to separate "deployments" up into a few sub tasks, which need to be done as part of a deployment. A few key tasks are:
 
-- compile source files to the actual files pushed to a server  
-(prim. language as well as assets like js/css)
+- compile source files to the actual files pushed to a server
+  (prim. language as well as assets like js/css)
 - upload files to a server
 - start/stop logic of running instance on the server
 - keep service running on the server in case of failures
@@ -31,11 +32,11 @@ This is not meant to be a comprehensive list of everything a deployment handles,
 
 ## Why releases and what's the matter with them
 
-Releases on the beam refer to a set of compiled files/folders, which form a self-contained artifact specifically for deployments. Often it comes as a tar archive, which can be unarchived on a production server and be started there using plain old executable shell scripts. 
+Releases on the beam refer to a set of compiled files/folders, which form a self-contained artifact specifically for deployments. Often it comes as a tar archive, which can be unarchived on a production server and be started there using plain old executable shell scripts.
 
 Self-contained for releases means it contains the beam vm, all applications of a project with all their compiled beam files, priv folders and scripts to start/stop things. The server itself doesn't need erlang/elixir installed at all (unless bundling of erts files is disabled). No need to version control a language runtime.
 
-In a mix project a release is built by running `mix release`. There's [great documentation](https://hexdocs.pm/mix/Mix.Tasks.Release.html) available on how it works, so I won't go into much detail here. For phoenix projects make sure to also consult [its documentation](https://hexdocs.pm/phoenix/releases.html). 
+In a mix project a release is built by running `mix release`. There's [great documentation](https://hexdocs.pm/mix/Mix.Tasks.Release.html) available on how it works, so I won't go into much detail here. For phoenix projects make sure to also consult [its documentation](https://hexdocs.pm/phoenix/releases.html).
 
 How does this relate to the difficulty of kitchen sink deployment tools especially if we seem to have a great way to bundle everything up neatly?
 
@@ -65,6 +66,6 @@ In professional environments this is also the place where integration with exist
 
 The last two sections hopefully explain a bit why there are few batteries included tools for handling complete deployments in elixir. The complex, elixir-specific parts are mostly in replicating ones specific server setup – there are e.g. docker solutions for certain os/architectures, but not for others – and the parts, which can be generalized are actually better handled by more general server management/deployment tooling, which can be used in language agnostic manner.
 
-For most companies deployment tools, CI/CD Pipeline and servers are already present, so it's often more a matter of adjusting the elixir workflow to work within those existing systems than it's a case of a tool being able to prescribe how deployment has to work with elixir and doing everything in its way. 
+For most companies deployment tools, CI/CD Pipeline and servers are already present, so it's often more a matter of adjusting the elixir workflow to work within those existing systems than it's a case of a tool being able to prescribe how deployment has to work with elixir and doing everything in its way.
 
 Sadly this means one-off and less infrastructure heavy deployment solutions are currently not supported out of the box to the degree one might hope for. Falling back to installing elixir on the server and running source code can be a solution for those kinds of cases though.
