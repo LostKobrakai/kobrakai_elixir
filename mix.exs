@@ -72,7 +72,9 @@ defmodule Kobrakai.MixProject do
       {:thumbor_path, github: "LostKobrakai/thumbor_path"},
       {:reverse_proxy_plug, "~> 2.1"},
       {:quantum, "~> 3.0"},
-      {:vix, "~> 0.24.0"}
+      {:vix, "~> 0.24.0"},
+      {:extrace, "~> 0.5"},
+      {:dns_cluster, "~> 0.1.1"}
     ]
   end
 

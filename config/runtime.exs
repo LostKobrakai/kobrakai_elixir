@@ -43,10 +43,11 @@ if config_env() == :prod do
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
-      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      ip: {0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: :conn
 
   config :kobrakai, :admin,
     username: System.fetch_env!("AUTH_USERNAME"),
@@ -56,6 +57,9 @@ if config_env() == :prod do
   config :kobrakai, KobrakaiWeb,
     secret_key: System.fetch_env!("SECURITY_KEY"),
     cdn: "https://kobrakai-image.b-cdn.net/"
+
+  # Configure clustering
+  config :kobrakai, dns_cluster_query: System.get_env("DNS_CLUSTER_QUERY")
 
   # ## SSL Support
   #
@@ -80,14 +84,6 @@ if config_env() == :prod do
   # and cert in disk or a relative path inside priv, for example
   # "priv/ssl/server.key". For all supported SSL configuration
   # options, see https://hexdocs.pm/plug/Plug.SSL.html#configure/1
-  #
-  # We also recommend setting `force_ssl` in your endpoint, ensuring
-  # no data is ever sent via http, always redirecting to https:
-  #
-  #     config :kobrakai, KobrakaiWeb.Endpoint,
-  #       force_ssl: [hsts: true]
-  #
-  # Check `Plug.SSL` for all available options in `force_ssl`.
 
   # ## Configuring the mailer
   #

@@ -13,6 +13,8 @@ defmodule KobrakaiWeb.Endpoint do
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
+  plug :health
+  plug :router_url
   plug KobrakaiWeb.Plausible
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -49,4 +51,19 @@ defmodule KobrakaiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug KobrakaiWeb.Router
+
+  def health(conn, _) do
+    case conn do
+      %{request_path: "/health"} -> conn |> send_resp(200, "OK") |> halt()
+      _ -> conn
+    end
+  end
+
+  def router_url(conn, _) do
+    uri = %URI{struct_url() | host: conn.host, scheme: "#{conn.scheme}", port: conn.port}
+
+    conn
+    |> Phoenix.Controller.put_router_url(uri)
+    |> Phoenix.Controller.put_static_url(uri)
+  end
 end

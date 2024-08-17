@@ -13,7 +13,6 @@ defmodule KobrakaiWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :assign_current_path
-    plug :assign_host
   end
 
   pipeline :api do

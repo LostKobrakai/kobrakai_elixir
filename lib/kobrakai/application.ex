@@ -12,6 +12,8 @@ defmodule Kobrakai.Application do
       KobrakaiWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Kobrakai.PubSub},
+      # Connect to cluster
+      {DNSCluster, query: Application.get_env(:kobrakai, :dns_cluster_query) || :ignore},
       # Start Finch
       {Finch, name: Kobrakai.Finch},
       # Start the manager for scheduled jobs
