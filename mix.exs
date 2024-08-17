@@ -61,7 +61,7 @@ defmodule Kobrakai.MixProject do
       {:makeup_eex, ">= 0.0.0"},
       {:yaml_elixir, "~> 2.9"},
       {:redirect, "~> 0.4.0"},
-      {:image, "~> 0.44.0"},
+      {:image, "~> 0.53.0"},
       {:atomex, "~> 0.5.0"},
       {:etag_plug, "~> 1.0"},
       {:ecto, "~> 3.9"},
@@ -72,7 +72,6 @@ defmodule Kobrakai.MixProject do
       {:thumbor_path, github: "LostKobrakai/thumbor_path"},
       {:reverse_proxy_plug, "~> 2.1"},
       {:quantum, "~> 3.0"},
-      {:vix, "~> 0.24.0"},
       {:extrace, "~> 0.5"},
       {:dns_cluster, "~> 0.1.1"}
     ]
