@@ -10,7 +10,15 @@ defmodule KobrakaiWeb.WebsocketUpgrade do
   @impl Plug
   def call(%Plug.Conn{} = conn, handler) do
     conn
-    |> WebSockAdapter.upgrade(handler, %{path_params: conn.path_params}, [])
-    |> Plug.Conn.halt()
+    |> Phoenix.Socket.Transport.check_origin(__MODULE__, KobrakaiWeb.Endpoint, [])
+    |> case do
+      %{halted: true} = conn ->
+        conn
+
+      conn ->
+        conn
+        |> WebSockAdapter.upgrade(handler, %{path_params: conn.path_params}, [])
+        |> Plug.Conn.halt()
+    end
   end
 end
