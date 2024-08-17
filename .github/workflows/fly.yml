@@ -1,0 +1,34 @@
+name: Deployment
+
+# Define workflow that runs when changes are pushed to the
+# `main` branch or pushed to a PR branch that targets the `main`
+# branch. Change the branch name if your project uses a
+# different name for the main branch like "master" or "production".
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    uses: ./.github/workflows/elixir.yml
+  deploy:
+    env:
+      MIX_ENV: prod
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    runs-on: ubuntu-24.04
+    name: Deploy to fly.io
+    needs: [tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy
+        run: flyctl deploy --remote-only
