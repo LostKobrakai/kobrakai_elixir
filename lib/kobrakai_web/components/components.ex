@@ -111,7 +111,11 @@ defmodule KobrakaiWeb.Components do
     sources =
       Enum.map(assigns.srcset, fn factor ->
         path =
-          %ThumborPath{source: assigns.src, size: {size_w * factor, size_h * factor}}
+          %ThumborPath{
+            source: assigns.src,
+            size: {size_w * factor, size_h * factor},
+            filters: ["quality(85)"]
+          }
           |> ThumborPath.build(KobrakaiWeb.fetch_secret())
 
         {Path.join(KobrakaiWeb.cdn(), path), factor}

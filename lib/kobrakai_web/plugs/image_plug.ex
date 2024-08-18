@@ -86,10 +86,25 @@ defmodule KobrakaiWeb.ImagePlug do
           image
       end)
 
+    opts =
+      thumbor_path.filters
+      |> Enum.flat_map(fn filter ->
+        case Code.string_to_quoted(filter) do
+          {:ok, {:quality, _, [parameter]}} when parameter in 1..100 -> [{:quality, parameter}]
+          {:ok, _} -> []
+        end
+      end)
+      |> Enum.into(%{quality: 100})
+
     conn = send_chunked(conn, 200)
 
     image
-    |> Image.stream!(suffix: ".jpg", buffer_size: 5_242_880, progressive: true, quality: 100)
+    |> Image.stream!(
+      suffix: ".jpg",
+      buffer_size: 5_242_880,
+      progressive: true,
+      quality: opts.quality
+    )
     |> Enum.reduce_while(conn, fn chunk, conn ->
       case chunk(conn, chunk) do
         {:ok, conn} -> {:cont, conn}
