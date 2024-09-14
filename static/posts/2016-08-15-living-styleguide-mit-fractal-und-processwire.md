@@ -32,7 +32,7 @@ Vor kurzem bin ich dann auf [Fractal](http://fractal.build/) gestoßen. Fractal 
 
 Diese Struktur ist schon für sich allein sehr übersichtlich und lässt dem Nutzer sehr viele Möglichkeiten eine Komponente umfassend zu beschreiben. Das Frontend setzt hier noch das i-Tüpfelchen, in dem es die verfügbaren Daten noch mit einem angenehmen Interface aufbereitet.
 
-{% primaryImage "/images/blog/fractal-processwire/intro.png", "" %}
+![](/images/blog/fractal-processwire/intro.png)
 
 Bei der Installation von Fractal stellt man auch sofort fest, dass hier im Sinne der Flexibilität einiges anderes läuft als bei Alternativen. Eine der ersten Einstellungen, die man trifft: Wo im Dateisystem sollen Komponenten, Dokumentation oder Assets abgelegt werden. Das macht es einfach das System neben z.B. einer CMS oder anderen Projektstruktur zu integrieren und auf bereits bestehende Ordnerstrukturen zurückzugreifen.
 
@@ -61,7 +61,7 @@ Im folgenden gehe ich von folgender Struktur aus, wobei diese durchaus auch noch
 │   │   │   │   └── basic-page.twig
 │   │   │   └── basic-page.php
 │   │   ├── init.php
-│   │   └── fractal-handles.php 
+│   │   └── fractal-handles.php
 │   ├── wire
 │   ├── fractal.js
 │   ├── composer.json
@@ -107,7 +107,7 @@ Das Setup ermöglicht es alle Teile des Interfaces unabhängig von der eigentlic
 
 Um das System auch nicht nur in der Theorie sondern auch an einem praktischen Beispiel zu testen hab ich meine private Homepage komplett auf Twig mit Fractal umgestellt und ein wenig mit Reverse-Engineering die einzelnen Komponenten herausgetrennt. Im Idealfall macht man das natürlich nicht nachträglich ;)
 
-{% primaryImage "/images/blog/fractal-processwire/example.png", "" %}
+![](/images/blog/fractal-processwire/example.png)
 
 Mit den Änderungen ist nun mein ProcessWire “Template-File” ein reiner Controller, wie man es von MCV Frameworks kennt und von meinem HTML/PHP Spaghetti Code ist nur ein kleiner Block übrig geblieben, der das oben angezeigte Twig Template mit den richtigen Daten befüllt.
 
@@ -131,13 +131,13 @@ echo $twig->render('@index', array(
 
 Alles in Allem bin ich mit dem System bisher super zufrieden. Fractal bietet neben dem oben Beschriebenen noch einiges mehr an Möglichkeiten zur Anpassung und weitere coole Features. Dadurch, dass die Twig Templates nicht direkt aus ProcessWire geladen und gerendert werden ist man total frei darin wie man die nötigen Daten generiert und an welchem Fleck man dann tatsächlich Markup generiert und ausgibt. Man könnte das System somit sogar ohne Probleme Stück-für-Stück in ein bestehendes Projekt einarbeiten oder auch nur für einige Komponenten und den Rest manuell erstellen. Meine nächsten Projekte werden auf jeden Fall in der Kombination starten und dann wird sich herausstellen, wie gut es sich im Arbeitsalltag schlägt.
 
---- 
+---
 
 Links:
 
-Fractal: [http://fractal.build/](http://fractal.build/)  
-ProcessWire: [http://processwire.com/](http://processwire.com/)  
+Fractal: [http://fractal.build/](http://fractal.build/)
+ProcessWire: [http://processwire.com/](http://processwire.com/)
 
-Twig-Adapter: [https://github.com/LostKobrakai/twig](https://github.com/LostKobrakai/twig)  
-PHP-Companion: [https://github.com/LostKobrakai/frctl-twig](https://github.com/LostKobrakai/frctl-twig)  
+Twig-Adapter: [https://github.com/LostKobrakai/twig](https://github.com/LostKobrakai/twig)
+PHP-Companion: [https://github.com/LostKobrakai/frctl-twig](https://github.com/LostKobrakai/frctl-twig)
 Bootstraper für ProcessWire: [https://github.com/LostKobrakai/processwire-fractal](https://github.com/LostKobrakai/processwire-fractal)

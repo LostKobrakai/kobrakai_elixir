@@ -1,6 +1,7 @@
 defmodule Mix.Tasks.Images.Compile do
   @moduledoc "Compile all images of projects"
   @shortdoc "Compiles images"
+  alias Kobrakai.Blog
   alias Kobrakai.Portfolio
 
   use Mix.Task
@@ -21,6 +22,16 @@ defmodule Mix.Tasks.Images.Compile do
           do: i["source"]
 
     create_thumbnails(secondary, Portfolio.secondary_image_sizes())
+
+    for p <- Blog.all_posts(),
+        path <- Regex.scan(~r/\/images.*?\.[a-z]+/, p.body) do
+      path = Path.relative(path)
+      source = Path.join("static", path)
+      target = Path.join("priv/static", path)
+      target |> Path.dirname() |> File.mkdir_p!()
+      Mix.shell().info("* Copying #{path}")
+      File.copy(source, target)
+    end
   end
 
   defp create_thumbnails(paths, sizes) do
