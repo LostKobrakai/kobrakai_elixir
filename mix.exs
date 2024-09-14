@@ -46,8 +46,7 @@ defmodule Kobrakai.MixProject do
        depth: 1},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.0"},
-      {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      {:bun, "~> 1.3", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
@@ -86,13 +85,13 @@ defmodule Kobrakai.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "tailwind storybook", "esbuild default"],
+      "assets.setup": ["bun.install --if-missing"],
+      "assets.build": ["bun default", "bun css", "bun storybook"],
       "assets.deploy": [
         "images.compile",
-        "tailwind default --minify",
-        "tailwind storybook --minify",
-        "esbuild default --minify",
+        "bun default --minify",
+        "bun css --minify",
+        "bun storybook --minify",
         "phx.digest"
       ]
     ]
