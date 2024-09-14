@@ -63,17 +63,20 @@
       </p>
     </div>
   </div>
-  <div class="sm:col-span-2 lg:col-span-3">
-    <h2 class="uppercase mb-6 group">
-      <.link href={~p"/photography"}>Fotografie</.link>
-    </h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 baguette">
+  <div class="sm:col-span-2 lg:col-span-3 space-y-2">
+    <h2 class="uppercase mb-6 group">Fotografie</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
       <.link
         :for={{file, index} <- Enum.with_index(@images, 1)}
         class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
         href={url(@conn, ~p"/photography/#{file}")}
       >
         <.image src={url(@conn, ~p"/photography/#{file}")} size={{320, 0}} />
+      </.link>
+    </div>
+    <div>
+      <.link navigate={~p"/photography"}>
+        Alle Bilder <.arrow />
       </.link>
     </div>
   </div>
