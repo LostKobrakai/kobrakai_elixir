@@ -11,6 +11,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Excalifont';
+  src: url('/font/Virgil.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Excalifont';
+  src: url('/font/Virgil.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Virgil';
+  src: url('/font/Virgil.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer utilities {
   .animation-fill-mode-forwards {
    animation-fill-mode: forwards;
@@ -24,6 +45,16 @@
   }
   .columns-3 {
     columns: 3;
+  }
+  
+  .excalidraw {
+    color: black;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .dark .excalidraw {
+    filter: invert(100%) hue-rotate(180deg);
   }
 }
 
