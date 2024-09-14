@@ -54,6 +54,7 @@ COPY assets assets
 COPY static static
 
 # compile assets
+RUN mix bun install
 RUN mix assets.deploy
 
 # Compile the release

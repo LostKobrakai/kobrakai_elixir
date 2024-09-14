@@ -1,0 +1,12 @@
+<masonry-layout
+  class="[&:not(:defined)]:grid [&:not(:defined)]:gap-4 grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))]"
+  gap="16"
+>
+  <.link
+    :for={{file, index} <- Enum.with_index(@photos, 1)}
+    class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
+    href={url(@conn, ~p"/photography/#{file}")}
+  >
+    <.image src={url(@conn, ~p"/photography/#{file}")} size={{400, 0}} />
+  </.link>
+</masonry-layout>

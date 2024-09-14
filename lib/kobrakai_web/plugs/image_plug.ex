@@ -3,11 +3,9 @@ defmodule KobrakaiWeb.ImagePlug do
   import Plug.Conn
 
   plug PlugCacheControl,
-    directives: [
-      :public,
-      max_age: {1, :hour},
-      stale_while_revalidate: {20, :minutes}
-    ]
+    directives:
+      [:public] ++
+        Application.compile_env!(:kobrakai, [:image_plug_cache])
 
   plug :check_hmac
   plug :build_image

@@ -3,7 +3,7 @@
   <div>
     <h2 class="uppercase mb-6">Projekte</h2>
     <ol class="staggered-intro">
-      <.limited_listing :let={limited} list={@projects} max={-9} reverse>
+      <.limited_listing :let={limited} list={@projects} max={9} reverse>
         <.list_item
           :for={{p, index} <- Enum.with_index(limited)}
           class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
@@ -65,20 +65,15 @@
   </div>
   <div class="sm:col-span-2 lg:col-span-3">
     <h2 class="uppercase mb-6 group">
-      <.link href="https://foto.space.kobrakai.de/" target="_blank">
-        Fotografie <.arrow direction="top-left" />
-      </.link>
+      <.link href={~p"/photography"}>Fotografie</.link>
     </h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 baguette">
       <.link
-        :for={{path, index} <- Enum.with_index(@images, 1)}
+        :for={{file, index} <- Enum.with_index(@images, 1)}
         class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
-        href={"https://foto.space.kobrakai.de/site/assets/files/#{path}.jpg"}
+        href={url(@conn, ~p"/photography/#{file}")}
       >
-        <.image
-          src={"https://foto.space.kobrakai.de/site/assets/files/#{path}.jpg"}
-          size={{320, 0}}
-        />
+        <.image src={url(@conn, ~p"/photography/#{file}")} size={{320, 0}} />
       </.link>
     </div>
   </div>

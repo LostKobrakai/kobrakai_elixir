@@ -3,6 +3,7 @@
     "../deps/*"
   ],
   "dependencies": {
+    "@appnest/masonry-layout": "^2.2.3",
     "phoenix": "workspace:*",
     "phoenix_html": "workspace:*",
     "phoenix_live_view": "workspace:*",

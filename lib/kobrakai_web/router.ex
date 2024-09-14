@@ -42,6 +42,7 @@ defmodule KobrakaiWeb.Router do
     get "/kolumne", BlogController, :index
     get "/kolumne/:id", BlogController, :show
 
+    get "/photography", CustomController, :photography
     get "/werdegang", CustomController, :cv
     get "/kontakt", CustomController, :contact
     get "/impressum", CustomController, :legal

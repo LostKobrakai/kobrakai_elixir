@@ -33,6 +33,7 @@ config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Local
 # Configure esbuild (the version is required)
 config :bun,
   version: "1.1.27",
+  install: [args: ~w(install), cd: Path.expand("../assets", __DIR__), env: %{}],
   default: [
     args:
       ~w(build js/app.js js/storybook.js --outdir=../priv/static/assets --external /fonts/* --external /images/*),
@@ -70,6 +71,10 @@ config :kobrakai, Kobrakai.Quantum.Scheduler,
     {"@reboot", {Kobrakai.CV, :refresh_elixir_forum_stats, []}},
     {"@daily", {Kobrakai.CV, :refresh_elixir_forum_stats, []}}
   ]
+
+config :kobrakai, :image_plug_cache,
+  max_age: {24, :hour},
+  stale_while_revalidate: {12, :hour}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

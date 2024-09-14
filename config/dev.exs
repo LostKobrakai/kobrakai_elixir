@@ -3,6 +3,10 @@ import Config
 config :kobrakai, Kobrakai.Blog, show_drafts: true
 config :kobrakai, Kobrakai.Portfolio, show_drafts: true
 
+config :kobrakai, :image_plug_cache,
+  max_age: {1, :hour},
+  stale_while_revalidate: {20, :minutes}
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
