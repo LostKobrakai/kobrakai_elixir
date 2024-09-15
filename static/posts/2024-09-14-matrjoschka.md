@@ -87,6 +87,10 @@ communicate with a wide array of clients - mobile apps, IoT devices, or even
 other server applications. Any client able of speaking the chosen transport
 protocol can participate in the real-time communication.
 
+One good example in the IoT / other server space is
+[NervesHub](https://www.nerves-hub.org/), which implements remote IEx shells for
+embedded devices, as well as distributing firmware updates, over Channels.
+
 Channels are the final layer of extension on the PubSub side of Phoenix. Next
 we'll look at two related features of Phoenix, which make use of PubSub to enable
 more complex functionality in Phoenix.
