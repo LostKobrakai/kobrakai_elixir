@@ -3,9 +3,9 @@ defmodule KobrakaiWeb.VideoController do
 
   def index(conn, _) do
     videos =
-      for video <- Kobrakai.Bold.list_videos!().body["data"] do
-        Kobrakai.Bold.video_response_mapping(video)
-      end
+      Kobrakai.Bold.list_videos!().body["data"]
+      |> Enum.sort_by(& &1["published_at"])
+      |> Enum.map(&Kobrakai.Bold.video_response_mapping/1)
 
     render(conn, :index, videos: videos, page_title: "Videos")
   end
