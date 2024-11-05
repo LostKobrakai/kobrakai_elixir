@@ -7,6 +7,9 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 
+# Configure bold integration
+config :kobrakai, Kobrakai.Bold, api_key: System.fetch_env!("BOLD_API_KEY")
+
 # ## Using releases
 #
 # If you use `mix release`, you need to explicitly enable the server

@@ -1,0 +1,50 @@
+<article class="max-w-4xl mx-auto">
+  <div class="mb-6 leading-tight">
+    <time
+      class="text-gray-500 dark:text-gray-400 text-sm"
+      datetime={Calendar.strftime(@video.date, "%Y-%m-%d")}
+    >
+      <%= Calendar.strftime(@video.date, "%d.%m.%Y") %>
+    </time>
+    <h1 class="uppercase text-3xl mb-2"><%= @video.title %></h1>
+  </div>
+  <media-player
+    class="block w-full aspect-[16/9] mb-6"
+    title={@video.title}
+    src={@video.src}
+    duration={@video.duration}
+    storage="vidstack-player-storage"
+  >
+    <media-provider>
+      <media-poster class="vds-poster" src={@video.thumbnail} alt=""></media-poster>
+      <track
+        :for={s <- @video.subtitles}
+        src={s.url}
+        kind="subtitles"
+        label={s.label}
+        srclang={s.language}
+      />
+      <track src={@video.chapters} kind="chapters" default />
+    </media-provider>
+    <media-video-layout
+      no-audio-gain
+      no-modal
+      thumbnails={"https://image.mux.com/#{@video.playback_id}/storyboard.vtt"}
+    >
+    </media-video-layout>
+  </media-player>
+  <div class="max-w-xl mx-auto prose dark:prose-invert"><%= @video.description %></div>
+  <aside class="mt-32 flex items-center gap-6">
+    <div class="w-16 rounded-full overflow-hidden inline-flex">
+      <img alt="" src={~p"/images/avatar.jpg"} />
+    </div>
+    <p>
+      <a class="hover:underline font-bold" href="/" rel="author">Benjamin Milde</a>
+      <br />
+      <a class="hover:underline" href="/">kobrakai.de</a>
+      <br />
+      <a rel="me" href="https://hachyderm.io/@lostkobrakai" target="_blank">Mastodon</a>
+      · <a rel="me" href="https://github.com/LostKobrakai" target="_blank">GitHub</a>
+    </p>
+  </aside>
+</article>

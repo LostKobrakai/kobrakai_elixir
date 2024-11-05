@@ -72,7 +72,8 @@ defmodule Kobrakai.MixProject do
       {:reverse_proxy_plug, "~> 2.1"},
       {:quantum, "~> 3.0"},
       {:extrace, "~> 0.5"},
-      {:dns_cluster, "~> 0.1.1"}
+      {:dns_cluster, "~> 0.1.1"},
+      {:req, "~> 0.5.0"}
     ]
   end
 

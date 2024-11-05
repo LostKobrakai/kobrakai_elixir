@@ -36,7 +36,7 @@ config :bun,
   install: [args: ~w(install), cd: Path.expand("../assets", __DIR__), env: %{}],
   default: [
     args:
-      ~w(build js/app.js js/storybook.js --outdir=../priv/static/assets --external /fonts/* --external /images/*),
+      ~w(build js/app.js js/storybook.js js/video.js --outdir=../priv/static/assets --external /fonts/* --external /images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{}
   ],
