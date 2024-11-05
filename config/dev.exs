@@ -83,3 +83,6 @@ config :kobrakai, :admin, false
 
 # Configure image plug
 config :kobrakai, KobrakaiWeb, secret_key: "abc"
+
+# Configure bold integration
+config :kobrakai, Kobrakai.Bold, api_key: System.get_env("BOLD_API_KEY")

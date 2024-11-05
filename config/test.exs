@@ -20,3 +20,9 @@ config :logger, level: :warning
 config :phoenix, :plug_init_mode, :runtime
 
 config :kobrakai, :admin, username: "test", password: "pass"
+
+# Configure bold integration
+config :kobrakai, Kobrakai.Bold,
+  req_options: [
+    plug: {Req.Test, Kobrakai.Bold}
+  ]

@@ -7,9 +7,6 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 
-# Configure bold integration
-config :kobrakai, Kobrakai.Bold, api_key: System.fetch_env!("BOLD_API_KEY")
-
 # ## Using releases
 #
 # If you use `mix release`, you need to explicitly enable the server
@@ -63,6 +60,9 @@ if config_env() == :prod do
 
   # Configure clustering
   config :kobrakai, dns_cluster_query: System.get_env("DNS_CLUSTER_QUERY")
+
+  # Configure bold integration
+  config :kobrakai, Kobrakai.Bold, api_key: System.fetch_env!("BOLD_API_KEY")
 
   # ## SSL Support
   #

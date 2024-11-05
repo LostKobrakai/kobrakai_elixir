@@ -3,16 +3,16 @@ defmodule Kobrakai.Bold do
     defexception [:message]
   end
 
-  def api_key do
-    Application.fetch_env!(:kobrakai, __MODULE__)
-    |> Keyword.fetch!(:api_key)
+  defp req_options do
+    config = Application.fetch_env!(:kobrakai, __MODULE__)
+
+    Keyword.get_lazy(config, :req_options, fn ->
+      [auth: Keyword.fetch!(config, :api_key)]
+    end)
   end
 
   def new(options \\ []) do
-    Req.new(
-      base_url: "https://app.boldvideo.io/api/",
-      auth: api_key()
-    )
+    Req.new(base_url: "https://app.boldvideo.io/api/")
     |> Req.Request.append_request_steps(
       post: fn req ->
         with %{method: :get, body: <<_::binary>>} <- req do
@@ -29,6 +29,7 @@ defmodule Kobrakai.Bold do
           {req, resp}
       end
     )
+    |> Req.merge(req_options())
     |> Req.merge(options)
   end
 
