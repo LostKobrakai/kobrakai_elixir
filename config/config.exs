@@ -32,7 +32,7 @@ config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :bun,
-  version: "1.1.27",
+  version: "1.1.34",
   install: [args: ~w(install), cd: Path.expand("../assets", __DIR__), env: %{}],
   default: [
     args:

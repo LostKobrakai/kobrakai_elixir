@@ -88,9 +88,11 @@ defmodule Kobrakai.MixProject do
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["bun.install --if-missing"],
       "assets.build": ["bun default", "bun css", "bun storybook"],
+      # Opt out of --minify-identifiers due to
+      # https://github.com/oven-sh/bun/issues/7710
       "assets.deploy": [
         "images.compile",
-        "bun default --minify",
+        "bun default --minify-whitespace --minify-syntax",
         "bun css --minify",
         "bun storybook --minify",
         "phx.digest"
