@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    <meta name="robots" content={@robots} />
+
     <.live_title suffix=" | Benjamin Milde">
       <%= assigns[:page_title] || "Home" %>
     </.live_title>
@@ -31,9 +33,9 @@
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
       if (
         !window.matchMedia('print').matches &&
-        localStorage.theme === 'dark' || 
+        localStorage.theme === 'dark' ||
         (
-          !('theme' in localStorage) && 
+          !('theme' in localStorage) &&
           window.matchMedia('(prefers-color-scheme: dark)').matches
         )
       ) {

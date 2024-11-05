@@ -13,6 +13,11 @@ defmodule KobrakaiWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :assign_current_path
+    plug :set_robots, :all
+  end
+
+  pipeline :robots_noindex do
+    plug :set_robots, :noindex
   end
 
   pipeline :api do
@@ -48,6 +53,8 @@ defmodule KobrakaiWeb.Router do
     get "/impressum", CustomController, :legal
 
     scope "/scratchpad" do
+      pipe_through :robots_noindex
+
       get "/", ScratchpadController, :index
       live "/checkboxes", Scratchpad.Checkboxes
       live "/table", Scratchpad.Table
