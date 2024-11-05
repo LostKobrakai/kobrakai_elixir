@@ -76,6 +76,13 @@ config :kobrakai, :image_plug_cache,
   max_age: {24, :hour},
   stale_while_revalidate: {12, :hour}
 
+# Use improved compressors
+config :phoenix,
+  static_compressors: [
+    PhoenixBakery.Gzip,
+    PhoenixBakery.Zstd
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

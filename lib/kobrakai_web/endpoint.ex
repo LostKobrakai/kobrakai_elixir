@@ -22,9 +22,10 @@ defmodule KobrakaiWeb.Endpoint do
   # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
   plug Plug.Static,
+    encodings: [{"zstd", ".zst"}],
+    gzip: true,
     at: "/",
     from: :kobrakai,
-    gzip: false,
     only: KobrakaiWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
