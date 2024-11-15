@@ -22,7 +22,7 @@ defmodule Kobrakai.Bold do
     )
     |> Req.Request.append_response_steps(
       http_errors: fn
-        {req, %{status: status}} when status in [400, 404] ->
+        {req, %{status: 404}} ->
           {req, NotFoundError.exception("Failed to find resource at: #{req.url}")}
 
         {req, resp} ->
