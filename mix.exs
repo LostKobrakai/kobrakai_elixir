@@ -87,7 +87,7 @@ defmodule Kobrakai.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
-      "assets.setup": ["bun.install --if-missing"],
+      "assets.setup": ["bun.install --if-missing", "bun install"],
       "assets.build": ["bun default", "bun css", "bun storybook"],
       # Opt out of --minify-identifiers due to
       # https://github.com/oven-sh/bun/issues/7710
