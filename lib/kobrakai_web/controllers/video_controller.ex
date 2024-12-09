@@ -15,6 +15,6 @@ defmodule KobrakaiWeb.VideoController do
       Kobrakai.Bold.get_video!(id).body["data"]
       |> Kobrakai.Bold.video_response_mapping()
 
-    render(conn, :show, video: video)
+    render(conn, :show, video: video, page_title: video.title)
   end
 end
