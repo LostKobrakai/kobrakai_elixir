@@ -3,21 +3,27 @@ defmodule KobrakaiWeb.CustomController do
 
   def photography(conn, _) do
     photos = Kobrakai.Photography.all_images()
-    render(conn, :photography, page_title: "Fotografie", photos: photos)
+
+    conn
+    |> merge_open_graph(title: "Fotografie")
+    |> render(:photography, photos: photos)
   end
 
   def cv(conn, _) do
-    render(conn, :cv,
-      page_title: "Werdegang",
-      elixir_forum_stats: Kobrakai.CV.elixir_forum_stats()
-    )
+    conn
+    |> merge_open_graph(title: "Werdegang")
+    |> render(:cv, elixir_forum_stats: Kobrakai.CV.elixir_forum_stats())
   end
 
   def contact(conn, _) do
-    render(conn, :contact, page_title: "Kontakt")
+    conn
+    |> merge_open_graph(title: "Kontakt")
+    |> render(:contact)
   end
 
   def legal(conn, _) do
-    render(conn, :legal, page_title: "Impressum")
+    conn
+    |> merge_open_graph(title: "Impressum")
+    |> render(:legal)
   end
 end

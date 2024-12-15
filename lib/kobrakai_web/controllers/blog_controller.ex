@@ -3,17 +3,20 @@ defmodule KobrakaiWeb.BlogController do
   alias Kobrakai.Blog
 
   def index(conn, _) do
-    render(conn, :index, posts: Blog.all_posts(), page_title: "Kolumne")
+    conn
+    |> merge_open_graph(title: "Kolumne")
+    |> render(:index, posts: Blog.all_posts())
   end
 
   def show(conn, %{"id" => id}) do
     post = Blog.get_post_by_id!(id)
 
-    render(conn, :show,
-      post: post,
-      page_title: post.title,
-      og_type: "article",
-      excerpt: post.excerpt
+    conn
+    |> merge_open_graph(
+      title: post.title,
+      description: post.excerpt,
+      type: "article"
     )
+    |> render(:show, post: post)
   end
 end

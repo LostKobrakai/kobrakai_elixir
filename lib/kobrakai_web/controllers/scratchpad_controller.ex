@@ -11,9 +11,8 @@ defmodule KobrakaiWeb.ScratchpadController do
         |> Enum.sort_by(& &1.date, Date)
 
   def index(conn, _) do
-    render(conn, :index,
-      pads: @pads,
-      page_title: "Scratchpad"
-    )
+    conn
+    |> merge_open_graph(title: "Scratchpad")
+    |> render(:index, pads: @pads)
   end
 end

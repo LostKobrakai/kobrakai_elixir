@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <meta name="robots" content={@robots} />
+    <KobrakaiWeb.OpenGraph.render og={@og} />
 
     <.live_title suffix=" | Benjamin Milde">
-      <%= assigns[:page_title] || "Home" %>
+      <%= get_in(assigns.og.title) || assigns[:page_title] %>
     </.live_title>
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,16 +21,6 @@
     </script>
     <script async phx-track-static type="text/javascript" src={~p"/assets/video.js"}>
     </script>
-
-    <meta name="robots" content={assigns[:robots] || "index, follow"} />
-
-    <meta property="og:title" content={assigns[:page_title] || "Home"} />
-    <meta :if={assigns[:excerpt]} name="description" content={assigns[:excerpt]} />
-    <meta :if={assigns[:excerpt]} property="og:description" content={assigns[:excerpt]} />
-    <meta property="og:url" content={Phoenix.Controller.current_path(@conn)} />
-    <meta property="og:image" content={~p"/images/signee.png"} />
-    <meta property="og:type" content={assigns[:og_type] || "website"} />
-    <link rel="canonical" href={Phoenix.Controller.current_path(@conn)} />
 
     <script type="text/javascript">
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC

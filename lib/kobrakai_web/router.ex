@@ -4,6 +4,7 @@ defmodule KobrakaiWeb.Router do
   import PhoenixStorybook.Router
   import Redirect
   import KobrakaiWeb.Plugs
+  import KobrakaiWeb.OpenGraph
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,6 +15,11 @@ defmodule KobrakaiWeb.Router do
     plug :put_secure_browser_headers
     plug :assign_current_path
     plug :set_robots, :all
+
+    plug :merge_open_graph,
+      title: "Kobrakai",
+      image: "/images/signee.png",
+      type: "website"
   end
 
   pipeline :robots_noindex do
@@ -48,8 +54,8 @@ defmodule KobrakaiWeb.Router do
     get "/kolumne", BlogController, :index
     get "/kolumne/:id", BlogController, :show
 
-    get "/video", VideoController, :index
-    get "/video/:id", VideoController, :show
+    get "/videos", VideoController, :index
+    get "/videos/:id", VideoController, :show
 
     get "/photography", CustomController, :photography
     get "/werdegang", CustomController, :cv

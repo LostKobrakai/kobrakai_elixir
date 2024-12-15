@@ -12,10 +12,6 @@ defmodule KobrakaiWeb.Hooks do
     {:cont, socket}
   end
 
-  def on_mount(:noindex, _params, _session, socket) do
-    {:cont, assign(socket, robots: "noindex, nofollow")}
-  end
-
   def on_mount(:scratchpad, _params, _session, socket) do
     {:cont, assign(socket, page_title: "Scratchpad")}
   end

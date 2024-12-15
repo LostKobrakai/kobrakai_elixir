@@ -4,7 +4,6 @@ defmodule KobrakaiWeb.Scratchpad.Checkboxes do
 
   on_mount {KobrakaiWeb.Hooks, :scratchpad}
   on_mount {KobrakaiWeb.Hooks, :current_path}
-  on_mount {KobrakaiWeb.Hooks, :noindex}
 
   @impl true
   def render(assigns) do

@@ -60,6 +60,7 @@ defmodule KobrakaiWeb do
 
       import Plug.Conn
       import KobrakaiWeb.Gettext
+      import KobrakaiWeb.OpenGraph
 
       unquote(verified_routes())
     end

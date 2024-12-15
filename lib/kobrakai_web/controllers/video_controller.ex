@@ -7,7 +7,9 @@ defmodule KobrakaiWeb.VideoController do
       |> Enum.sort_by(& &1["published_at"])
       |> Enum.map(&Kobrakai.Bold.video_response_mapping/1)
 
-    render(conn, :index, videos: videos, page_title: "Videos")
+    conn
+    |> merge_open_graph(title: "Videos")
+    |> render(:index, videos: videos)
   end
 
   def show(conn, %{"id" => id}) do
@@ -15,6 +17,15 @@ defmodule KobrakaiWeb.VideoController do
       Kobrakai.Bold.get_video!(id).body["data"]
       |> Kobrakai.Bold.video_response_mapping()
 
-    render(conn, :show, video: video, page_title: video.title)
+    conn
+    |> merge_open_graph(
+      title: video.title,
+      description: video.description,
+      type: "video.episode",
+      image: video.thumbnail,
+      video: video.src,
+      video_duration: video.duration
+    )
+    |> render(:show, video: video)
   end
 end
