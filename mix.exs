@@ -34,9 +34,9 @@ defmodule Kobrakai.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7"},
-      {:phoenix_html, "~> 4.0"},
+      {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.20.0"},
+      {:phoenix_live_view, "~> 1.0"},
       {:hero_icons,
        github: "tailwindlabs/heroicons",
        tag: "v2.1.1",
@@ -64,7 +64,7 @@ defmodule Kobrakai.MixProject do
       {:atomex, "~> 0.5.0"},
       {:etag_plug, "~> 1.0"},
       {:ecto, "~> 3.9"},
-      {:phoenix_ecto, "~> 4.4"},
+      {:phoenix_ecto, "~> 4.5"},
       {:bandit, "~> 1.0"},
       {:phoenix_storybook, "~> 0.6.0"},
       {:plug_cache_control, "~> 1.1.0", github: "tanguilp/plug_cache_control"},
