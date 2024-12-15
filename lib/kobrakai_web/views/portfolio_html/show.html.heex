@@ -4,11 +4,11 @@
   </div>
   <div class="lg:order-2">
     <div class="mb-6 leading-tight">
-      <h1 class="uppercase text-3xl mb-2"><%= @project.headline || @project.title %></h1>
-      <h2 class="text-lg"><%= @project.subtitle %></h2>
+      <h1 class="uppercase text-3xl mb-2">{@project.headline || @project.title}</h1>
+      <h2 class="text-lg">{@project.subtitle}</h2>
     </div>
     <div class="prose-custom">
-      <%= Phoenix.HTML.raw(@project.body) %>
+      {Phoenix.HTML.raw(@project.body)}
     </div>
   </div>
   <div class="flex flex-col gap-12">

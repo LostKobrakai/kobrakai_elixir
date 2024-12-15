@@ -7,7 +7,7 @@ defmodule KobrakaiWeb.PortfolioHTML do
   def index(assigns) do
     ~H"""
     <div>
-      <h2 class="uppercase mb-6"><%= @og.title %></h2>
+      <h2 class="uppercase mb-6">{@og.title}</h2>
       <div class="sm:columns-2 lg:columns-3">
         <ol class="-my-4">
           <KobrakaiWeb.PageHTML.list_item

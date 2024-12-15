@@ -6,7 +6,7 @@ defmodule KobrakaiWeb.BlogHTML do
   def index(assigns) do
     ~H"""
     <div>
-      <h2 class="uppercase mb-6"><%= @og.title %></h2>
+      <h2 class="uppercase mb-6">{@og.title}</h2>
       <div class="sm:columns-2 lg:columns-3">
         <ol class="-my-4">
           <KobrakaiWeb.PageHTML.list_item
@@ -32,9 +32,9 @@ defmodule KobrakaiWeb.BlogHTML do
     <%= for p <- @parts do %>
       <%= case p do %>
         <% {:live, live} -> %>
-          <%= live_render(@conn, Module.concat([live])) %>
+          {live_render(@conn, Module.concat([live]))}
         <% {:html, html} -> %>
-          <%= Phoenix.HTML.raw(html) %>
+          {Phoenix.HTML.raw(html)}
       <% end %>
     <% end %>
     """

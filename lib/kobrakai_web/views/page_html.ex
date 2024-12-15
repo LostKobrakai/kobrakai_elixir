@@ -20,15 +20,15 @@ defmodule KobrakaiWeb.PageHTML do
     <li class={["my-2 group", @class]} style="break-inside: avoid;" {@rest}>
       <.link navigate={@url}>
         <div>
-          <%= @headline %>
+          {@headline}
           <.arrow />
         </div>
         <div class="text-gray-500 dark:text-gray-400 text-sm">
-          <%= Calendar.strftime(@date, "%d.%m.%Y") %>
+          {Calendar.strftime(@date, "%d.%m.%Y")}
           <%= unless Enum.empty?(@tags) do %>
             &mdash;
             <ul class="comma-separated inline-flex">
-              <li :for={tag <- @tags}><%= String.capitalize(tag) %></li>
+              <li :for={tag <- @tags}>{String.capitalize(tag)}</li>
             </ul>
           <% end %>
         </div>

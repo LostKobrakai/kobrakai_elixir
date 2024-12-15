@@ -50,9 +50,9 @@ defmodule KobrakaiWeb.Components do
       |> assign(:length, length(list))
 
     ~H"""
-    <%= render_slot(@inner_block, @rendered) %>
+    {render_slot(@inner_block, @rendered)}
     <%= if @length > abs(@max) && @link != [] do %>
-      <%= render_slot(@link, @length) %>
+      {render_slot(@link, @length)}
     <% end %>
     """
   end
@@ -152,6 +152,6 @@ defmodule KobrakaiWeb.Components do
 
     assigns = assign(assigns, formatted: formatted)
 
-    ~H"<data value={@stat}><%= @formatted %></data>"
+    ~H"<data value={@stat}>{@formatted}</data>"
   end
 end
