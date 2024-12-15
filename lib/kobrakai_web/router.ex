@@ -48,12 +48,8 @@ defmodule KobrakaiWeb.Router do
     get "/kolumne", BlogController, :index
     get "/kolumne/:id", BlogController, :show
 
-    scope "/" do
-      pipe_through :robots_noindex
-
-      get "/video", VideoController, :index
-      get "/video/:id", VideoController, :show
-    end
+    get "/video", VideoController, :index
+    get "/video/:id", VideoController, :show
 
     get "/photography", CustomController, :photography
     get "/werdegang", CustomController, :cv
