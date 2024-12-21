@@ -25,12 +25,8 @@ document.querySelectorAll("media-player").forEach((player) => {
     bold.trackEvent(video, evt);
   };
 
-  const handleTimeUpdateEvent = (_evt, nativeEvt) => {
-    bold.trackEvent(video, nativeEvt);
-  };
-
   player.addEventListener("play", handleEvent);
   player.addEventListener("pause", handleEvent);
   player.addEventListener("loaded-metadata", handleEvent);
-  player.addEventListener("time-update", handleTimeUpdateEvent);
+  player.addEventListener("time-update", handleEvent);
 });
