@@ -5,14 +5,7 @@ defmodule KobrakaiWeb.Plausible do
     case conn.path_info do
       path when path in [["js", "script.js"], ["api", "event"]] ->
         conn
-        |> Plug.run([
-          {
-            ReverseProxyPlug,
-            upstream: "https://plausible.io",
-            client: Kobrakai.ReverseProxyPlug.FinchClient,
-            response_mode: :buffer
-          }
-        ])
+        |> Plug.run([{ReverseProxyPlug, upstream: "https://plausible.io", response_mode: :buffer}])
         |> Plug.Conn.halt()
 
       _ ->

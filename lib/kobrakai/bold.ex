@@ -3,6 +3,11 @@ defmodule Kobrakai.Bold do
     defexception [:message]
   end
 
+  def api_key do
+    config = Application.fetch_env!(:kobrakai, __MODULE__)
+    Keyword.fetch!(config, :api_key)
+  end
+
   defp req_options do
     config = Application.fetch_env!(:kobrakai, __MODULE__)
 

@@ -16,6 +16,7 @@ defmodule KobrakaiWeb.Endpoint do
   plug :health
   plug :router_url
   plug KobrakaiWeb.Plausible
+  plug KobrakaiWeb.BoldVideo
 
   # Serve at "/" the static files from "priv/static" directory.
   #

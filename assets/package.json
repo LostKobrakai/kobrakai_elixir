@@ -4,6 +4,7 @@
   ],
   "dependencies": {
     "@appnest/masonry-layout": "^2.2.3",
+    "@boldvideo/bold-js": "^0.4.2",
     "hls.js": "^1.5.17",
     "phoenix": "workspace:*",
     "phoenix_html": "workspace:*",

@@ -69,7 +69,7 @@ defmodule Kobrakai.MixProject do
       {:phoenix_storybook, "~> 0.6.0"},
       {:plug_cache_control, "~> 1.1.0", github: "tanguilp/plug_cache_control"},
       {:thumbor_path, github: "LostKobrakai/thumbor_path"},
-      {:reverse_proxy_plug, "~> 2.1"},
+      {:reverse_proxy_plug, "~> 3.0"},
       {:quantum, "~> 3.0"},
       {:extrace, "~> 0.5"},
       {:dns_cluster, "~> 0.1.1"},
