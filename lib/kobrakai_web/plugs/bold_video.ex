@@ -4,16 +4,23 @@ defmodule KobrakaiWeb.BoldVideo do
   def call(conn, _) do
     case conn.path_info do
       ["api", "bold" | rest] ->
-        conn
-        |> Plug.Conn.put_req_header("authorization", Kobrakai.Bold.api_key())
-        |> Plug.forward(
-          rest,
-          ReverseProxyPlug,
-          ReverseProxyPlug.init(
-            upstream: "https://app.boldvideo.io/",
-            response_mode: :buffer
+        if rest in [
+             ["api", "v1", "event"]
+           ] do
+          conn
+          |> Plug.Conn.put_req_header("authorization", Kobrakai.Bold.api_key())
+          |> Plug.forward(
+            rest,
+            ReverseProxyPlug,
+            ReverseProxyPlug.init(
+              upstream: "https://app.boldvideo.io/",
+              response_mode: :buffer
+            )
           )
-        )
+        else
+          conn
+          |> Plug.Conn.send_resp(401, "")
+        end
         |> Plug.Conn.halt()
 
       _ ->
