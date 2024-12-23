@@ -93,7 +93,7 @@ defmodule Kobrakai.MixProject do
       # https://github.com/oven-sh/bun/issues/7710
       "assets.deploy": [
         "images.compile",
-        "bun default --minify-whitespace --minify-syntax",
+        "bun default --minify --format=iife",
         "bun css --minify",
         "bun storybook --minify",
         "phx.digest"

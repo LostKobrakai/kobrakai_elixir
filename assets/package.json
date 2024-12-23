@@ -5,7 +5,7 @@
   "dependencies": {
     "@appnest/masonry-layout": "^2.2.3",
     "@boldvideo/bold-js": "^0.4.2",
-    "hls.js": "^1.5.17",
+    "hls.js": "^1.5.18",
     "phoenix": "workspace:*",
     "phoenix_html": "workspace:*",
     "phoenix_live_view": "workspace:*",
@@ -16,6 +16,6 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
-    "tailwindcss": "^3.4.9"
+    "tailwindcss": "^3.4.17"
   }
 }
