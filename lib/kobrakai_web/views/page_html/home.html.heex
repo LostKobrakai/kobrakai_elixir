@@ -1,5 +1,34 @@
 <h1 class="sr-only">Benjamin Milde</h1>
 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="sm:col-span-2 lg:col-span-3 space-y-4">
+    <h2 class="uppercase mb-6 group">Video</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <%= for {video, index} <- Enum.with_index(@videos, 1) do %>
+        <.link
+          :if={video}
+          class={[
+            "opacity-0",
+            "animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"
+          ]}
+          href={url(@conn, ~p"/videos/#{video.id}")}
+        >
+          <.image class="border-white border-2 mb-1" src={video.thumbnail} size={{640, 0}} />
+          <div class="text-gray-500 dark:text-gray-400 text-sm">
+            {Calendar.strftime(video.date, "%d.%m.%Y")}
+          </div>
+        </.link>
+        <div :if={video == nil}>
+          <div class="border-neutral-900 border-2 mb-1 aspect-[16/9]"></div>
+          <div class="text-gray-500 dark:text-gray-400 text-sm"></div>
+        </div>
+      <% end %>
+    </div>
+    <div :if={Enum.count(@videos) > 4}>
+      <.link navigate={~p"/videos"}>
+        Alle Videos <.arrow />
+      </.link>
+    </div>
+  </div>
   <div>
     <h2 class="uppercase mb-6">Projekte</h2>
     <ol class="staggered-intro">
