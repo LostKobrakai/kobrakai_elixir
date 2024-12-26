@@ -7,8 +7,6 @@ defmodule KobrakaiWeb.PageController do
       |> Enum.sort_by(& &1["published_at"])
       |> Enum.take(4)
       |> Enum.map(&Kobrakai.Bold.video_response_mapping/1)
-      |> Stream.concat(Stream.repeatedly(fn -> nil end))
-      |> Enum.take(4)
 
     # The home page is often custom made,
     # so skip the default app layout.
