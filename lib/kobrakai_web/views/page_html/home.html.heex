@@ -17,10 +17,12 @@
         </div>
       </.link>
       <div
-        :for={i <- [-4, -3, -2, -1] |> Enum.drop(Enum.count(@videos))}
+        :for={index <- Enum.drop(0..3//1, Enum.count(@videos))}
         class={[
-          if(i == -3, do: "hidden sm:block"),
-          if(i in [-2, -1], do: "hidden lg:block")
+          "opacity-0",
+          "animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}",
+          if(index in [0, 1], do: "hidden sm:block"),
+          if(index in [2, 3], do: "hidden lg:block")
         ]}
       >
         <div class="border-neutral-900 border-2 mb-1 aspect-[16/9]"></div>
