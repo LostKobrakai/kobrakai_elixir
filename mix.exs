@@ -88,13 +88,14 @@ defmodule Kobrakai.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["bun.install --if-missing", "bun install"],
-      "assets.build": ["bun default", "bun css", "bun storybook"],
+      "assets.build": ["bun default", "bun css", "bun storybook", "bun serviceworker"],
       "assets.deploy": [
         "images.compile",
         "bun default --minify",
         "bun css --minify",
         "bun storybook --minify",
-        "phx.digest"
+        "phx.digest",
+        "bun serviceworker --minify"
       ]
     ]
   end

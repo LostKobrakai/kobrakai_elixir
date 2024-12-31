@@ -75,12 +75,6 @@ defmodule KobrakaiWeb.Router do
   end
 
   scope "/", KobrakaiWeb do
-    pipe_through :api
-
-    get "/cache", CacheController, :show
-  end
-
-  scope "/", KobrakaiWeb do
     pipe_through :rss
 
     get "/feed.xml", RssController, :rss

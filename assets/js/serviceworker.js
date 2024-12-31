@@ -1,14 +1,17 @@
-"use strict";
+// Make imported functions be considered macros
+// They're executed at bundle time and only their results are emited in the resulting bundle.
+// Not sure how data is handled, but it likely is inlined as is.
+// Supports async functions, where results are awaited on.
+// https://bun.sh/docs/bundler/macros
+import { cacheMacro } from "./serviceworker/cache_manifest.js" with { type: "macro" };
 
-const version = "20241231";
-const staticCacheName = "static-" + version;
+const cache = cacheMacro();
+const staticCacheName = "static-" + cache.hash;
 const cacheList = [staticCacheName];
 
 async function updateStaticCache() {
-  let response = await fetch("/cache");
-  let json = await response.json();
   let staticCache = await caches.open(staticCacheName);
-  staticCache.addAll(json.static);
+  staticCache.addAll(cache.cache);
 }
 
 async function clearOldCaches() {

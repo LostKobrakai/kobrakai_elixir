@@ -23,6 +23,7 @@ config :kobrakai, KobrakaiWeb.Endpoint,
   secret_key_base: "5x0q0Y1j1FKgBNGfJmjjOY6qj/GEX7U8EsZWtonVrXIfVaFhcNk4Fg54oXHdX9R2",
   watchers: [
     bun: {Bun, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    serviceworker: {Bun, :install_and_run, [:serviceworker, ~w(--sourcemap=inline --watch)]},
     bun_css: {Bun, :install_and_run, [:css, ~w(--watch)]},
     bun_storybook: {Bun, :install_and_run, [:storybook, ~w(--watch)]}
   ]
