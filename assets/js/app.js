@@ -62,7 +62,7 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("/assets/serviceworker.js", { scope: "/" })
     .then(
-      (registration) => console.log("Service worker registration succeeded."),
+      (_registration) => console.log("Service worker registration succeeded."),
       (error) => console.error(`Service worker registration failed: ${error}`),
     );
 } else {

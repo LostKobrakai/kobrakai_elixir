@@ -5,18 +5,10 @@ const staticCacheName = "static-" + version;
 const cacheList = [staticCacheName];
 
 async function updateStaticCache() {
+  let response = await fetch("/cache");
+  let json = await response.json();
   let staticCache = await caches.open(staticCacheName);
-  staticCache.addAll([
-    "/assets/video.js",
-    "/assets/app.css",
-    "/assets/app.js",
-    "/images/signee.png",
-    "/images/pfeil.png",
-    "/images/avatar.jpg",
-    "/font/noway-regular-webfont.woff",
-    "/font/noway-regular-webfont.woff2",
-    "/font/Virgil.woff2",
-  ]);
+  staticCache.addAll(json.static);
 }
 
 async function clearOldCaches() {

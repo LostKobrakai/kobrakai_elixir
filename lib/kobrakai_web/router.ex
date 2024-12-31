@@ -13,6 +13,9 @@ defmodule KobrakaiWeb.Router do
     plug :put_root_layout, {KobrakaiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :website do
     plug :assign_current_path
     plug :set_robots, :all
 
@@ -45,7 +48,7 @@ defmodule KobrakaiWeb.Router do
   end
 
   scope "/", KobrakaiWeb do
-    pipe_through :browser
+    pipe_through [:browser, :website]
 
     get "/", PageController, :home
     get "/projekte", PortfolioController, :index
@@ -69,6 +72,12 @@ defmodule KobrakaiWeb.Router do
       live "/checkboxes", Scratchpad.Checkboxes
       live "/table", Scratchpad.Table
     end
+  end
+
+  scope "/", KobrakaiWeb do
+    pipe_through :api
+
+    get "/cache", CacheController, :show
   end
 
   scope "/", KobrakaiWeb do
@@ -100,12 +109,12 @@ defmodule KobrakaiWeb.Router do
   end
 
   scope "/" do
+    pipe_through :admin
     storybook_assets()
-  end
 
-  scope "/", KobrakaiWeb do
-    pipe_through [:browser, :admin]
-    live_storybook("/storybook", backend_module: KobrakaiWeb.Storybook)
+    scope "/", KobrakaiWeb do
+      live_storybook("/storybook", backend_module: KobrakaiWeb.Storybook)
+    end
   end
 
   # Other scopes may use custom stacks.

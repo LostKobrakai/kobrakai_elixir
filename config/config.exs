@@ -35,8 +35,10 @@ config :bun,
   version: "1.1.34",
   install: [args: ~w(install), cd: Path.expand("../assets", __DIR__), env: %{}],
   default: [
+    # Use --format=iife to prevent overlaps in global state (variables/functions)
     args:
-      ~w(build js/app.js js/storybook.js js/video.js js/serviceworker.js --format=iife --outdir=../priv/static/assets --external /fonts/* --external /images/*),
+      ~w(build js/app.js js/storybook.js js/video.js js/serviceworker.js) ++
+        ~w(--format=iife --outdir=../priv/static/assets --external /fonts/* --external /images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{}
   ],
