@@ -55,7 +55,7 @@ defmodule KobrakaiWeb.Router do
     get "/kolumne/:id", BlogController, :show
 
     get "/videos", VideoController, :index
-    get "/videos/:id", VideoController, :show
+    get "/videos/:id", VideoController, :show, assigns: %{video_js: true}
 
     get "/photography", CustomController, :photography
     get "/werdegang", CustomController, :cv

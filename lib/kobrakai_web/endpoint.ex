@@ -27,7 +27,8 @@ defmodule KobrakaiWeb.Endpoint do
     gzip: true,
     at: "/",
     from: :kobrakai,
-    only: KobrakaiWeb.static_paths()
+    only: KobrakaiWeb.static_paths(),
+    headers: {__MODULE__, :static_headers, []}
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -67,5 +68,12 @@ defmodule KobrakaiWeb.Endpoint do
     conn
     |> Phoenix.Controller.put_router_url(uri)
     |> Phoenix.Controller.put_static_url(uri)
+  end
+
+  def static_headers(conn) do
+    case conn.request_path do
+      "/assets/serviceworker.js" -> [{"Service-Worker-Allowed", "/"}]
+      _ -> []
+    end
   end
 end
