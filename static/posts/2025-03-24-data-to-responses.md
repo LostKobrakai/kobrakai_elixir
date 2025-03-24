@@ -47,6 +47,9 @@ difference is that the former convention allowed multiple formats to be
 transformed within a single module. This is still possible to configure manually
 in Phoenix 1.7, but not using the default inferred naming convention.
 
+The new convention however aligns with the calling conventions of function
+components of `Phoenix.Component` using the HEEx template engine.
+
 ### Name
 
 We typically call `Phoenix.Controller.render/3`, where `name` and `assigns` are
