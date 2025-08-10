@@ -5,12 +5,6 @@ const plugin = require("tailwindcss/plugin")
 const fs = require("fs")
 const path = require("path")
 
-const range = [...Array(100).keys()]
-const delays = range.reduce((acc, i) => {
-  return { ...acc, [`${i * 55}`]: `${i * 55}ms` };
-}, {})
-const delays_safe = range.map(i => `animation-delay-${i * 55}`)
-
 module.exports = {
   content: [
     "./js/**/*.js",
@@ -19,9 +13,7 @@ module.exports = {
     "../static/**/*.*md"
   ],
   darkMode: 'class',
-  safelist: [...delays_safe],
   theme: {
-    animationDelay: delays,
     screens: {
       'sm': '640px',
       'md': '768px',
@@ -85,15 +77,6 @@ module.exports = {
     }),
     require("@tailwindcss/forms"),
     require('@tailwindcss/aspect-ratio'),
-    plugin(function ({ addUtilities, theme, e }) {
-      const values = theme('animationDelay')
-      var utilities = Object.entries(values).map(([key, value]) => {
-        return {
-          [`.${e(`animation-delay-${key}`)}`]: { animationDelay: `${value}` },
-        }
-      })
-      addUtilities(utilities)
-    }),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

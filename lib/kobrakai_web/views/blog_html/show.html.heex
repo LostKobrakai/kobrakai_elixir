@@ -1,4 +1,4 @@
-<article class="max-w-xl mx-auto">
+<article class="max-w-xl mx-auto post-heading" style={"--name: post-#{@post.id}"}>
   <div class="mb-6 leading-tight">
     <time
       class="text-gray-500 dark:text-gray-400 text-sm"
@@ -6,7 +6,9 @@
     >
       {Calendar.strftime(@post.date, "%d.%m.%Y")}
     </time>
-    <h1 class="uppercase text-3xl mb-2">{@post.headline || @post.title}</h1>
+    <h1 class="uppercase text-3xl mb-2">
+      {@post.headline || @post.title}
+    </h1>
   </div>
   <div class="prose max-w-none dark:prose-invert">
     <.body conn={@conn} content={@post.body} />

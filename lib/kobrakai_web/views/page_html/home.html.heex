@@ -6,10 +6,12 @@
       <.link
         :for={{video, index} <- Enum.with_index(@videos, 1)}
         class={[
+          "video-listing",
           "opacity-0",
-          "animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"
+          "animate-in-small animation-fill-mode-forwards stagger"
         ]}
         href={url(@conn, ~p"/videos/#{video.id}")}
+        style={"--name: video-#{video.id}; --index: #{index}"}
       >
         <.image
           class="border-white border-2 mb-1 aspect-[16/9]"
@@ -24,10 +26,11 @@
         :for={index <- Enum.drop(0..3//1, Enum.count(@videos))}
         class={[
           "opacity-0",
-          "animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}",
+          "animate-in-small animation-fill-mode-forwards stagger",
           if(index in [0, 1], do: "hidden sm:block"),
           if(index in [2, 3], do: "hidden lg:block")
         ]}
+        style={"--index: #{index}"}
       >
         <div class="border-neutral-900 border-2 mb-1 aspect-[16/9]"></div>
         <div class="text-gray-500 dark:text-gray-400 text-sm"></div>
@@ -45,14 +48,18 @@
       <.limited_listing :let={limited} list={@projects} max={9} reverse>
         <.list_item
           :for={{p, index} <- Enum.with_index(limited)}
-          class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+          class="project-listing opacity-0 animate-in animation-fill-mode-forwards stagger"
           headline={p.title}
           date={p.date}
           tags={p.tags}
           url={~p"/projekte/#{p.id}"}
+          style={"--name: project-#{p.id}; --index: #{index}"}
         />
         <:link :let={length}>
-          <li class="group opacity-0 animate-in animation-fill-mode-forwards animation-delay-495">
+          <li
+            class="group opacity-0 animate-in animation-fill-mode-forwards stagger"
+            style="--index: 9"
+          >
             <.link navigate={~p"/projekte"}>
               Alle Projekte ({length}) <.arrow />
             </.link>
@@ -72,14 +79,18 @@
       <.limited_listing :let={limited} list={@posts} max={9} reverse>
         <.list_item
           :for={{p, index} <- Enum.with_index(limited)}
-          class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+          class="post-listing opacity-0 animate-in animation-fill-mode-forwards stagger"
           headline={p.title}
           date={p.date}
           tags={p.tags}
           url={~p"/kolumne/#{p.id}"}
+          style={"--name: post-#{p.id}; --index: #{index}"}
         />
         <:link :let={length}>
-          <li class="group opacity-0 animate-in animation-fill-mode-forwards animation-delay-495">
+          <li
+            class="group opacity-0 animate-in animation-fill-mode-forwards stagger"
+            style="--index: 9"
+          >
             <.link navigate={~p"/kolumne"}>
               Alle Posts ({length}) <.arrow />
             </.link>
@@ -96,7 +107,7 @@
       </span>
     </h2>
     <div class="prose-custom">
-      <p class="opacity-0 animate-in animation-fill-mode-forwards animation-delay-0">
+      <p class="opacity-0 animate-in animation-fill-mode-forwards">
         Designer mit Bachelor of Arts in Mediadesign.<br />
         Programmierer in Front- und Backend.<br /> Hobbyfotograf mit Fokus Peoplefotografie.
       </p>
@@ -107,8 +118,9 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
       <.link
         :for={{file, index} <- Enum.with_index(@images, 1)}
-        class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
+        class="opacity-0 animate-in-small animation-fill-mode-forwards stagger"
         href={url(@conn, ~p"/photography/#{file}")}
+        style={"--index: #{index}"}
       >
         <.image src={url(@conn, ~p"/photography/#{file}")} size={{320, 0}} />
       </.link>

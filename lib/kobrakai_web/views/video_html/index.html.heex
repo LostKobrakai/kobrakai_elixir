@@ -4,11 +4,12 @@
     <ol class="-my-4">
       <KobrakaiWeb.PageHTML.list_item
         :for={{p, index} <- @videos |> Enum.reverse() |> Enum.with_index()}
-        class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+        class="opacity-0 animate-in animation-fill-mode-forwards stagger"
         headline={p.title}
         date={p.date}
         tags={p.tags}
         url={~p"/videos/#{p.id}"}
+        style={"--index: #{index}"}
       />
     </ol>
   </div>

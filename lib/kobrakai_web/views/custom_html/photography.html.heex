@@ -4,8 +4,9 @@
 >
   <.link
     :for={{file, index} <- Enum.with_index(@photos, 1)}
-    class={"opacity-0 animate-in-small animation-fill-mode-forwards animation-delay-#{index * 55}"}
+    class="opacity-0 animate-in-small animation-fill-mode-forwards stagger"
     href={url(@conn, ~p"/photography/#{file}")}
+    style={"--index: #{index}"}
   >
     <.image src={url(@conn, ~p"/photography/#{file}")} size={{400, 0}} />
   </.link>

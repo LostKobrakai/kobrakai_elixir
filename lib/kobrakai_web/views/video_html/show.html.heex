@@ -9,12 +9,13 @@
     <h1 class="uppercase text-3xl mb-2">{@video.title}</h1>
   </div>
   <media-player
-    class="block w-full aspect-[16/9] mb-6"
+    class="block w-full aspect-[16/9] mb-6 video-player"
     data-id={@video.id}
     title={@video.title}
     src={@video.src}
     duration={@video.duration}
     storage="vidstack-player-storage"
+    style={"--name: video-#{@video.id}"}
   >
     <media-provider>
       <media-poster class="vds-poster" src={@video.thumbnail} alt=""></media-poster>

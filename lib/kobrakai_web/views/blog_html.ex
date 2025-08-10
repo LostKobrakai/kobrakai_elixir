@@ -11,11 +11,12 @@ defmodule KobrakaiWeb.BlogHTML do
         <ol class="-my-4">
           <KobrakaiWeb.PageHTML.list_item
             :for={{p, index} <- @posts |> Enum.reverse() |> Enum.with_index()}
-            class={"opacity-0 animate-in animation-fill-mode-forwards animation-delay-#{index * 55}"}
+            class="opacity-0 animate-in animation-fill-mode-forwards stagger"
             headline={p.title}
             date={p.date}
             tags={p.tags}
             url={~p"/kolumne/#{p.id}"}
+            style={"--index: #{index}"}
           />
         </ol>
       </div>

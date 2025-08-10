@@ -8,6 +8,7 @@ defmodule KobrakaiWeb.PageHTML do
   attr :url, :string, required: true
   attr :tags, :list, default: []
   attr :class, :any, default: ""
+  attr :style, :string, default: ""
   attr :rest, :global
 
   def list_item(assigns) do
@@ -17,7 +18,7 @@ defmodule KobrakaiWeb.PageHTML do
       end)
 
     ~H"""
-    <li class={["my-2 group", @class]} style="break-inside: avoid;" {@rest}>
+    <li class={["my-2 group", @class]} style={"break-inside: avoid; #{@style}"} {@rest}>
       <.link navigate={@url}>
         <div>
           {@headline}

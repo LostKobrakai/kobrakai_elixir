@@ -88,9 +88,26 @@ html, body{
   margin-bottom: 1em
 }
 
+.stagger {
+  animation-delay: calc(var(--index) * 55ms);
+}
+
 @media print {
   a::after{
     content: " (" attr(href) ") ";
   }
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.2s;
+}
+
+@media not (prefers-reduced-motion: reduce) {
+  .post-heading, .post-listing { view-transition-name: var(--name) }
+  .project-heading, .project-listing { view-transition-name: var(--name) }
+  .video-player, .video-listing { view-transition-name: var(--name) }
+}
