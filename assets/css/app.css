@@ -80,6 +80,10 @@ html, body{
   list-style-type: disc;
 }
 
+.a-underline a{
+  text-decoration: underline;
+}
+
 .footnotes p {
   margin: 0
 }

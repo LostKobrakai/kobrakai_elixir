@@ -3,12 +3,12 @@
   <div class="sm:columns-2 lg:columns-3">
     <ol class="-my-4">
       <KobrakaiWeb.PageHTML.list_item
-        :for={{p, index} <- @videos |> Enum.reverse() |> Enum.with_index()}
+        :for={{video, index} <- @videos |> Enum.reverse() |> Enum.with_index()}
         class="opacity-0 animate-in animation-fill-mode-forwards stagger"
-        headline={p.title}
-        date={p.date}
-        tags={p.tags}
-        url={~p"/videos/#{p.id}"}
+        headline={video.title}
+        date={video.date}
+        tags={video.tags}
+        url={video.url || ~p"/videos/#{video.id}"}
         style={"--index: #{index}"}
       />
     </ol>

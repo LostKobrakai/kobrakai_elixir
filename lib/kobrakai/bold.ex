@@ -53,6 +53,7 @@ defmodule Kobrakai.Bold do
   def video_response_mapping(video) do
     %{
       id: video["id"],
+      url: nil,
       title: video["title"],
       date:
         video["published_at"]

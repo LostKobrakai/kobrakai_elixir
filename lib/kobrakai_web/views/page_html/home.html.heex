@@ -10,7 +10,7 @@
           "opacity-0",
           "animate-in-small animation-fill-mode-forwards stagger"
         ]}
-        href={url(@conn, ~p"/videos/#{video.id}")}
+        href={video.url || ~p"/videos/#{video.id}"}
         style={"--name: video-#{video.id}; --index: #{index}"}
       >
         <.image
