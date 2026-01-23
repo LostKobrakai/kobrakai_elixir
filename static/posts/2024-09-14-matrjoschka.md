@@ -49,8 +49,8 @@ a single key. Using `Registry.dispatch` those registrations can be used to
 implement [node local PubSub](https://hexdocs.pm/elixir/Registry.html#module-using-as-a-pubsub).
 
 `Registry` is used that way by many tools not just within Phoenix. One example
-would be (`PropertyTable`)[https://hexdocs.pm/property_table/PropertyTable.html]
-often used in nerves systems.
+would be [`PropertyTable`](https://hexdocs.pm/property_table/PropertyTable.html)
+&ndash; a default in nerves systems.
 
 <svg class="excalidraw" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147 148" width="294" height="296">
   <g stroke-linecap="round" transform="translate(10 10) rotate(0 63.5 64)"><path d="M31.75 0 C49.81 -0.08, 72.38 -1.33, 95.25 0 M31.75 0 C52.75 0.21, 72.34 -0.86, 95.25 0 M95.25 0 C116.44 1.56, 126.91 11.96, 127 31.75 M95.25 0 C117.22 -2.06, 126.77 9.26, 127 31.75 M127 31.75 C126.26 48.5, 128.1 64.61, 127 96.25 M127 31.75 C126.75 56.33, 125.97 81.16, 127 96.25 M127 96.25 C125.48 118.48, 115.31 126.6, 95.25 128 M127 96.25 C128.6 116.46, 118.7 126.55, 95.25 128 M95.25 128 C81.37 130, 68.23 128.79, 31.75 128 M95.25 128 C78.7 127.62, 63.85 127.91, 31.75 128 M31.75 128 C12.28 126.14, 1.16 118.41, 0 96.25 M31.75 128 C8.29 129.56, -0.97 118.66, 0 96.25 M0 96.25 C1.2 75.79, 0.37 58.61, 0 31.75 M0 96.25 C-0.19 78.96, 0.85 62.83, 0 31.75 M0 31.75 C1.34 10.56, 11.4 0.79, 31.75 0 M0 31.75 C0.63 10.19, 11.34 -1.19, 31.75 0" stroke="currentColor" stroke-width="2" fill="none"></path></g><g transform="translate(31.620000139872218 61.5) rotate(0 41.87999986012778 12.5)"><text x="41.879999860127775" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="currentColor" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">Registry</text></g>
