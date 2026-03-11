@@ -4,7 +4,9 @@ defmodule KobrakaiWeb.RssController do
   alias Kobrakai.Blog
 
   def rss(conn, _) do
-    send_resp(conn, 200, build_feed(conn, Blog.all_posts() |> Enum.reverse()))
+    conn
+    |> put_resp_content_type("application/atom+xml")
+    |> send_resp(200, build_feed(conn, Blog.all_posts() |> Enum.reverse()))
   end
 
   def build_feed(conn, posts) do
