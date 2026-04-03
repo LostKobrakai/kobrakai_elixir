@@ -85,6 +85,8 @@ defmodule Kobrakai.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
+    colored_mix = "elixir --erl \"-elixir\\ ansi_enabled\\ true\" -S mix"
+
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["bun.install --if-missing", "bun install"],
@@ -96,6 +98,13 @@ defmodule Kobrakai.MixProject do
         "bun storybook --minify",
         "phx.digest",
         "bun serviceworker --minify"
+      ],
+      checks: [
+        "cmd #{colored_mix} deps.unlock --check-unused",
+        "cmd #{colored_mix} compile --force --warnings-as-errors",
+        "cmd #{colored_mix} xref graph --format cycles --label compile-connected --fail-above 0",
+        "cmd #{colored_mix} format --check-formatted",
+        "cmd #{colored_mix} gettext.extract --check-up-to-date"
       ]
     ]
   end

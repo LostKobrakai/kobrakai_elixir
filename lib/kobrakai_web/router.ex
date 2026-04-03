@@ -93,7 +93,9 @@ defmodule KobrakaiWeb.Router do
   end
 
   scope "/ws", KobrakaiWeb do
-    get "/connection_timer/:name", WebsocketUpgrade, KobrakaiWeb.ConnectionTimer
+    get "/connection_timer/:name",
+        WebsocketUpgrade,
+        Module.concat(["KobrakaiWeb", "ConnectionTimer"])
   end
 
   scope "/", KobrakaiWeb do
