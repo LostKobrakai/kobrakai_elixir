@@ -1,10 +1,14 @@
 defmodule Kobrakai.Video do
   use KobrakaiWeb, :verified_routes
 
-  def list_videos do
+  defp default_host() do
+    URI.new!("https://kobrakai.de")
+  end
+
+  def list_videos(host \\ default_host()) do
     Kobrakai.Bold.list_videos!().body["data"]
     |> Enum.map(&Kobrakai.Bold.video_response_mapping/1)
-    |> Enum.concat(external_videos())
+    |> Enum.concat(external_videos(host))
     |> Enum.sort_by(& &1.date, Date)
   end
 
@@ -13,7 +17,7 @@ defmodule Kobrakai.Video do
     |> Kobrakai.Bold.video_response_mapping()
   end
 
-  def external_videos() do
+  def external_videos(host) do
     [
       %{
         url: "https://www.youtube.com/watch?v=YJp6r6IXP6U",
@@ -21,7 +25,7 @@ defmodule Kobrakai.Video do
         title: "Wired up! - Using ecto without schemas*",
         date: ~D[2023-04-23],
         tags: ["video"],
-        thumbnail: url(~p"/images/elixir-conf-eu-2023.jpg")
+        thumbnail: url(host, ~p"/images/elixir-conf-eu-2023.jpg")
       },
       %{
         url: "https://video.goatmire.com/v/wp5qe",

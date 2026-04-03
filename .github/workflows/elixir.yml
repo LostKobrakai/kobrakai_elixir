@@ -118,3 +118,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Trigger Dokploy Deployment
+        run: |
+          curl -fsSX POST \
+            "https://${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy" \
+            -H 'accept: application/json' \
+            -H "x-api-key: ${{ secrets.DOKPLOY_API_KEY }}" \
+            -H 'Content-Type: application/json' \
+            -d '{"applicationId": "${{ secrets.DOKPLOY_APP_ID }}"}'

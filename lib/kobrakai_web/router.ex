@@ -13,6 +13,7 @@ defmodule KobrakaiWeb.Router do
     plug :put_root_layout, {KobrakaiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_hostname
   end
 
   pipeline :website do
@@ -142,5 +143,9 @@ defmodule KobrakaiWeb.Router do
       false -> conn
       config -> Plug.BasicAuth.basic_auth(conn, config)
     end
+  end
+
+  def put_hostname(conn, _) do
+    Phoenix.Controller.put_router_url(conn, conn.host)
   end
 end

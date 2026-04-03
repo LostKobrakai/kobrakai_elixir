@@ -4,7 +4,7 @@ defmodule KobrakaiWeb.VideoController do
   def index(conn, _) do
     conn
     |> merge_open_graph(title: "Videos")
-    |> render(:index, videos: Kobrakai.Video.list_videos())
+    |> render(:index, videos: Kobrakai.Video.list_videos(conn))
   end
 
   def show(conn, %{"id" => id}) do

@@ -10,7 +10,7 @@ defmodule KobrakaiWeb.PageController do
       projects: Kobrakai.Portfolio.featured_projects(),
       posts: Kobrakai.Blog.all_posts(),
       images: Kobrakai.Photography.homepage(),
-      videos: Kobrakai.Video.list_videos() |> Enum.reverse() |> Enum.take(4)
+      videos: Kobrakai.Video.list_videos(conn) |> Enum.reverse() |> Enum.take(4)
     )
   end
 end
