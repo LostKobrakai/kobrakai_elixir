@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*.*.*"
   pull_request:
   workflow_call:
 
@@ -22,8 +24,8 @@ jobs:
       # Specify the OTP and Elixir versions to use when building
       # and running the workflow steps.
       matrix:
-        otp: ["27.0.1"] # Define the OTP version [required]
-        elixir: ["1.17.2"] # Define the elixir version [required]
+        otp: ["28.4"] # Define the OTP version [required]
+        elixir: ["1.19.5"] # Define the elixir version [required]
     steps:
       # Step: Setup Elixir + Erlang image as the base.
       - name: Set up Elixir
@@ -84,3 +86,45 @@ jobs:
       # Step: Execute the tests.
       - name: Run tests
         run: mix test --color
+
+  docker:
+    if: github.event_name == 'push'
+
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

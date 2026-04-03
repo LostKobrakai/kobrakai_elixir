@@ -17,6 +17,7 @@ jobs:
   tests:
     uses: ./.github/workflows/elixir.yml
   deploy:
+    if: false
     env:
       MIX_ENV: prod
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

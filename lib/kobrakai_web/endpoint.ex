@@ -63,7 +63,8 @@ defmodule KobrakaiWeb.Endpoint do
   end
 
   def router_url(conn, _) do
-    uri = %URI{struct_url() | host: conn.host, scheme: "#{conn.scheme}", port: conn.port}
+    %URI{} = base = struct_url()
+    uri = %URI{base | host: conn.host, scheme: "#{conn.scheme}", port: conn.port}
 
     conn
     |> Phoenix.Controller.put_router_url(uri)
