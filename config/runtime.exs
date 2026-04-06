@@ -1,5 +1,11 @@
 import Config
 
+if config_env() != :test do
+  config :kobrakai, KobrakaiWeb.AuthController,
+    client_id: System.get_env("OIDC_CLIENT_ID", "kobrakai"),
+    client_secret: System.fetch_env!("OIDC_CLIENT_SECRET")
+end
+
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration
@@ -48,10 +54,6 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base,
     check_origin: :conn
-
-  config :kobrakai, :admin,
-    username: System.fetch_env!("AUTH_USERNAME"),
-    password: System.fetch_env!("AUTH_PASSWORD")
 
   # Configure image plug
   config :kobrakai, KobrakaiWeb,

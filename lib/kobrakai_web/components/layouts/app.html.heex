@@ -23,11 +23,23 @@
       <a rel="me" href="https://hachyderm.io/@lostkobrakai" target="_blank">Mastodon</a>
       · <a rel="me" href="https://github.com/LostKobrakai" target="_blank">GitHub</a>
     </p>
-    <p class="mt-2">
+    <p class="mt-2 flex justify-center gap-4">
       <button style="button" phx-click={JS.dispatch("toogle-darkmode")}>
         <.icon name="hero-sun" class="hidden h-6 w-6 dark:inline-block" />
         <.icon name="hero-moon" class="inline-block h-6 w-6 dark:hidden" />
       </button>
+      <%= if @current_user do %>
+        <.link
+          href={~p"/auth/deauthenticate?state=#{Phoenix.Controller.current_path(@conn)}"}
+          method="delete"
+        >
+          <.icon name="hero-arrow-right-start-on-rectangle" class="inline-block h-6 w-6" />
+        </.link>
+      <% else %>
+        <.link href={~p"/auth/initiate?state=#{Phoenix.Controller.current_path(@conn)}"}>
+          <.icon name="hero-arrow-right-end-on-rectangle" class="inline-block h-6 w-6" />
+        </.link>
+      <% end %>
     </p>
   </footer>
 </div>

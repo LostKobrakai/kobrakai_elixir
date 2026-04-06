@@ -74,7 +74,8 @@ defmodule Kobrakai.MixProject do
       {:extrace, "~> 0.5"},
       {:dns_cluster, "~> 0.1.1"},
       {:req, "~> 0.5.0"},
-      {:phoenix_bakery, "~> 0.1.0", runtime: false}
+      {:phoenix_bakery, "~> 0.1.0", runtime: false},
+      {:oidcc_plug, "~> 0.3.0"}
     ]
   end
 

@@ -14,6 +14,7 @@ defmodule KobrakaiWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :put_hostname
+    plug :current_user
   end
 
   pipeline :website do
@@ -45,7 +46,16 @@ defmodule KobrakaiWeb.Router do
   end
 
   pipeline :admin do
-    plug :auth
+    plug :ensure_authenticated
+  end
+
+  scope "/auth", KobrakaiWeb do
+    pipe_through [:browser, :robots_noindex]
+
+    get "/initiate", AuthController, :initiate
+    get "/authenticate", AuthController, :authenticate
+    post "/authenticate", AuthController, :authenticate
+    delete "/deauthenticate", AuthController, :deauthenticate
   end
 
   scope "/", KobrakaiWeb do
@@ -136,16 +146,5 @@ defmodule KobrakaiWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  defp auth(conn, _opts) do
-    case Application.fetch_env!(:kobrakai, :admin) do
-      false -> conn
-      config -> Plug.BasicAuth.basic_auth(conn, config)
-    end
-  end
-
-  def put_hostname(conn, _) do
-    Phoenix.Controller.put_router_url(conn, conn.host)
   end
 end

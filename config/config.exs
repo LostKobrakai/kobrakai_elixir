@@ -95,6 +95,12 @@ config :phoenix,
 config :reverse_proxy_plug,
   http_client: ReverseProxyPlug.HTTPClient.Adapters.Req
 
+# Configures OIDC
+config :kobrakai, Kobrakai.OIDC.Provider,
+  issuer: "https://idp.services.kobrakai.de/oauth2/openid/kobrakai"
+
+config :kobrakai, KobrakaiWeb.AuthController, provider: Kobrakai.OIDC.Provider
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

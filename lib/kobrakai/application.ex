@@ -10,6 +10,8 @@ defmodule Kobrakai.Application do
     children = [
       # Start the Telemetry supervisor
       KobrakaiWeb.Telemetry,
+      # Start OIDC provider worker
+      Kobrakai.OIDC.Provider,
       # Start the PubSub system
       {Phoenix.PubSub, name: Kobrakai.PubSub},
       # Connect to cluster
