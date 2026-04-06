@@ -75,7 +75,12 @@ defmodule Kobrakai.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:req, "~> 0.5.0"},
       {:phoenix_bakery, "~> 0.1.0", runtime: false},
-      {:oidcc_plug, "~> 0.3.0"}
+      {:oidcc_plug, "~> 0.3.0"},
+      # https://github.com/elixir-plug/plug/pull/1302
+      {:plug, "~> 1.19.1",
+       github: "LostKobrakai/plug",
+       ref: "f25ffe856e12e5d4eaf0c6f22504cc538796c398",
+       override: true}
     ]
   end
 
