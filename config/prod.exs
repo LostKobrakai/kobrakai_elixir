@@ -25,5 +25,7 @@ config :kobrakai, KobrakaiWeb.Endpoint,
     hsts: true
   ]
 
+config :kobrakai, KobrakaiWeb.AuthController, redirect_host: "https://kobrakai.de"
+
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.

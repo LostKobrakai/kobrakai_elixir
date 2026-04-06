@@ -45,7 +45,15 @@ defmodule KobrakaiWeb.AuthController do
   end
 
   @doc false
-  def callback_uri do
-    url(~p"/auth/authenticate")
+  if redirect_host = Application.compile_env(:kobrakai, [__MODULE__, :redirect_host]) do
+    @uri URI.new!(redirect_host)
+
+    def callback_uri do
+      url(@uri, ~p"/auth/authenticate")
+    end
+  else
+    def callback_uri do
+      url(~p"/auth/authenticate")
+    end
   end
 end
