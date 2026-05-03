@@ -15,9 +15,9 @@ defmodule KobrakaiWeb.CoreComponents do
   Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
   """
   use Phoenix.Component
+  use Gettext, backend: KobrakaiWeb.Gettext
 
   alias Phoenix.LiveView.JS
-  import KobrakaiWeb.Gettext
 
   @doc """
   Renders a modal.

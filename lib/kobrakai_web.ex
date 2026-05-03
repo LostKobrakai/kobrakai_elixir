@@ -98,12 +98,13 @@ defmodule KobrakaiWeb do
 
   defp html_helpers do
     quote do
+      use Gettext, backend: KobrakaiWeb.Gettext
+
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
       import KobrakaiWeb.Components
       import KobrakaiWeb.CoreComponents
-      import KobrakaiWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

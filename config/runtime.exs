@@ -2,7 +2,7 @@ import Config
 
 if config_env() != :test do
   config :kobrakai, KobrakaiWeb.AuthController,
-    client_id: System.get_env("OIDC_CLIENT_ID", "kobrakai"),
+    client_id: System.get_env("OIDC_CLIENT_ID", "80374ebd-2ebe-4997-9c12-d606795374e6"),
     client_secret: System.fetch_env!("OIDC_CLIENT_SECRET")
 end
 
@@ -89,22 +89,4 @@ if config_env() == :prod do
   # and cert in disk or a relative path inside priv, for example
   # "priv/ssl/server.key". For all supported SSL configuration
   # options, see https://hexdocs.pm/plug/Plug.SSL.html#configure/1
-
-  # ## Configuring the mailer
-  #
-  # In production you need to configure the mailer to use a different adapter.
-  # Also, you may need to configure the Swoosh API client of your choice if you
-  # are not using SMTP. Here is an example of the configuration:
-  #
-  #     config :kobrakai, Kobrakai.Mailer,
-  #       adapter: Swoosh.Adapters.Mailgun,
-  #       api_key: System.get_env("MAILGUN_API_KEY"),
-  #       domain: System.get_env("MAILGUN_DOMAIN")
-  #
-  # For this example you need include a HTTP client required by Swoosh API client.
-  # Swoosh supports Hackney and Finch out of the box:
-  #
-  #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
-  #
-  # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end

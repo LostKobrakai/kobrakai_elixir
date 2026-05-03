@@ -7,12 +7,6 @@ config :kobrakai, KobrakaiWeb.Endpoint,
   secret_key_base: "FXRFs7HK7qgTq2zD4SYYn7c0fc+xQTxYP517fy3j0ew4FTI+EALANSjq+4lXwMKl",
   server: false
 
-# In test we don't send emails.
-config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false
-
 # Print only warnings and errors during test
 config :logger, level: :warning
 

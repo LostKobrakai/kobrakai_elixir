@@ -116,7 +116,7 @@ defmodule KobrakaiWeb.Router do
   end
 
   scope "/" do
-    pipe_through :admin
+    pipe_through [:browser, :admin]
     storybook_assets()
 
     scope "/", KobrakaiWeb do
@@ -138,13 +138,4 @@ defmodule KobrakaiWeb.Router do
   redirect "/maya", "/projekte/maya", :permanent
   redirect "/bleisatz", "/projekte/bleisatz", :permanent
   redirect "/schriftanalyse", "/projekte/schriftanalyse", :permanent
-
-  # Enable LiveDashboard and Swoosh mailbox preview in development
-  if Application.compile_env(:kobrakai, :dev_routes) do
-    scope "/dev" do
-      pipe_through :browser
-
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
 end

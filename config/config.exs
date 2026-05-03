@@ -21,15 +21,6 @@ config :kobrakai, KobrakaiWeb.Endpoint,
   pubsub_server: Kobrakai.PubSub,
   live_view: [signing_salt: "Rtah5aPu"]
 
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :kobrakai, Kobrakai.Mailer, adapter: Swoosh.Adapters.Local
-
 # Configure esbuild (the version is required)
 config :bun,
   version: "1.1.34",
@@ -96,8 +87,7 @@ config :reverse_proxy_plug,
   http_client: ReverseProxyPlug.HTTPClient.Adapters.Req
 
 # Configures OIDC
-config :kobrakai, Kobrakai.OIDC.Provider,
-  issuer: "https://idp.services.kobrakai.de/oauth2/openid/kobrakai"
+config :kobrakai, Kobrakai.OIDC.Provider, issuer: "https://pocket.services.kobrakai.de"
 
 config :kobrakai, KobrakaiWeb.AuthController, provider: Kobrakai.OIDC.Provider
 

@@ -4,6 +4,8 @@ defmodule KobrakaiWeb.AuthController do
   alias KobrakaiWeb.Authentication.ClientStore
   alias Oidcc.Plug.AuthorizationCallback
 
+  plug :store_return_to when action in [:initiate]
+
   plug Oidcc.Plug.Authorize,
        [
          client_store: ClientStore,
@@ -16,16 +18,24 @@ defmodule KobrakaiWeb.AuthController do
        [client_store: ClientStore, redirect_uri: &__MODULE__.callback_uri/0]
        when action in [:authenticate]
 
+  defp store_return_to(conn, _opts) do
+    return_to = conn.params["return_to"] || "/"
+    put_session(conn, "return_to", return_to)
+  end
+
   def initiate(conn, _params) do
     conn
   end
 
-  def authenticate(%{private: %{AuthorizationCallback => result}} = conn, params) do
+  def authenticate(%{private: %{AuthorizationCallback => result}} = conn, _params) do
     case result do
       {:ok, {_token, userinfo}} ->
+        return_to = get_session(conn, "return_to") || "/"
+
         conn
         |> put_session("oidcc_claims", userinfo)
-        |> redirect(to: Map.get(params, "state", "/"))
+        |> delete_session("return_to")
+        |> redirect(to: return_to)
 
       {:error, reason} ->
         Logger.debug("Auth failed with: #{inspect(reason)}")
