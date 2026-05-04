@@ -1,5 +1,5 @@
 ---
-title: Elixir Kit ↔ OIDC
+title: ElixirKit ↔ OIDC
 tags:
   - blog
   - programmierung
@@ -9,19 +9,19 @@ excerpt: |
   How to combine an elixirkit desktop app with OIDC
 ---
 
-At work we had been using [elixir kit](https://github.com/livebook-dev/elixirkit)
-for a small menu bar app some time last year. Copying livebook's usage of elixir
-kit at the time brought us quite quickly to a working proof of concept for the
+At work we had been using [elixirkit](https://github.com/livebook-dev/elixirkit)
+for a small menu bar app some time last year. Copying livebook's usage of elixirkit
+at the time brought us quite quickly to a working proof of concept for the
 local network proxy we needed. Recently we were looking into adding some
 authentication to the app to move it closer to being ready for real usage beyond
 just being a PoC – and given we've been exploring OpenID Connect lately as well
 I wanted to combine those pieces.
 
-## Elixir kit using tauri
+## ElixirKit using tauri
 
-There wasn't just OIDC to be added though. Elixir kit started out as a bridge
+There wasn't just OIDC to be added though. ElixirKit started out as a bridge
 between elixir and individual swift and C# codebases for the desktop specific
-parts. That's what we had used some time last year. Since then elixir kit was
+parts. That's what we had used some time last year. Since then elixirkit was
 updated to integrate with [tauri](https://tauri.app/) instead and was actually
 released as a standalone mix package. I won't go into more details on that portion,
 but make sure to check the package out now that it's more approachable to check out.
@@ -30,7 +30,7 @@ working quite quickly.
 
 ## OIDCC
 
-With elixir kit tauri doesn't render a javascript based static/spa website, but
+With elixirkit tauri doesn't render a javascript based static/spa website, but
 it starts an elixir project alongside the desktop app where one can run e.g. a
 phoenix server to serve pages to the desktop app. For adding OIDC I therefore
 was able to stick to the tools I had already been using in other projects:
@@ -71,7 +71,7 @@ but the user can handle the redirect.
 But what needs to happen instead of the default respond with a redirect on the
 current http request:
 
-With elixir kit one gets a PubSub connection to tauris rust backend. So the
+With elixirkit one gets a PubSub connection to tauris rust backend. So the
 url to redirect to can be sent there, where the
 [tauri-opener](https://v2.tauri.app/plugin/opener/) plugin can then open the
 url in the default browser on the users operating system.
@@ -100,7 +100,7 @@ we need to validate the redirects validity by is stored on the session of the
 desktop apps webview though - when using oidcc_plug. This hurdle can be solved in
 many ways given it's moving data between various places on the same desktop app.
 
-The path I chose was using elixir kit's pubsub again to make tauris rust backend
+The path I chose was using elixirkit's pubsub again to make tauris rust backend
 navigate the webview to the url, where oidcc_plug would pick up the data sent
 by the identity provider, validate it and provide it on the auth controller –
 just like it happens in a non-desktop-app context.
@@ -111,7 +111,7 @@ should switch back from the browser to the desktop application to continue.
 
 ##### Random port
 
-The RFC mentions this explicitly, but you want that for an elixir kit app
+The RFC mentions this explicitly, but you want that for an elixirkit app
 anyways: Using a random port for the phoenix server instead of a hardcoded one.
 If you configure `http: [port: 0]` on your phoenix endpoint it'll listen on a
 random free port provided by the operating system. With

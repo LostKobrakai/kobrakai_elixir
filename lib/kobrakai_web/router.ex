@@ -56,6 +56,9 @@ defmodule KobrakaiWeb.Router do
     plug :ensure_authenticated
   end
 
+  # Try before matching
+  redirect "/kolumne/elixir-kit-oidc", "/kolumne/elixirkit-oidc", :permanent
+
   scope "/auth", KobrakaiWeb do
     pipe_through [:browser, :robots_noindex]
 
