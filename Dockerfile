@@ -57,6 +57,9 @@ COPY static static
 RUN mix bun install
 RUN mix assets.deploy
 
+# Locales
+RUN mix localize.download_locales
+
 # Compile the release
 RUN mix compile
 
@@ -71,7 +74,7 @@ RUN mix release
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && \
-    apt-get install -y libstdc++6 openssl libncurses6 locales ca-certificates curl \
+    apt-get install -y libstdc++6 openssl libncurses6 locales ca-certificates curl tzdata \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale

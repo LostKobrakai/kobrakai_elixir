@@ -22,8 +22,6 @@ defmodule Kobrakai.Application do
       Kobrakai.Quantum.Scheduler,
       # Start the Endpoint (http/https)
       KobrakaiWeb.Endpoint
-      # Start a worker by calling: Kobrakai.Worker.start_link(arg)
-      # {Kobrakai.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -30,13 +30,13 @@
       </button>
       <%= if @current_user do %>
         <.link
-          href={~p"/auth/deauthenticate?state=#{Phoenix.Controller.current_path(@conn)}"}
+          href={~p"/auth/deauthenticate?state=#{@current_path}"}
           method="delete"
         >
           <.icon name="hero-arrow-right-start-on-rectangle" class="inline-block h-6 w-6" />
         </.link>
       <% else %>
-        <.link href={~p"/auth/initiate?state=#{Phoenix.Controller.current_path(@conn)}"}>
+        <.link href={~p"/auth/initiate?state=#{@current_path}"}>
           <.icon name="hero-arrow-right-end-on-rectangle" class="inline-block h-6 w-6" />
         </.link>
       <% end %>

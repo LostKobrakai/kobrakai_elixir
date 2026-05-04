@@ -13,6 +13,13 @@ defmodule KobrakaiWeb.Router do
     plug :put_root_layout, {KobrakaiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug Localize.Plug.PutLocale,
+      from: [:session, :accept_language],
+      gettext: KobrakaiWeb.Gettext
+
+    plug Localize.Plug.PutSession
+
     plug :put_hostname
     plug :current_user
   end
@@ -62,6 +69,7 @@ defmodule KobrakaiWeb.Router do
     pipe_through [:browser, :website]
 
     get "/", PageController, :home
+    live "/tz", TzLive
     get "/projekte", PortfolioController, :index
     get "/projekte/:id", PortfolioController, :show
 

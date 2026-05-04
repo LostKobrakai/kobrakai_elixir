@@ -91,6 +91,14 @@ config :kobrakai, Kobrakai.OIDC.Provider, issuer: "https://pocket.services.kobra
 
 config :kobrakai, KobrakaiWeb.AuthController, provider: Kobrakai.OIDC.Provider
 
+# Timezone Database
+config :elixir, :time_zone_database, Zoneinfo.TimeZoneDatabase
+
+# Localize
+config :localize,
+  default_locale: :en,
+  supported_locales: [:en, :fr, :de, :ja, :es]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

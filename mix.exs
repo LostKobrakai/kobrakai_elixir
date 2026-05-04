@@ -80,7 +80,10 @@ defmodule Kobrakai.MixProject do
       {:plug, "~> 1.19.1",
        github: "LostKobrakai/plug",
        ref: "f25ffe856e12e5d4eaf0c6f22504cc538796c398",
-       override: true}
+       override: true},
+      {:zoneinfo, "~> 0.1.0"},
+      {:localize, "~> 0.25.0"},
+      {:localize_web, "~> 0.5.0"}
     ]
   end
 
