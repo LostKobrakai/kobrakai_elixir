@@ -31,7 +31,24 @@ defmodule KobrakaiWeb.ImagePlug do
   end
 
   defp check_hmac(conn, _) do
-    if ThumborPath.valid?(Path.join(conn.path_info), conn.assigns.secret) do
+    path = Path.join(conn.path_info)
+    secret = conn.assigns.secret
+
+    valid =
+      cond do
+        ThumborPath.valid?(path, secret) ->
+          true
+
+        String.contains?(path, "https:%2F%2F") ->
+          path
+          |> String.replace("https:%2F%2F", "https%3A%2F%2F")
+          |> ThumborPath.valid?(secret)
+
+        true ->
+          false
+      end
+
+    if valid do
       conn
     else
       conn
