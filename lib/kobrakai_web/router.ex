@@ -72,7 +72,6 @@ defmodule KobrakaiWeb.Router do
     pipe_through [:browser, :website]
 
     get "/", PageController, :home
-    live "/tz", TzLive
     get "/projekte", PortfolioController, :index
     get "/projekte/:id", PortfolioController, :show
 
@@ -84,7 +83,7 @@ defmodule KobrakaiWeb.Router do
 
     get "/photography", CustomController, :photography
     get "/werdegang", CustomController, :cv
-    get "/kontakt", CustomController, :contact
+    live "/kontakt", ContactLive
     get "/impressum", CustomController, :legal
 
     scope "/scratchpad" do

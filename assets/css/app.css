@@ -34,6 +34,10 @@
   font-style: normal;
 }
 
+[data-phx-session] {
+  display: contents;
+}
+
 @layer utilities {
   .animation-fill-mode-forwards {
    animation-fill-mode: forwards;

@@ -29,8 +29,13 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-  params: { _csrf_token: csrfToken },
   hooks: Hooks,
+  params: (_liveViewName) => {
+    return {
+      _csrf_token: csrfToken,
+      time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    };
+  },
   dom: {
     onBeforeElUpdated(from, to) {
       if (from instanceof HTMLDetailsElement && from.open) {
