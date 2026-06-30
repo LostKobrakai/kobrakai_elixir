@@ -1,6 +1,6 @@
 ---
 title: Serve the webfinger protocol with phoenix
-tags: 
+tags:
   - blog
   - programmierung
   - webfinger
@@ -10,43 +10,43 @@ excerpt: |
   Use webfinger to host your mastodon identity on your own domain
 ---
 
-With Elon Musk taking over Twitter many, especially tech savvy, people have been 
+With Elon Musk taking over Twitter many, especially tech savvy, people have been
 looking at [Mastodon](https://joinmastodon.org/de) as an alternative – and so
 did I. Mastodon is a federated platform, where you join as a user of a certain
-instance, like for example [hachyderm.io](https://hachyderm.io/), the instance 
+instance, like for example [hachyderm.io](https://hachyderm.io/), the instance
 I joined a few days ago.
 
 So people can now find me under the account name `@lostkobrakai@hachyderm.io`.
 
-So far so good, but it kinda rubed me the wrong way to be `@lostkobrakai` of some 
+So far so good, but it kinda rubed me the wrong way to be `@lostkobrakai` of some
 random Mastodon instance. What if it goes away, will people still find my profile?
 In the end these instance often depend on volunteers, which are in my opinion
 not to blame if they would like to move on or stop doing what they do today.
-However I'd really like to have my profile be linked to my own domain, even though 
+However I'd really like to have my profile be linked to my own domain, even though
 I don't run my own instance (yet?).
 
-Luckily that's actually rather simple to do as 
-[explained to me](https://elixirforum.com/t/mastodon-handles-lets-share-them/29514/67?u=lostkobrakai) 
+Luckily that's actually rather simple to do as
+[explained to me](https://forum.elixirforum.com/t/mastodon-handles-lets-share-them/29514/67?u=lostkobrakai)
 when I asked on the ElixirForum.
 
 ## Webfinger
 
-The answer is webfinger – a http based protocol to "to discover information about 
-people or other entities on the Internet"[^1]. 
+The answer is webfinger – a http based protocol to "to discover information about
+people or other entities on the Internet"[^1].
 
 The protocol works by having a known path on a website:
 
 `GET /.well-known/webfinger`
 
 That path can be queried with a `?resource=…` query string. Websites supporting
-webfinger can return any suitable information they know about the resource in 
-the JSON Resource Description (JRD) format, a standardized schema for 
+webfinger can return any suitable information they know about the resource in
+the JSON Resource Description (JRD) format, a standardized schema for
 data encoded as JSON. More details on it can be found in the RFC.
 
 Given I recently moved my website to be powered by phoenix I did implement this
-as a simple controller. 
+as a simple controller.
 
-I knew I wanted to have ETag support, so I pulled in `{:etag_plug, "~> 1.0"}` 
+I knew I wanted to have ETag support, so I pulled in `{:etag_plug, "~> 1.0"}`
 first and put that on the controller. ETags are a mechanism to skip sending
 data when the client already has the data cached locally, which I hadn't really
 touched much, so this was a good excuse to see how it goes.
@@ -60,7 +60,7 @@ end
 ```
 
 Next the RFC for webfinger expects servers to return a `400`, if the request
-misses the required `?resource=…` query parameter. I handled this one in a 
+misses the required `?resource=…` query parameter. I handled this one in a
 plug as well, though a custom one this time.
 
 ```elixir
@@ -142,9 +142,9 @@ defmodule MyAppWeb.WebfingerController do
 end
 ```
 
-As you can see I just hardcoded the values, but this could easily become more 
-flexible when needed. One thing of note however is the returned content type of 
-`application/jrd+json`. 
+As you can see I just hardcoded the values, but this could easily become more
+flexible when needed. One thing of note however is the returned content type of
+`application/jrd+json`.
 
 With phoenix we can do proper content type negotiation,
 so in the router I didn't just add the router under the `:browser` pipeline, but
@@ -164,7 +164,7 @@ end
 
 The `"jrd"` format isn't known by the `:mime` application, so I've added the
 necessary config to extend it as well. Make sure to recompile it using
-`mix deps.compile mime --force`. Otherwise you might run into compile time errors 
+`mix deps.compile mime --force`. Otherwise you might run into compile time errors
 around mismatched compiled and runtime configuration.
 
 ```elixir
@@ -174,7 +174,7 @@ config :mime, :types, %{
 ```
 
 With that everything is in place for me to be discovered under my own domain
-as `@lostkobrakai@kobrakai.de`: 
+as `@lostkobrakai@kobrakai.de`:
 
 https://kobrakai.de/.well-known/webfinger?resource=acct:lostkobrakai@kobrakai.de
 

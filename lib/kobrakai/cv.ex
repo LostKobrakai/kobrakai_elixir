@@ -10,7 +10,7 @@ defmodule Kobrakai.CV do
   end
 
   def refresh_elixir_forum_stats do
-    request = Finch.build(:get, "https://elixirforum.com/u/lostkobrakai/summary.json")
+    request = Finch.build(:get, "https://forum.elixirforum.com/u/lostkobrakai/summary.json")
 
     with {:ok, %{status: 200, body: json}} <- Finch.request(request, Kobrakai.Finch),
          {:ok, data} <- Jason.decode(json),
