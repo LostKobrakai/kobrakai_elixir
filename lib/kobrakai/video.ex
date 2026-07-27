@@ -6,7 +6,8 @@ defmodule Kobrakai.Video do
   end
 
   def list_videos(host \\ default_host()) do
-    Kobrakai.Bold.list_videos!().body["data"]
+    Kobrakai.Bold.list_videos!().body
+    |> Map.get("data", [])
     |> Enum.map(&Kobrakai.Bold.video_response_mapping/1)
     |> Enum.concat(external_videos(host))
     |> Enum.sort_by(& &1.date, Date)
